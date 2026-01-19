@@ -9,6 +9,8 @@ export interface User {
   createdAt: string;
   isEmailVerified: boolean;
   preferences: UserPreferences;
+  subscriptionTier?: 'free' | 'silver' | 'gold' | 'pro' | 'platinum';
+  name?: string;
 }
 
 export interface UserPreferences {

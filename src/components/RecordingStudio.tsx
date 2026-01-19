@@ -9,17 +9,17 @@ import { RealTimeCoaching } from '../modules/genspark';
 
 interface RecordingStudioProps {
   song?: {
-    id: string;
+    id: number | string;
     title: string;
     artist: string;
-    youtube_url: string;
+    youtubeUrl: string;
     duration?: number;
   };
   initialTranspose?: number;
 }
 
 export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioProps) {
-  const { user } = useAuth();
+  const { state: { user } } = useAuth();
   const [isRecording, setIsRecording] = useState(false);
   const [isVideoEnabled, setIsVideoEnabled] = useState(true);
   const [isAudioEnabled, setIsAudioEnabled] = useState(true);
@@ -199,7 +199,7 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
               <div className="flex items-center space-x-3">
                 <Button 
                   size="sm" 
-                  onClick={() => window.open(song.youtube_url, '_blank')}
+                  onClick={() => window.open(song.youtubeUrl, '_blank')}
                   className="bg-red-600 hover:bg-red-700 text-white"
                 >
                   <Play className="h-4 w-4 mr-1" />

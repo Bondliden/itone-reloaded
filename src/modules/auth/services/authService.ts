@@ -1,5 +1,3 @@
-import { supabase } from '../../../lib/supabase';
-import { isSupabaseConfigured } from '../../../lib/supabase';
 import { i18nService } from '../../i18n';
 import type { User, LoginCredentials, RegisterData } from '../types';
 

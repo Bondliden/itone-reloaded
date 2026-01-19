@@ -10,14 +10,14 @@ import { useAuth } from '../modules/auth';
 import { useSongs, useSaveSong, useRemoveSong, useUserSongs } from '../hooks/useSupabase';
 
 interface Song {
-  id: string;
+  id: number | string;
   title: string;
   artist: string;
   duration: number;
   genre: string;
-  difficulty: string;
-  youtube_url: string;
-  spotify_id?: string;
+  difficulty: string | null;
+  youtubeUrl: string;
+  spotifyId?: string | null;
 }
 
 export function SongLibrary() {
@@ -34,7 +34,7 @@ export function SongLibrary() {
   const [effectValues, setEffectValues] = useState<Record<string, string>>({});
 
   const { data: songs = [] } = useSongs(search, selectedGenre);
-  const { data: userSongs = [] } = useUserSongs(user?.id);
+  const { data: userSongs = [] } = useUserSongs();
   const saveSongMutation = useSaveSong();
   const removeSongMutation = useRemoveSong();
 
@@ -72,11 +72,11 @@ export function SongLibrary() {
       id: `custom-${Date.now()}`,
       title: 'Custom YouTube Song',
       artist: 'Unknown Artist',
-      duration: 180, // Default 3 minutes
+      duration: 180,
       genre: 'Custom',
       difficulty: 'medium',
-      youtube_url: youtubeUrl,
-      spotify_id: ''
+      youtubeUrl: youtubeUrl,
+      spotifyId: ''
     };
 
     // Add to the current session (in a real app, this would be saved to database)
@@ -110,8 +110,8 @@ export function SongLibrary() {
       duration: 180,
       genre: 'Custom',
       difficulty: 'medium',
-      youtube_url: quickYoutubeUrl,
-      spotify_id: ''
+      youtubeUrl: quickYoutubeUrl,
+      spotifyId: ''
     };
 
     openRecordingStudio(customSong);
@@ -137,15 +137,17 @@ export function SongLibrary() {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const isSongSaved = (songId: string) => {
-    return userSongs.some(us => us.song_id === songId);
+  const isSongSaved = (songId: number | string) => {
+    return userSongs.some(us => us.songId === Number(songId));
   };
 
   const toggleSaveSong = async (song: Song) => {
     if (!user) return;
 
+    const numericId = typeof song.id === 'string' ? parseInt(song.id) : song.id;
+    
     if (isSongSaved(song.id)) {
-      await removeSongMutation.mutateAsync({ userId: user.id, songId: song.id });
+      await removeSongMutation.mutateAsync(numericId);
       toast({
         title: "Removed from library",
         description: `${song.title} has been removed from your library.`,
@@ -153,8 +155,7 @@ export function SongLibrary() {
     } else {
       const transposeValue = transposeValues[song.id] || 0;
       await saveSongMutation.mutateAsync({ 
-        userId: user.id, 
-        songId: song.id,
+        songId: numericId,
         transposeValue 
       });
       toast({
@@ -182,54 +183,51 @@ export function SongLibrary() {
   };
 
   const openRecordingStudio = (song: Song) => {
-    setSelectedSong({
-      ...song,
-      youtube_url: song.youtube_url
-    });
+    setSelectedSong(song);
     setShowRecordingStudio(true);
   };
 
-  // Mock songs data for demo
-  const mockSongs = [
+  // Mock songs data for demo (used as fallback when API returns empty)
+  const mockSongs: Song[] = [
     {
-      id: '1',
+      id: 1,
       title: 'Bohemian Rhapsody',
       artist: 'Queen',
       duration: 355,
       genre: 'Rock',
       difficulty: 'hard',
-      youtube_url: 'https://www.youtube.com/watch?v=fJ9rUzIMcZQ',
-      spotify_id: '4u7EnebtmKWzUH433cf1Qv'
+      youtubeUrl: 'https://www.youtube.com/watch?v=fJ9rUzIMcZQ',
+      spotifyId: '4u7EnebtmKWzUH433cf1Qv'
     },
     {
-      id: '2',
+      id: 2,
       title: 'Shape of You',
       artist: 'Ed Sheeran',
       duration: 233,
       genre: 'Pop',
       difficulty: 'medium',
-      youtube_url: 'https://www.youtube.com/watch?v=JGwWNGJdvx8',
-      spotify_id: '7qiZfU4dY4WkLyMn4s5iuJ'
+      youtubeUrl: 'https://www.youtube.com/watch?v=JGwWNGJdvx8',
+      spotifyId: '7qiZfU4dY4WkLyMn4s5iuJ'
     },
     {
-      id: '3',
+      id: 3,
       title: 'Imagine',
       artist: 'John Lennon',
       duration: 183,
       genre: 'Classic',
       difficulty: 'easy',
-      youtube_url: 'https://www.youtube.com/watch?v=YkgkThdzX-8',
-      spotify_id: '7pKfPomDiuM2OtqtWKpGRb'
+      youtubeUrl: 'https://www.youtube.com/watch?v=YkgkThdzX-8',
+      spotifyId: '7pKfPomDiuM2OtqtWKpGRb'
     },
     {
-      id: '4',
+      id: 4,
       title: 'Billie Jean',
       artist: 'Michael Jackson',
       duration: 294,
       genre: 'Pop',
       difficulty: 'medium',
-      youtube_url: 'https://www.youtube.com/watch?v=Zi_XLOBDo_Y',
-      spotify_id: '5ChkMS8OtdzJeqyybCc9R5'
+      youtubeUrl: 'https://www.youtube.com/watch?v=Zi_XLOBDo_Y',
+      spotifyId: '5ChkMS8OtdzJeqyybCc9R5'
     }
   ];
 
@@ -396,7 +394,7 @@ export function SongLibrary() {
                     {isSongSaved(song.id) && (
                       <Heart className="h-4 w-4 text-red-400 fill-current" />
                     )}
-                    {song.id.startsWith('custom-') && (
+                    {String(song.id).startsWith('custom-') && (
                       <span className="bg-red-600/20 text-red-400 px-2 py-1 rounded-full text-xs font-medium">
                         Custom
                       </span>
@@ -409,9 +407,9 @@ export function SongLibrary() {
                       {formatDuration(song.duration)}
                     </span>
                     <span className="text-purple-400">{song.genre}</span>
-                    <span className={`flex items-center ${getDifficultyColor(song.difficulty)}`}>
+                    <span className={`flex items-center ${getDifficultyColor(song.difficulty || 'medium')}`}>
                       <Star className="h-3 w-3 mr-1" />
-                      {song.difficulty}
+                      {song.difficulty || 'medium'}
                     </span>
                     {transposeValues[song.id] !== undefined && transposeValues[song.id] !== 0 && (
                       <span className="text-yellow-400 text-xs bg-yellow-400/20 px-2 py-1 rounded">
@@ -456,7 +454,7 @@ export function SongLibrary() {
                   </div>
 
                   {/* Save/Unsave Song */}
-                  {!song.id.startsWith('custom-') && (
+                  {!String(song.id).startsWith('custom-') && (
                     <Button
                       variant="ghost"
                       size="sm"
@@ -475,7 +473,7 @@ export function SongLibrary() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => window.open(song.youtube_url, '_blank')}
+                    onClick={() => window.open(song.youtubeUrl, '_blank')}
                     className="text-white hover:bg-white/10"
                   >
                     <Play className="h-4 w-4 mr-1" />

@@ -52,8 +52,8 @@ export function DashboardPage() {
     setLoadedModules(prev => new Set([...prev, tabValue]));
     
     // Analytics tracking
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'module_access', {
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'module_access', {
         module_name: tabValue,
         user_tier: state.user?.subscriptionTier || 'free'
       });

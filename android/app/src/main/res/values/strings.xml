@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">iTone Karaoke</string>
+    <string name="title_activity_main">iTone Karaoke - Sing Your Heart Out</string>
+    <string name="package_name">com.itone.karaoke</string>
+    <string name="custom_url_scheme">com.itone.karaoke</string>
+</resources>

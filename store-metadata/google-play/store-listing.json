@@ -1,0 +1,29 @@
+{
+  "title": "iTone Karaoke - Sing Your Heart Out",
+  "short_description": "The ultimate karaoke experience with AI-powered features, HD recording, and real-time collaboration.",
+  "full_description": "🎤 SING YOUR HEART OUT WITH ITONE KARAOKE 🎤\n\nThe most advanced karaoke app with AI-powered recommendations, professional recording quality, and seamless collaboration features.\n\n✨ KEY FEATURES:\n• 🎵 Massive song library with YouTube integration\n• 🧠 AI-powered song recommendations via Genspark AI\n• 🎥 HD video recording with professional audio effects\n• 👥 Real-time collaboration with up to 4 friends\n• 🎯 Live vocal coaching and performance scoring\n• 📱 Perfect for mobile with voice + video recording\n• 🌍 Auto-detect country and language support\n• 🎚️ Key transpose (-12 to +12 semitones) for any vocal range\n• 🎭 5 professional sound effects (Studio, Arena, Cathedral, etc.)\n• 💎 Platform publishing to Spotify, Apple Music & more (Premium)\n\n🆓 FREE TIER INCLUDES:\n• 4 YouTube karaoke recordings per month\n• Unlimited key transpose for perfect pitch\n• 5 professional sound effects\n• HD quality downloads\n• Community features\n\n💎 PREMIUM SUBSCRIPTIONS:\n• Silver ($9.99): 2-person collaboration + unlimited recordings\n• Gold ($19.99): 4-person collaboration + advanced effects\n• Platinum ($53.99): Platform uploads + professional audio suite\n\n🎯 PERFECT FOR:\n• Karaoke enthusiasts and singers\n• Music students practicing vocal techniques\n• Friends wanting to sing together remotely\n• Content creators publishing covers\n• Anyone who loves music and singing\n\n🔒 PRIVACY & SECURITY:\n• Secure Google authentication\n• Your recordings stay private unless you choose to share\n• No data collection without consent\n• GDPR compliant\n\nDownload iTone Karaoke today and discover why thousands of singers choose us for their karaoke experience!",
+  "category": "MUSIC_AND_AUDIO",
+  "content_rating": "Everyone",
+  "website": "https://itone.studio",
+  "email": "support@itone.studio",
+  "phone": "+1-555-ITONE-APP",
+  "privacy_policy_url": "https://itone.studio/privacy",
+  "keywords": "karaoke, singing, music, recording, collaboration, AI, vocal coaching, YouTube, Spotify, Apple Music",
+  "screenshots": {
+    "phone": [
+      "screenshot-phone-1.png",
+      "screenshot-phone-2.png", 
+      "screenshot-phone-3.png",
+      "screenshot-phone-4.png",
+      "screenshot-phone-5.png"
+    ],
+    "tablet": [
+      "screenshot-tablet-1.png",
+      "screenshot-tablet-2.png"
+    ]
+  },
+  "feature_graphic": "feature-graphic.png",
+  "app_icon": "app-icon-512.png",
+  "video_url": "https://youtube.com/watch?v=demo-video",
+  "release_notes": "🎤 Initial release of iTone Karaoke!\n\n✨ Features:\n• AI-powered song recommendations\n• HD karaoke recording\n• Real-time collaboration\n• Professional audio effects\n• Key transpose for any voice\n• Free tier with 4 recordings/month\n\n🚀 Ready to sing your heart out!"
+}

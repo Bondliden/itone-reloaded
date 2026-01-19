@@ -1,0 +1,31 @@
+{
+  "name": "iTone Karaoke",
+  "subtitle": "Sing Your Heart Out",
+  "description": "🎤 The ultimate karaoke experience with AI-powered features, HD recording, and real-time collaboration.\n\n✨ REVOLUTIONARY FEATURES:\n• 🧠 AI song recommendations powered by Genspark\n• 🎥 Professional HD video recording\n• 👥 Live collaboration with friends worldwide\n• 🎯 Real-time vocal coaching and scoring\n• 🎚️ Key transpose for perfect pitch matching\n• 🎭 Professional sound effects suite\n• 📱 Optimized for iPhone with camera + microphone\n• 🌍 Auto-detects your country and language\n• 💎 Direct publishing to Spotify, Apple Music & more\n\n🆓 FREE FEATURES:\n• 4 YouTube karaoke recordings monthly\n• Unlimited key transpose (-12 to +12)\n• 5 professional sound effects\n• HD quality exports\n• Social sharing\n\n💎 PREMIUM SUBSCRIPTIONS:\n• Silver: 2-person collaboration\n• Gold: 4-person collaboration + advanced effects  \n• Platinum: Platform uploads + pro audio suite\n\n🎯 PERFECT FOR:\n• Karaoke lovers and vocalists\n• Music students and voice coaches\n• Remote singing with friends\n• Content creators and cover artists\n• Anyone passionate about music\n\nJoin thousands of singers worldwide and experience the future of karaoke!",
+  "keywords": "karaoke,singing,music,recording,collaboration,AI,vocal,coaching,YouTube,Spotify",
+  "category": "Music",
+  "price": "Free",
+  "content_rating": "4+",
+  "website_url": "https://itone.studio",
+  "support_url": "https://itone.studio/support",
+  "privacy_policy_url": "https://itone.studio/privacy",
+  "marketing_url": "https://itone.studio",
+  "copyright": "© 2025 iTone. All rights reserved.",
+  "version": "1.0.0",
+  "build_number": "1",
+  "release_notes": "🎤 Welcome to iTone Karaoke!\n\nExperience the future of karaoke with:\n• AI-powered song recommendations\n• Professional HD recording quality\n• Real-time collaboration features\n• Vocal coaching and performance analytics\n• Key transpose for perfect pitch\n• 5 professional sound effects\n\n🆓 Free tier includes 4 recordings per month with full HD quality and all transpose/effects features.\n\n💎 Premium subscriptions unlock unlimited recordings, multi-person collaboration, and direct publishing to streaming platforms.\n\nStart your karaoke journey today!",
+  "promotional_text": "The most advanced karaoke app with AI recommendations and professional recording quality!",
+  "app_store_screenshots": {
+    "iphone_6_5": [
+      "ios-screenshot-1.png",
+      "ios-screenshot-2.png", 
+      "ios-screenshot-3.png",
+      "ios-screenshot-4.png",
+      "ios-screenshot-5.png"
+    ],
+    "ipad_12_9": [
+      "ios-screenshot-ipad-1.png",
+      "ios-screenshot-ipad-2.png"
+    ]
+  }
+}

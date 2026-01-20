@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useLocation } from 'wouter';
 import { SongLibrary } from '../components/SongLibrary';
@@ -14,13 +14,13 @@ import { useUserSubscription } from '../hooks/useSubscription';
 import { usePlatinumSubscription } from '../hooks/usePlatinum';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { Button } from '../components/ui/button';
-import { Music, Clock, Mic, User, Video, Users, Crown, CreditCard, Upload, Link2 } from 'lucide-react';
+import { Music, Clock, Mic, User, Video, Users, Crown, CreditCard, Upload, Link2, Star } from 'lucide-react';
 import { Link } from 'wouter';
 
 export function DashboardPage() {
   const { user, loading } = useAuth();
   const { data: subscription } = useUserSubscription(user?.id);
-  const { data: platinumSubscription } = usePlatinumSubscription(user?.id);
+  const { data: _platinumSubscription } = usePlatinumSubscription(user?.id);
   const [, setLocation] = useLocation();
 
   React.useEffect(() => {
@@ -44,7 +44,7 @@ export function DashboardPage() {
   return (
     <div className="min-h-screen">
       <Header />
-      
+
       <main className="max-w-7xl mx-auto px-6 py-8">
         <div className="mb-8">
           <div className="flex items-center justify-between">
@@ -72,11 +72,10 @@ export function DashboardPage() {
 
         {/* Subscription Status Banner */}
         {subscription ? (
-          <div className={`backdrop-blur-lg rounded-2xl p-4 mb-6 border ${
-            subscription.plan?.name === 'Silver' ? 'bg-gradient-to-r from-gray-600/20 to-gray-500/20 border-gray-400/30' :
+          <div className={`backdrop-blur-lg rounded-2xl p-4 mb-6 border ${subscription.plan?.name === 'Silver' ? 'bg-gradient-to-r from-gray-600/20 to-gray-500/20 border-gray-400/30' :
             subscription.plan?.name === 'Gold' ? 'bg-gradient-to-r from-yellow-600/20 to-orange-600/20 border-yellow-400/30' :
-            'bg-gradient-to-r from-purple-600/20 to-pink-600/20 border-purple-400/30'
-          }`}>
+              'bg-gradient-to-r from-purple-600/20 to-pink-600/20 border-purple-400/30'
+            }`}>
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 {subscription.plan?.name === 'Silver' && <Star className="h-6 w-6 text-gray-400" />}
@@ -85,7 +84,7 @@ export function DashboardPage() {
                 <div>
                   <h3 className="text-white font-semibold">{subscription.plan?.name} Member</h3>
                   <p className="text-gray-300 text-sm">
-                    {subscription.status === 'trialing' ? 'Free trial active' : 'Subscription active'} • 
+                    {subscription.status === 'trialing' ? 'Free trial active' : 'Subscription active'} •
                     Renews {new Date(subscription.current_period_end).toLocaleDateString()}
                   </p>
                 </div>
@@ -179,15 +178,15 @@ export function DashboardPage() {
           </TabsContent>
 
           <TabsContent value="platforms">
-            <FeatureGate 
-              feature="platform_uploads" 
+            <FeatureGate
+              feature="platform_uploads"
               requiredPlan="Platinum"
               fallback={
                 <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-center">
                   <Crown className="h-16 w-16 text-purple-400 mx-auto mb-4" />
                   <h3 className="text-2xl font-bold text-white mb-4">Platform Integration</h3>
                   <p className="text-gray-300 mb-6">
-                    Connect your streaming platform accounts and upload directly from iTone. 
+                    Connect your streaming platform accounts and upload directly from iTone.
                     All platform access costs are included in your Platinum subscription.
                   </p>
                   <Link href="/pricing">
@@ -204,15 +203,15 @@ export function DashboardPage() {
           </TabsContent>
 
           <TabsContent value="uploads">
-            <FeatureGate 
-              feature="platform_uploads" 
+            <FeatureGate
+              feature="platform_uploads"
               requiredPlan="Platinum"
               fallback={
                 <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-center">
                   <Upload className="h-16 w-16 text-purple-400 mx-auto mb-4" />
                   <h3 className="text-2xl font-bold text-white mb-4">Upload Dashboard</h3>
                   <p className="text-gray-300 mb-6">
-                    Track your uploads to streaming platforms and monitor your monthly usage. 
+                    Track your uploads to streaming platforms and monitor your monthly usage.
                     Get 10 uploads per month included with Platinum.
                   </p>
                   <Link href="/pricing">

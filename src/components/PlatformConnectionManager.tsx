@@ -58,7 +58,7 @@ export function PlatformConnectionManager() {
           description: `Successfully connected to ${platform.display_name}. You can now upload directly to this platform.`,
         });
       }
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: "Connection Failed",
         description: `Failed to connect to ${platform.display_name}. Please try again.`,

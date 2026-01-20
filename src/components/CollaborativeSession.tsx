@@ -47,11 +47,14 @@ export function CollaborativeSession() {
     }
   ]);
 
-  const [messages, setMessages] = useState([
-    { id: '1', user: 'Sarah Johnson', message: '¡Excelente canción! 🎤', timestamp: Date.now() - 30000 },
-    { id: '2', user: 'Mike Chen', message: 'Me encanta esta colaboración', timestamp: Date.now() - 15000 },
-    { id: '3', user: 'System', message: 'Recording started - everyone ready?', timestamp: Date.now() - 5000 }
-  ]);
+  const [messages, setMessages] = useState(() => {
+    const now = Date.now();
+    return [
+      { id: '1', user: 'Sarah Johnson', message: '¡Excelente canción! 🎤', timestamp: now - 30000 },
+      { id: '2', user: 'Mike Chen', message: 'Me encanta esta colaboración', timestamp: now - 15000 },
+      { id: '3', user: 'System', message: 'Recording started - everyone ready?', timestamp: now - 5000 }
+    ];
+  });
 
   const [newMessage, setNewMessage] = useState('');
   const [sessionCode] = useState('ROCK2025');
@@ -120,7 +123,9 @@ export function CollaborativeSession() {
   };
 
   const formatTime = (timestamp: number) => {
-    const diff = Date.now() - timestamp;
+    // Called only when rendering message timestamps, not during initial render
+    const now = Date.now();
+    const diff = now - timestamp;
     const minutes = Math.floor(diff / 60000);
     if (minutes < 1) return 'now';
     return `${minutes}m ago`;

@@ -48,7 +48,7 @@ export function Queue() {
         title: "Removed from queue",
         description: "Song has been removed from the queue.",
       });
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: "Error",
         description: "Failed to remove song from queue.",
@@ -78,7 +78,7 @@ export function Queue() {
       const _nextSong = await response.json();
       queryClient.invalidateQueries({ queryKey: ['queue'] });
       setLocation('/karaoke');
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: "Error",
         description: "Failed to start karaoke session.",

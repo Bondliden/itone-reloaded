@@ -24,66 +24,7 @@ export function AudioVisualizer({
   const dataArrayRef = useRef<Uint8Array>();
   const [isActive, setIsActive] = useState(false);
 
-  useEffect(() => {
-    if (!stream || !canvasRef.current) return;
-
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Set up audio analysis
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-    const analyser = audioContext.createAnalyser();
-    const source = audioContext.createMediaStreamSource(stream);
-
-    analyser.fftSize = 256;
-    analyser.smoothingTimeConstant = 0.8;
-    source.connect(analyser);
-
-    const bufferLength = analyser.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-
-    analyserRef.current = analyser;
-    dataArrayRef.current = dataArray;
-    setIsActive(true);
-
-    const draw = () => {
-      if (!analyserRef.current || !dataArrayRef.current || !ctx) return;
-
-      analyserRef.current.getByteFrequencyData(dataArrayRef.current);
-
-      const width = canvas.width;
-      const height = canvas.height;
-
-      // Clear canvas
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-      ctx.fillRect(0, 0, width, height);
-
-      if (type === 'bars') {
-        drawBars(ctx, dataArrayRef.current, width, height, color, sensitivity);
-      } else if (type === 'waveform') {
-        drawWaveform(ctx, dataArrayRef.current, width, height, color, sensitivity);
-      } else if (type === 'circular') {
-        drawCircular(ctx, dataArrayRef.current, width, height, color, sensitivity);
-      }
-
-      animationRef.current = requestAnimationFrame(draw);
-    };
-
-    draw();
-
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-      if (audioContext.state !== 'closed') {
-        audioContext.close();
-      }
-      setIsActive(false);
-    };
-  }, [stream, type, color, sensitivity]);
-
+  // Define draw functions before useEffect to avoid hoisting issues
   const drawBars = (
     ctx: CanvasRenderingContext2D,
     dataArray: Uint8Array,
@@ -171,6 +112,66 @@ export function AudioVisualizer({
       ctx.stroke();
     }
   };
+
+  useEffect(() => {
+    if (!stream || !canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Set up audio analysis
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const analyser = audioContext.createAnalyser();
+    const source = audioContext.createMediaStreamSource(stream);
+
+    analyser.fftSize = 256;
+    analyser.smoothingTimeConstant = 0.8;
+    source.connect(analyser);
+
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+
+    analyserRef.current = analyser;
+    dataArrayRef.current = dataArray;
+    setIsActive(true);
+
+    const draw = () => {
+      if (!analyserRef.current || !dataArrayRef.current || !ctx) return;
+
+      analyserRef.current.getByteFrequencyData(dataArrayRef.current);
+
+      const width = canvas.width;
+      const height = canvas.height;
+
+      // Clear canvas
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.fillRect(0, 0, width, height);
+
+      if (type === 'bars') {
+        drawBars(ctx, dataArrayRef.current, width, height, color, sensitivity);
+      } else if (type === 'waveform') {
+        drawWaveform(ctx, dataArrayRef.current, width, height, color, sensitivity);
+      } else if (type === 'circular') {
+        drawCircular(ctx, dataArrayRef.current, width, height, color, sensitivity);
+      }
+
+      animationRef.current = requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      if (audioContext.state !== 'closed') {
+        audioContext.close();
+      }
+      setIsActive(false);
+    };
+  }, [stream, type, color, sensitivity]);
 
   return (
     <canvas

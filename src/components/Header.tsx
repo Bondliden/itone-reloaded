@@ -10,7 +10,6 @@ import { useUserSubscription } from '../hooks/useSubscription';
 
 export function Header() {
   const { user, logout } = useAuth();
-  const { data: _subscription } = useUserSubscription(user?.id);
 
   return (
     <header className="relative z-10 px-6 py-4 bg-black/30 backdrop-blur-lg border-b border-white/10">

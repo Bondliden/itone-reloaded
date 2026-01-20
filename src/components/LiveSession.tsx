@@ -134,18 +134,6 @@ export function LiveSession({ sessionId: _sessionId, isHost = false, className, 
     addSystemMessage(`It's now ${participants[nextIndex].name}'s turn to sing!`);
   };
 
-  const _toggleParticipantMute = (participantId: string) => {
-    setParticipants(prev => prev.map(p =>
-      p.id === participantId ? { ...p, isMuted: !p.isMuted } : p
-    ));
-  };
-
-  const _toggleParticipantVideo = (participantId: string) => {
-    setParticipants(prev => prev.map(p =>
-      p.id === participantId ? { ...p, hasVideo: !p.hasVideo } : p
-    ));
-  };
-
   const formatTimestamp = (timestamp: Date) => {
     return timestamp.toLocaleTimeString('en-US', {
       hour12: false,

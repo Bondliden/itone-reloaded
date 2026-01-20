@@ -3,7 +3,7 @@ import session from 'express-session';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { dirname } from 'path';
 import { authRoutes } from './routes/auth.js';
 import { karaokeRoutes } from './routes/karaoke.js';
 
@@ -12,7 +12,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const _dirname = dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -57,11 +57,11 @@ passport.use(new GoogleStrategy({
   return done(null, user);
 }));
 
-passport.serializeUser((user: any, done) => {
+passport.serializeUser((user: Express.User, done) => {
   done(null, user);
 });
 
-passport.deserializeUser((user: any, done) => {
+passport.deserializeUser((user: Express.User, done) => {
   done(null, user);
 });
 

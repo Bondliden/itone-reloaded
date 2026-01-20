@@ -91,7 +91,7 @@ export function IntegratedUploadStudio({ recording, isOpen, onClose }: Integrate
       });
 
       onClose();
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: "Upload Failed",
         description: "Failed to start upload process. Please try again.",

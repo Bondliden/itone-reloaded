@@ -42,7 +42,7 @@ const songs = [
   }
 ];
 
-let queue: Array<{
+const queue: Array<{
   id: string;
   songId: string;
   userId: string;
@@ -89,7 +89,7 @@ karaokeRoutes.post('/queue', (req, res) => {
 
   const { songId } = req.body;
   const song = songs.find(s => s.id === songId);
-  
+
   if (!song) {
     return res.status(404).json({ error: 'Song not found' });
   }
@@ -97,8 +97,8 @@ karaokeRoutes.post('/queue', (req, res) => {
   const queueItem = {
     id: Date.now().toString(),
     songId,
-    userId: (req.user as any).id,
-    userName: (req.user as any).name,
+    userId: (req.user as Express.User & { id: string }).id,
+    userName: (req.user as Express.User & { name: string }).name,
     timestamp: Date.now()
   };
 
@@ -123,14 +123,14 @@ karaokeRoutes.delete('/queue/:id', (req, res) => {
 
   const queueItemId = req.params.id;
   const index = queue.findIndex(item => item.id === queueItemId);
-  
+
   if (index === -1) {
     return res.status(404).json({ error: 'Queue item not found' });
   }
 
   // Only allow users to remove their own items or implement admin logic
   const queueItem = queue[index];
-  if (queueItem.userId !== (req.user as any).id) {
+  if (queueItem.userId !== (req.user as Express.User & { id: string }).id) {
     return res.status(403).json({ error: 'Unauthorized' });
   }
 
@@ -146,7 +146,7 @@ karaokeRoutes.post('/queue/next', (req, res) => {
 
   const nextItem = queue.shift();
   const song = songs.find(s => s.id === nextItem!.songId);
-  
+
   res.json({
     ...nextItem,
     song

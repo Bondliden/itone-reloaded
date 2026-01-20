@@ -23,7 +23,7 @@ interface KaraokePlayerProps {
   className?: string;
 }
 
-export function KaraokePlayer({ song, onRecordingStart: _onRecordingStart, onRecordingStop: _onRecordingStop, className }: KaraokePlayerProps) {
+export function KaraokePlayer({ song, className }: KaraokePlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(80);

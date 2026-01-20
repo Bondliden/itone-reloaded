@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { User, Settings, Music, Video, Trophy, Edit3, Crown, Download, Share2 } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { User, Music, Video, Trophy, Edit3, Crown, Download, Share2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
@@ -24,11 +24,16 @@ export function UserProfile() {
     setIsEditing(false);
   };
 
-  const stats = {
-    songsRecorded: recordings.length,
-    savedSongs: userSongs.length,
-    totalViews: recordings.reduce((acc, rec) => acc + Math.floor(Math.random() * 100), 0)
-  };
+  // Calculate stats using useMemo to avoid re-running Math.random() on every render
+  const stats = useMemo(() => {
+    // Pre-generate random values for each recording to avoid calling Math.random during render
+    const viewCounts = recordings.map(() => Math.floor(Math.random() * 100));
+    return {
+      songsRecorded: recordings.length,
+      savedSongs: userSongs.length,
+      totalViews: viewCounts.reduce((acc, views) => acc + views, 0)
+    };
+  }, [recordings, userSongs]);
 
   const isPlatinum = user?.subscriptionTier === 'platinum';
 
@@ -66,7 +71,7 @@ export function UserProfile() {
               )}
             </div>
           </div>
-          
+
           <Dialog open={isEditing} onOpenChange={setIsEditing}>
             <DialogTrigger asChild>
               <Button variant="ghost" size="sm" className="text-white hover:bg-white/10">
@@ -83,7 +88,7 @@ export function UserProfile() {
                   <label className="text-sm font-medium text-gray-300 mb-2 block">Name</label>
                   <Input
                     value={editForm.name}
-                    onChange={(e) => setEditForm({...editForm, name: e.target.value})}
+                    onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
                     className="bg-gray-800 border-gray-600 text-white"
                   />
                 </div>
@@ -91,7 +96,7 @@ export function UserProfile() {
                   <label className="text-sm font-medium text-gray-300 mb-2 block">Bio</label>
                   <Input
                     value={editForm.bio}
-                    onChange={(e) => setEditForm({...editForm, bio: e.target.value})}
+                    onChange={(e) => setEditForm({ ...editForm, bio: e.target.value })}
                     placeholder="Tell us about yourself..."
                     className="bg-gray-800 border-gray-600 text-white"
                   />
@@ -141,7 +146,7 @@ export function UserProfile() {
           <Music className="h-5 w-5 mr-2 text-purple-400" />
           My Saved Songs ({userSongs.length})
         </h3>
-        
+
         {userSongs.length === 0 ? (
           <div className="text-center py-8">
             <Music className="h-12 w-12 text-gray-400 mx-auto mb-3" />
@@ -183,7 +188,7 @@ export function UserProfile() {
           <Video className="h-5 w-5 mr-2 text-blue-400" />
           Recent Recordings ({recordings.length})
         </h3>
-        
+
         {recordings.length === 0 ? (
           <div className="text-center py-8">
             <Video className="h-12 w-12 text-gray-400 mx-auto mb-3" />
@@ -229,10 +234,10 @@ export function UserProfile() {
       </div>
 
       {/* Subscription Status */}
-      <div className={`rounded-2xl p-6 ${isPlatinum 
-        ? 'bg-gradient-to-r from-yellow-600/20 to-orange-600/20 border border-yellow-400/30' 
+      <div className={`rounded-2xl p-6 ${isPlatinum
+        ? 'bg-gradient-to-r from-yellow-600/20 to-orange-600/20 border border-yellow-400/30'
         : 'bg-white/10 backdrop-blur-lg'
-      }`}>
+        }`}>
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-xl font-bold text-white mb-2 flex items-center">
@@ -249,7 +254,7 @@ export function UserProfile() {
               )}
             </h3>
             <p className="text-gray-300 text-sm">
-              {isPlatinum 
+              {isPlatinum
                 ? 'Enjoy unlimited HD recordings, collaborative sessions, and direct platform uploads'
                 : 'Upgrade to Platinum for HD recordings, collaborative features, and platform integrations'
               }

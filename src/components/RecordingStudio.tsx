@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Video, VideoOff, Mic, MicOff, Square, Play, Download, Users, Globe, Upload, Youtube, Music } from 'lucide-react';
+import { Video, VideoOff, Mic, MicOff, Square, Play, Download, Users, Globe, Upload } from 'lucide-react';
 import { Button } from './ui/button';
 import { Switch } from './ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { TransposeControl } from './TransposeControl';
-import { FeatureGate } from './FeatureGate';
 import { IntegratedUploadStudio } from './IntegratedUploadStudio';
 import { toast } from './ui/toast';
 import { useAuth } from '../contexts/AuthContext';
@@ -37,7 +36,7 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
   const [includeYouTubeAudio, setIncludeYouTubeAudio] = useState(true);
   const [autoTune, setAutoTune] = useState(false);
   const [echoEffect, setEchoEffect] = useState(false);
-  
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -45,7 +44,7 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
   const hasGoldOrHigher = subscription?.plan?.name === 'Gold' || subscription?.plan?.name === 'Platinum';
   const hasPlatinum = subscription?.plan?.name === 'Platinum';
   const hasIntegratedPlatinum = !!platinumSubscription;
-  const maxQuality = subscription?.plan?.download_quality || 'standard';
+  const _maxQuality = subscription?.plan?.download_quality || 'standard';
 
   useEffect(() => {
     initializeCamera();
@@ -62,12 +61,12 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
         video: isVideoEnabled,
         audio: isAudioEnabled
       });
-      
+
       streamRef.current = stream;
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: "Camera Access Denied",
         description: "Please allow camera and microphone access to record karaoke.",
@@ -93,10 +92,10 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
       const options = {
         mimeType: recordingQuality === 'high' && hasGoldOrHigher ? 'video/webm;codecs=vp9' : 'video/webm'
       };
-      
+
       const mediaRecorder = new MediaRecorder(streamRef.current, options);
       mediaRecorderRef.current = mediaRecorder;
-      
+
       const chunks: BlobPart[] = [];
       mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
@@ -115,7 +114,7 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
 
       mediaRecorder.start();
       setIsRecording(true);
-      
+
       if (isCollaborative) {
         toast({
           title: "Live Collaboration Started",
@@ -144,7 +143,7 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      
+
       toast({
         title: "Download Started",
         description: `Your ${quality} recording is being downloaded.`,
@@ -205,7 +204,7 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
       });
       return;
     }
-    
+
     setIsCollaborative(true);
     setConnectedUsers(Math.min(Math.floor(Math.random() * 3) + 2, subscription?.plan?.max_collaborators || 2));
     toast({
@@ -269,7 +268,7 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
               playsInline
               className="w-full h-full object-cover"
             />
-            
+
             {/* Recording Indicator */}
             {isRecording && (
               <div className="absolute top-4 left-4 flex items-center space-x-2 bg-red-600 px-3 py-1 rounded-full">
@@ -317,11 +316,10 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
               <Button
                 onClick={toggleRecording}
                 size="lg"
-                className={`rounded-full w-16 h-16 ${
-                  isRecording 
-                    ? 'bg-red-600 hover:bg-red-700' 
+                className={`rounded-full w-16 h-16 ${isRecording
+                    ? 'bg-red-600 hover:bg-red-700'
                     : 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700'
-                }`}
+                  }`}
               >
                 {isRecording ? (
                   <Square className="h-6 w-6 text-white" />
@@ -379,28 +377,28 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-gray-300 text-sm">Include YouTube Audio</span>
-                <Switch 
+                <Switch
                   checked={includeYouTubeAudio}
                   onCheckedChange={setIncludeYouTubeAudio}
                 />
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-gray-300 text-sm">Auto-tune</span>
-                <Switch 
+                <Switch
                   checked={autoTune}
                   onCheckedChange={setAutoTune}
                 />
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-gray-300 text-sm">Echo Effect</span>
-                <Switch 
+                <Switch
                   checked={echoEffect}
                   onCheckedChange={setEchoEffect}
                 />
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-gray-300 text-sm">Enhanced Quality</span>
-                <Switch 
+                <Switch
                   checked={recordingQuality !== 'standard'}
                   onCheckedChange={(checked) => setRecordingQuality(checked ? (hasPlatinum ? 'ultra' : 'high') : 'standard')}
                   disabled={!hasGoldOrHigher}
@@ -428,13 +426,13 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
                 disabled={!hasGoldOrHigher}
               />
             </div>
-            
+
             {!hasGoldOrHigher && (
               <p className="text-yellow-400 text-xs mb-3">
                 Collaborative recording requires Gold or Platinum subscription
               </p>
             )}
-            
+
             {isCollaborative && hasGoldOrHigher && (
               <div className="space-y-3">
                 <div className="bg-green-600/20 border border-green-400/30 rounded-lg p-3">
@@ -467,7 +465,7 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
                   <Download className="h-4 w-4 mr-2" />
                   Download {recordingQuality === 'ultra' ? 'UHD' : recordingQuality === 'high' ? 'HD' : 'SD'} Recording
                 </Button>
-                
+
                 {/* Integrated Platform Uploads (Platinum Only) */}
                 {hasIntegratedPlatinum && (
                   <Button

@@ -90,8 +90,8 @@ export class VideoRecorder {
       }
 
       this.mediaRecorder.onstop = () => {
-        const blob = new Blob(this.recordedChunks, { 
-          type: this.mediaRecorder?.mimeType || 'video/webm' 
+        const blob = new Blob(this.recordedChunks, {
+          type: this.mediaRecorder?.mimeType || 'video/webm'
         });
         resolve(blob);
       };
@@ -126,10 +126,10 @@ export class VideoRecorder {
   toggleTrack(kind: 'audio' | 'video', enabled: boolean): void {
     if (!this.stream) return;
 
-    const tracks = kind === 'audio' 
-      ? this.stream.getAudioTracks() 
+    const tracks = kind === 'audio'
+      ? this.stream.getAudioTracks()
       : this.stream.getVideoTracks();
-    
+
     tracks.forEach(track => {
       track.enabled = enabled;
     });
@@ -138,7 +138,7 @@ export class VideoRecorder {
   async switchCamera(): Promise<MediaStream> {
     const currentConstraints = this.stream?.getVideoTracks()[0]?.getSettings();
     const newFacingMode = currentConstraints?.facingMode === 'user' ? 'environment' : 'user';
-    
+
     this.stopCamera();
     return this.initializeCamera({ facingMode: newFacingMode });
   }
@@ -152,7 +152,7 @@ export class VideoRecorder {
     if (!this.stream) return;
 
     const constraints: MediaStreamConstraints = {};
-    
+
     if (kind === 'video') {
       constraints.video = { deviceId: { exact: deviceId } };
       constraints.audio = true; // Keep existing audio
@@ -162,7 +162,7 @@ export class VideoRecorder {
     }
 
     const newStream = await navigator.mediaDevices.getUserMedia(constraints);
-    
+
     // Replace tracks in existing stream
     if (kind === 'video') {
       const videoTrack = newStream.getVideoTracks()[0];
@@ -198,7 +198,7 @@ export function createVideoThumbnail(videoBlob: Blob): Promise<string> {
     video.onloadedmetadata = () => {
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
-      
+
       video.currentTime = Math.min(5, video.duration / 2); // Seek to middle or 5 seconds
     };
 
@@ -206,7 +206,7 @@ export function createVideoThumbnail(videoBlob: Blob): Promise<string> {
       ctx.drawImage(video, 0, 0);
       const thumbnail = canvas.toDataURL('image/jpeg', 0.8);
       resolve(thumbnail);
-      
+
       // Cleanup
       video.remove();
       canvas.remove();
@@ -264,7 +264,7 @@ export function compressVideo(videoBlob: Blob, quality: 'low' | 'medium' | 'high
 
       // Start compression process
       recorder.start();
-      
+
       // Draw frames (simplified - in reality you'd process the entire video)
       const drawFrame = () => {
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -274,7 +274,7 @@ export function compressVideo(videoBlob: Blob, quality: 'low' | 'medium' | 'high
           recorder.stop();
         }
       };
-      
+
       video.play();
       drawFrame();
     };
@@ -284,7 +284,7 @@ export function compressVideo(videoBlob: Blob, quality: 'low' | 'medium' | 'high
   });
 }
 
-export async function mergeAudioVideo(videoBlob: Blob, audioBlob: Blob): Promise<Blob> {
+export async function mergeAudioVideo(videoBlob: Blob, _audioBlob: Blob): Promise<Blob> {
   // This is a complex operation that typically requires server-side processing
   // or advanced browser APIs like WebCodecs
   // For now, return the video blob as-is

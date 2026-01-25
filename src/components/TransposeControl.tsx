@@ -24,19 +24,11 @@ export function TransposeControl({ transpose, onTransposeChange, className }: Tr
   };
 
   return (
-<<<<<<< HEAD
-    <div className={`bg-white/10 backdrop-blur-lg rounded-xl p-4 ${className}`}>
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center space-x-2">
-          <Music2 className="h-5 w-5 text-purple-400" />
-          <span className="text-white font-medium">Transpose</span>
-=======
     <div className={`bg-gradient-to-r from-green-600/20 to-blue-600/20 border border-green-400/40 backdrop-blur-lg rounded-xl p-4 ${className}`}>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-2">
           <Music2 className="h-5 w-5 text-green-400" />
           <span className="text-white font-bold">Key Transpose (Free)</span>
->>>>>>> origin/main
         </div>
         <Button
           variant="ghost"
@@ -48,18 +40,14 @@ export function TransposeControl({ transpose, onTransposeChange, className }: Tr
           Reset
         </Button>
       </div>
-      
+
       <div className="space-y-3">
         <div className="text-center">
-<<<<<<< HEAD
-          <span className="text-lg font-semibold text-white">
-=======
           <span className="text-xl font-bold text-green-400">
->>>>>>> origin/main
             {getTransposeText(transpose)}
           </span>
         </div>
-        
+
         <Slider
           value={[transpose]}
           onValueChange={handleSliderChange}
@@ -68,7 +56,7 @@ export function TransposeControl({ transpose, onTransposeChange, className }: Tr
           step={1}
           className="w-full"
         />
-        
+
         <div className="flex justify-between text-xs text-gray-400">
           <span>-12</span>
           <span>0</span>

@@ -39,8 +39,6 @@ const mockPlans = [
   },
   {
     id: '3',
-<<<<<<< HEAD
-=======
     name: 'Pro',
     price_monthly: 24.99,
     features: [
@@ -60,7 +58,6 @@ const mockPlans = [
   },
   {
     id: '4',
->>>>>>> origin/main
     name: 'Platinum',
     price_monthly: 29.99,
     features: [
@@ -68,16 +65,10 @@ const mockPlans = [
       'Lossless downloads',
       '4-person collaboration',
       'Professional audio suite',
-<<<<<<< HEAD
-      'Platform uploads',
-      '24/7 support',
-      'Analytics dashboard'
-=======
       'Unlimited platform uploads',
       '24/7 support',
       'Advanced analytics',
       'API access'
->>>>>>> origin/main
     ],
     max_collaborators: 4,
     download_quality: 'ultra',
@@ -119,11 +110,7 @@ export function useUserSubscription(userId?: string) {
         `)
         .eq('user_id', userId)
         .eq('status', 'active')
-<<<<<<< HEAD
-        .single();
-=======
         .maybeSingle();
->>>>>>> origin/main
       
       if (error && error.code !== 'PGRST116') throw error;
       return data as UserSubscription | null;

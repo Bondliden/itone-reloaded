@@ -7,6 +7,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   resolve-conflicts:
     runs-on: ubuntu-latest
@@ -51,7 +54,6 @@ jobs:
           REMAINING=$(find . -type f -not -path '*/.*' -exec grep -lE "<<<<<<<|=======|>>>>>>>" {} + || true)
           if [ -n "$REMAINING" ]; then
             echo "Warning: Conflicts still remain in: $REMAINING"
-            # We don't exit 1 here to allow the commit step to push what it fixed
           else
             echo "All conflicts resolved."
           fi

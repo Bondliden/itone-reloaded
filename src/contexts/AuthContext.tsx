@@ -8,11 +8,7 @@ interface User {
   email: string;
   avatar?: string;
   bio?: string;
-<<<<<<< HEAD
-  subscriptionTier?: 'free' | 'platinum';
-=======
   subscriptionTier?: 'free' | 'pro' | 'platinum';
->>>>>>> origin/main
 }
 
 interface AuthContextType {
@@ -32,16 +28,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [, setLocation] = useLocation();
 
   useEffect(() => {
-    // Only proceed if Supabase is properly configured
     if (!isSupabaseConfigured() || !supabase) {
       setLoading(false);
       return;
     }
-
-    // Check for existing session
     checkUser();
-    
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN' && session) {
         await loadUserProfile(session.user.id);
@@ -50,7 +41,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
       setLoading(false);
     });
-
     return () => subscription.unsubscribe();
   }, []);
 
@@ -59,7 +49,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setLoading(false);
       return;
     }
-
     try {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
@@ -74,19 +63,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const loadUserProfile = async (userId: string) => {
     if (!supabase) return;
-
     try {
       const { data: profile } = await supabase
         .from('user_profiles')
         .select('*')
         .eq('id', userId)
         .single();
-
       if (profile) {
         setUser({
           id: profile.id,
           name: profile.display_name,
-          email: '', // Will be loaded from auth.users if needed
+          email: '',
           avatar: profile.avatar_url,
           bio: profile.bio,
           subscriptionTier: profile.subscription_tier
@@ -99,24 +86,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async () => {
     setLoading(true);
-    
-    // For demo purposes, create a mock user and profile
     try {
-      // In a real app, this would be handled by Supabase Auth
       const mockUser = {
-<<<<<<< HEAD
-        id: 'demo-user-' + Date.now(),
-=======
         id: crypto.randomUUID(),
->>>>>>> origin/main
         name: 'Demo User',
         email: 'demo@itone.com',
         avatar: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=128&h=128&fit=crop',
         bio: 'Passionate karaoke singer and music lover 🎤',
         subscriptionTier: 'free' as const
       };
-
-      // Simulate creating profile in database
       setTimeout(() => {
         setUser(mockUser);
         setLoading(false);
@@ -134,7 +112,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setLocation('/');
       return;
     }
-
     try {
       await supabase.auth.signOut();
       setUser(null);
@@ -146,17 +123,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const updateProfile = async (data: Partial<User>) => {
     if (!user) return;
-
     try {
       const updatedUser = { ...user, ...data };
       setUser(updatedUser);
-
-      // In a real app, update the database
-      // await supabase.from('user_profiles').update({
-      //   display_name: updatedUser.name,
-      //   bio: updatedUser.bio,
-      //   avatar_url: updatedUser.avatar
-      // }).eq('id', user.id);
     } catch (error) {
       console.error('Profile update error:', error);
     }

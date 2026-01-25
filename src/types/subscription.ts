@@ -1,10 +1,6 @@
 export interface SubscriptionPlan {
   id: string;
-<<<<<<< HEAD
-  name: 'Silver' | 'Gold' | 'Platinum';
-=======
   name: 'Silver' | 'Gold' | 'Pro' | 'Platinum';
->>>>>>> origin/main
   price_monthly: number;
   features: string[];
   max_collaborators: number;
@@ -34,18 +30,4 @@ export interface PlatformUploadCost {
   platform: 'youtube' | 'spotify' | 'deezer' | 'apple_music';
   base_cost: number;
   itone_margin_percent: number;
-  updated_at: string;
-}
-
-export interface UploadTransaction {
-  id: string;
-  user_id: string;
-  recording_id?: string;
-  platform: string;
-  base_cost: number;
-  itone_fee: number;
-  total_cost: number;
-  stripe_payment_intent_id?: string;
-  status: 'pending' | 'completed' | 'failed' | 'refunded';
-  created_at: string;
 }

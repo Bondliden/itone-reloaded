@@ -1,25 +1,13 @@
-<<<<<<< HEAD
 import { useState } from 'react';
 import { CreditCard, Calendar, AlertTriangle, CheckCircle, XCircle, Download, Crown } from 'lucide-react';
 import { Button } from './ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { useAuth } from '../contexts/AuthContext';
-=======
-import React, { useState } from 'react';
-import { CreditCard, Calendar, AlertTriangle, CheckCircle, XCircle, Download, Crown } from 'lucide-react';
-import { Button } from './ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
-import { useAuth } from '../modules/auth';
->>>>>>> origin/main
 import { useUserSubscription, useUpdateSubscription } from '../hooks/useSubscription';
 import { toast } from './ui/toast';
 
 export function SubscriptionManager() {
-<<<<<<< HEAD
   const { user } = useAuth();
-=======
-  const { state: { user } } = useAuth();
->>>>>>> origin/main
   const { data: subscription } = useUserSubscription(user?.id);
   const updateSubscriptionMutation = useUpdateSubscription();
   const [showCancelDialog, setShowCancelDialog] = useState(false);
@@ -38,12 +26,8 @@ export function SubscriptionManager() {
         description: "Your subscription will end at the current billing period.",
       });
       setShowCancelDialog(false);
-<<<<<<< HEAD
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_error) {
-=======
-    } catch (error) {
->>>>>>> origin/main
       toast({
         title: "Error",
         description: "Failed to cancel subscription. Please try again.",
@@ -65,12 +49,8 @@ export function SubscriptionManager() {
         title: "Subscription Reactivated",
         description: "Your subscription will continue at the next billing period.",
       });
-<<<<<<< HEAD
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_error) {
-=======
-    } catch (error) {
->>>>>>> origin/main
       toast({
         title: "Error",
         description: "Failed to reactivate subscription. Please try again.",
@@ -163,11 +143,7 @@ export function SubscriptionManager() {
                 <div className="flex items-center space-x-2 mb-1">
                   <Calendar className="h-4 w-4 text-blue-400" />
                   <span className="text-white text-sm">
-<<<<<<< HEAD
                     {new Date(subscription.current_period_start).toLocaleDateString()} -
-=======
-                    {new Date(subscription.current_period_start).toLocaleDateString()} - 
->>>>>>> origin/main
                     {new Date(subscription.current_period_end).toLocaleDateString()}
                   </span>
                 </div>
@@ -196,22 +172,14 @@ export function SubscriptionManager() {
             <CreditCard className="h-4 w-4 mr-2" />
             Update Payment Method
           </Button>
-<<<<<<< HEAD
 
-=======
-          
->>>>>>> origin/main
           <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
             <Download className="h-4 w-4 mr-2" />
             Download Invoices
           </Button>
 
           {subscription.cancel_at_period_end ? (
-<<<<<<< HEAD
             <Button
-=======
-            <Button 
->>>>>>> origin/main
               onClick={handleReactivateSubscription}
               className="bg-green-600 hover:bg-green-700 text-white"
             >
@@ -250,11 +218,7 @@ export function SubscriptionManager() {
                     <Button variant="ghost" onClick={() => setShowCancelDialog(false)}>
                       Keep Subscription
                     </Button>
-<<<<<<< HEAD
                     <Button
-=======
-                    <Button 
->>>>>>> origin/main
                       onClick={handleCancelSubscription}
                       className="bg-red-600 hover:bg-red-700 text-white"
                     >
@@ -275,11 +239,7 @@ export function SubscriptionManager() {
               <span className="text-red-400 font-medium">Subscription Cancelled</span>
             </div>
             <p className="text-gray-300 text-sm mt-1">
-<<<<<<< HEAD
               Your subscription will end on {new Date(subscription.current_period_end).toLocaleDateString()}.
-=======
-              Your subscription will end on {new Date(subscription.current_period_end).toLocaleDateString()}. 
->>>>>>> origin/main
               You can reactivate it anytime before this date.
             </p>
           </div>

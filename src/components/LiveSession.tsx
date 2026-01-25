@@ -1,33 +1,20 @@
-<<<<<<< HEAD
 import { useState } from 'react';
 import { Mic, MessageCircle, Settings, Crown, Globe, Copy, UserPlus } from 'lucide-react';
-=======
-import React, { useState, useEffect } from 'react';
-import { Users, Mic, Video, MessageCircle, Settings, Crown, Globe, Copy, UserPlus } from 'lucide-react';
->>>>>>> origin/main
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { Switch } from './ui/switch';
-<<<<<<< HEAD
 import { useAuth } from '../contexts/AuthContext';
 import { toast } from './ui/toast';
 import { cn } from '../lib/utils';
-=======
-import { useAuth } from '../modules/auth';
-import { toast } from './ui/toast';
->>>>>>> origin/main
 
 interface LiveSessionProps {
   sessionId?: string;
   isHost?: boolean;
   className?: string;
-<<<<<<< HEAD
   onRecordingStart?: () => void;
   onRecordingStop?: () => void;
-=======
->>>>>>> origin/main
 }
 
 interface SessionParticipant {
@@ -50,14 +37,9 @@ interface ChatMessage {
   type: 'text' | 'system';
 }
 
-<<<<<<< HEAD
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function LiveSession({ sessionId: _sessionId, isHost = false, className, onRecordingStart, onRecordingStop }: LiveSessionProps) {
   const { user } = useAuth();
-=======
-export function LiveSession({ sessionId, isHost = false, className }: LiveSessionProps) {
-  const { state: { user } } = useAuth();
->>>>>>> origin/main
   const [participants, setParticipants] = useState<SessionParticipant[]>([
     {
       id: user?.id || '1',
@@ -144,11 +126,7 @@ export function LiveSession({ sessionId, isHost = false, className }: LiveSessio
   const nextSinger = () => {
     const currentIndex = participants.findIndex(p => p.isCurrentSinger);
     const nextIndex = (currentIndex + 1) % participants.length;
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> origin/main
     setParticipants(prev => prev.map((p, index) => ({
       ...p,
       isCurrentSinger: index === nextIndex
@@ -157,31 +135,11 @@ export function LiveSession({ sessionId, isHost = false, className }: LiveSessio
     addSystemMessage(`It's now ${participants[nextIndex].name}'s turn to sing!`);
   };
 
-<<<<<<< HEAD
   const formatTimestamp = (timestamp: Date) => {
     return timestamp.toLocaleTimeString('en-US', {
       hour12: false,
       hour: '2-digit',
       minute: '2-digit'
-=======
-  const toggleParticipantMute = (participantId: string) => {
-    setParticipants(prev => prev.map(p => 
-      p.id === participantId ? { ...p, isMuted: !p.isMuted } : p
-    ));
-  };
-
-  const toggleParticipantVideo = (participantId: string) => {
-    setParticipants(prev => prev.map(p => 
-      p.id === participantId ? { ...p, hasVideo: !p.hasVideo } : p
-    ));
-  };
-
-  const formatTimestamp = (timestamp: Date) => {
-    return timestamp.toLocaleTimeString('en-US', { 
-      hour12: false, 
-      hour: '2-digit', 
-      minute: '2-digit' 
->>>>>>> origin/main
     });
   };
 
@@ -195,20 +153,12 @@ export function LiveSession({ sessionId, isHost = false, className }: LiveSessio
             <div>
               <h2 className="text-xl font-bold text-white">Live Karaoke Session</h2>
               <p className="text-gray-300 text-sm">
-<<<<<<< HEAD
                 {participants.length} participant{participants.length !== 1 ? 's' : ''} •
-=======
-                {participants.length} participant{participants.length !== 1 ? 's' : ''} • 
->>>>>>> origin/main
                 Session #{sessionCode}
               </p>
             </div>
           </div>
-<<<<<<< HEAD
 
-=======
-          
->>>>>>> origin/main
           <div className="flex items-center space-x-3">
             <Button
               variant="ghost"
@@ -219,11 +169,7 @@ export function LiveSession({ sessionId, isHost = false, className }: LiveSessio
               <Copy className="h-4 w-4 mr-1" />
               {sessionCode}
             </Button>
-<<<<<<< HEAD
 
-=======
-            
->>>>>>> origin/main
             <Button
               size="sm"
               className="bg-green-600 hover:bg-green-700 text-white"
@@ -250,60 +196,36 @@ export function LiveSession({ sessionId, isHost = false, className }: LiveSessio
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <span className="text-gray-300">Allow spectators</span>
-<<<<<<< HEAD
                       <Switch
                         checked={sessionSettings.allowSpectators}
                         onCheckedChange={(checked) =>
-=======
-                      <Switch 
-                        checked={sessionSettings.allowSpectators}
-                        onCheckedChange={(checked) => 
->>>>>>> origin/main
                           setSessionSettings(prev => ({ ...prev, allowSpectators: checked }))
                         }
                       />
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-gray-300">Require approval to join</span>
-<<<<<<< HEAD
                       <Switch
                         checked={sessionSettings.requireApproval}
                         onCheckedChange={(checked) =>
-=======
-                      <Switch 
-                        checked={sessionSettings.requireApproval}
-                        onCheckedChange={(checked) => 
->>>>>>> origin/main
                           setSessionSettings(prev => ({ ...prev, requireApproval: checked }))
                         }
                       />
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-gray-300">Record separate tracks</span>
-<<<<<<< HEAD
                       <Switch
                         checked={sessionSettings.recordSeparateTracks}
                         onCheckedChange={(checked) =>
-=======
-                      <Switch 
-                        checked={sessionSettings.recordSeparateTracks}
-                        onCheckedChange={(checked) => 
->>>>>>> origin/main
                           setSessionSettings(prev => ({ ...prev, recordSeparateTracks: checked }))
                         }
                       />
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-gray-300">Auto-mixing</span>
-<<<<<<< HEAD
                       <Switch
                         checked={sessionSettings.autoMixing}
                         onCheckedChange={(checked) =>
-=======
-                      <Switch 
-                        checked={sessionSettings.autoMixing}
-                        onCheckedChange={(checked) => 
->>>>>>> origin/main
                           setSessionSettings(prev => ({ ...prev, autoMixing: checked }))
                         }
                       />
@@ -384,11 +306,7 @@ export function LiveSession({ sessionId, isHost = false, className }: LiveSessio
                     <span className="text-white font-medium text-sm">
                       {participant.name}
                     </span>
-<<<<<<< HEAD
 
-=======
-                    
->>>>>>> origin/main
                     {/* Voice Level Indicator */}
                     <div className="flex items-center space-x-2">
                       {participant.voiceLevel > 0 && (
@@ -398,24 +316,15 @@ export function LiveSession({ sessionId, isHost = false, className }: LiveSessio
                               key={i}
                               className={cn(
                                 'w-1 h-3 rounded-full transition-all duration-100',
-<<<<<<< HEAD
                                 i < Math.floor(participant.voiceLevel / 20)
                                   ? 'bg-green-400'
-=======
-                                i < Math.floor(participant.voiceLevel / 20) 
-                                  ? 'bg-green-400' 
->>>>>>> origin/main
                                   : 'bg-gray-600'
                               )}
                             />
                           ))}
                         </div>
                       )}
-<<<<<<< HEAD
 
-=======
-                      
->>>>>>> origin/main
                       {participant.isMuted && (
                         <div className="w-6 h-6 bg-red-600 rounded-full flex items-center justify-center">
                           <Mic className="h-3 w-3 text-white" />
@@ -447,23 +356,14 @@ export function LiveSession({ sessionId, isHost = false, className }: LiveSessio
                   onClick={toggleRecording}
                   className={cn(
                     'font-semibold',
-<<<<<<< HEAD
                     isRecording
                       ? 'bg-red-600 hover:bg-red-700'
-=======
-                    isRecording 
-                      ? 'bg-red-600 hover:bg-red-700' 
->>>>>>> origin/main
                       : 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700'
                   )}
                 >
                   {isRecording ? 'Stop Recording' : 'Start Recording'}
                 </Button>
-<<<<<<< HEAD
 
-=======
-                
->>>>>>> origin/main
                 {isHost && (
                   <Button
                     onClick={nextSinger}
@@ -494,11 +394,7 @@ export function LiveSession({ sessionId, isHost = false, className }: LiveSessio
               {messages.length} messages
             </span>
           </div>
-<<<<<<< HEAD
 
-=======
-          
->>>>>>> origin/main
           {/* Messages */}
           <div className="flex-1 overflow-y-auto space-y-2 mb-4">
             {messages.map((msg) => (
@@ -516,13 +412,8 @@ export function LiveSession({ sessionId, isHost = false, className }: LiveSessio
                 </div>
                 <p className={cn(
                   'text-sm rounded-lg px-3 py-2',
-<<<<<<< HEAD
                   msg.type === 'system'
                     ? 'bg-blue-600/20 text-blue-300 italic'
-=======
-                  msg.type === 'system' 
-                    ? 'bg-blue-600/20 text-blue-300 italic' 
->>>>>>> origin/main
                     : 'bg-black/30 text-gray-300'
                 )}>
                   {msg.message}

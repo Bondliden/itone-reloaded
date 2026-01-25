@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from 'react';
-<<<<<<< HEAD
 import { Bell, CreditCard, AlertTriangle, CheckCircle, Calendar, Crown } from 'lucide-react';
 import { Button } from './ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { useAuth } from '../contexts/AuthContext';
-=======
-import { Bell, X, CreditCard, AlertTriangle, CheckCircle, Calendar, Crown } from 'lucide-react';
-import { Button } from './ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
-import { useAuth } from '../modules/auth';
->>>>>>> origin/main
 import { useUserSubscription } from '../hooks/useSubscription';
 
 interface Notification {
@@ -24,14 +17,8 @@ interface Notification {
 }
 
 export function NotificationCenter() {
-<<<<<<< HEAD
   const { user } = useAuth();
   const { data: subscription } = useUserSubscription(user?.id);
-=======
-  const { state: { user } } = useAuth();
-  // Mock subscription for demo
-  const subscription = null;
->>>>>>> origin/main
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
 
@@ -48,11 +35,7 @@ export function NotificationCenter() {
         if (subscription.status === 'trialing' && subscription.trial_end) {
           const trialEnd = new Date(subscription.trial_end);
           const daysUntilTrialEnd = Math.ceil((trialEnd.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
-<<<<<<< HEAD
 
-=======
-          
->>>>>>> origin/main
           if (daysUntilTrialEnd <= 3 && daysUntilTrialEnd > 0) {
             notifs.push({
               id: 'trial-ending',
@@ -122,11 +105,7 @@ export function NotificationCenter() {
   }, [subscription]);
 
   const markAsRead = (notificationId: string) => {
-<<<<<<< HEAD
     setNotifications(prev => prev.map(n =>
-=======
-    setNotifications(prev => prev.map(n => 
->>>>>>> origin/main
       n.id === notificationId ? { ...n, read: true } : n
     ));
     setUnreadCount(prev => Math.max(0, prev - 1));
@@ -190,11 +169,7 @@ export function NotificationCenter() {
             )}
           </div>
         </DialogHeader>
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> origin/main
         <div className="space-y-3 max-h-96 overflow-y-auto">
           {notifications.length === 0 ? (
             <div className="text-center py-8">
@@ -205,18 +180,10 @@ export function NotificationCenter() {
             notifications.map((notification) => (
               <div
                 key={notification.id}
-<<<<<<< HEAD
                 className={`p-4 rounded-lg border transition-colors cursor-pointer ${notification.read
                     ? 'bg-gray-800/50 border-gray-700'
                     : 'bg-blue-600/10 border-blue-400/30 hover:bg-blue-600/20'
                   }`}
-=======
-                className={`p-4 rounded-lg border transition-colors cursor-pointer ${
-                  notification.read 
-                    ? 'bg-gray-800/50 border-gray-700' 
-                    : 'bg-blue-600/10 border-blue-400/30 hover:bg-blue-600/20'
-                }`}
->>>>>>> origin/main
                 onClick={() => markAsRead(notification.id)}
               >
                 <div className="flex items-start space-x-3">

@@ -38,7 +38,6 @@ export function useStreamingPlatforms() {
           }
         ] as StreamingPlatform[];
       }
-
       const { data, error } = await supabase
         .from('streaming_platforms')
         .select('*')
@@ -86,11 +85,7 @@ export function usePlatinumSubscription(userId?: string) {
         .select('*')
         .eq('user_id', userId)
         .eq('status', 'active')
-<<<<<<< HEAD
-        .single();
-=======
         .maybeSingle();
->>>>>>> origin/main
       
       if (error && error.code !== 'PGRST116') throw error;
       return data as PlatinumSubscription | null;
@@ -113,7 +108,6 @@ export function usePlatinumPricing() {
           total_cost: 53.99
         } as PlatinumPricing;
       }
-
       const { data, error } = await supabase
         .rpc('calculate_platinum_pricing');
       
@@ -195,7 +189,6 @@ export function useCreateUploadJob() {
         platform_id: platformId,
         metadata
       }));
-
       const { data, error } = await supabase
         .from('upload_jobs')
         .insert(jobs)

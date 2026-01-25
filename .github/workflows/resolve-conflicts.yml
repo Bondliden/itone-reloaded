@@ -1,0 +1,68 @@
+name: Resolve Merge Conflicts
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  resolve-conflicts:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    
+    - name: Check for merge conflicts
+      id: check_conflicts
+      run: |
+        # Count conflict markers
+        CONFLICTS=$(grep -r '<<<<<<< HEAD' src/ --include="*.ts" --include="*.tsx" 2>/dev/null | wc -l)
+        echo "conflict_count=$CONFLICTS" >> $GITHUB_OUTPUT
+        
+        if [ "$CONFLICTS" -gt 0 ]; then
+          echo "Found $CONFLICTS conflict marker(s) - attempting auto-resolution..."
+          exit 0
+        fi
+        echo "No conflicts detected"
+    
+    - name: Run conflict resolution script
+      if: steps.check_conflicts.outputs.conflict_count > 0
+      run: |
+        if [ -f fix-conflicts.js ]; then
+          node fix-conflicts.js
+        else
+          echo "No conflict resolution script found"
+        fi
+    
+    - name: Verify conflicts are resolved
+      run: |
+        REMAINING=$(grep -r '<<<<<<< HEAD' src/ --include="*.ts" --include="*.tsx" 2>/dev/null | wc -l)
+        if [ "$REMAINING" -gt 0 ]; then
+          echo "❌ ERROR: $REMAINING conflict marker(s) still remain!"
+          exit 1
+        fi
+        echo "✅ All conflicts resolved successfully!"
+    
+    - name: Commit resolved conflicts
+      if: steps.check_conflicts.outputs.conflict_count > 0
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "Conflict Resolution Bot"
+        git add -A
+        git commit -m "chore: Auto-resolve merge conflicts [skip ci]" || echo "Nothing to commit"
+    
+    - name: Push changes
+      if: steps.check_conflicts.outputs.conflict_count > 0
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}

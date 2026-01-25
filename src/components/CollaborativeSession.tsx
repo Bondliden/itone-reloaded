@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-import { useState } from 'react';
-import { Users, Globe, Mic, Video, MessageCircle, UserPlus, Crown, MicOff, VideoOff, Copy } from 'lucide-react';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
-import { useAuth } from '../contexts/AuthContext';
-import { toast } from './ui/toast';
-import { Switch } from './ui/switch';
-=======
 import React, { useState, useEffect } from 'react';
 import { Users, Globe, Mic, Video, MessageCircle, UserPlus, Crown, MicOff, VideoOff, Copy } from 'lucide-react';
 import { Button } from './ui/button';
@@ -16,7 +6,6 @@ import { Switch } from './ui/switch';
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
 import { useAuth } from '../modules/auth';
 import { toast } from './ui/toast';
->>>>>>> origin/main
 
 interface Participant {
   id: string;
@@ -57,18 +46,6 @@ export function CollaborativeSession() {
       hasVideo: false
     }
   ]);
-<<<<<<< HEAD
-
-  const [messages, setMessages] = useState(() => {
-    const now = Date.now();
-    return [
-      { id: '1', user: 'Sarah Johnson', message: '¡Excelente canción! 🎤', timestamp: now - 30000 },
-      { id: '2', user: 'Mike Chen', message: 'Me encanta esta colaboración', timestamp: now - 15000 },
-      { id: '3', user: 'System', message: 'Recording started - everyone ready?', timestamp: now - 5000 }
-    ];
-  });
-
-=======
   
   const [messages, setMessages] = useState([
     { id: '1', user: 'Sarah Johnson', message: '¡Excelente canción! 🎤', timestamp: Date.now() - 30000 },
@@ -76,7 +53,6 @@ export function CollaborativeSession() {
     { id: '3', user: 'System', message: 'Recording started - everyone ready?', timestamp: Date.now() - 5000 }
   ]);
   
->>>>>>> origin/main
   const [newMessage, setNewMessage] = useState('');
   const [sessionCode] = useState('ROCK2025');
   const [currentSinger, setCurrentSinger] = useState(0);
@@ -106,21 +82,13 @@ export function CollaborativeSession() {
   };
 
   const toggleMute = (participantId: string) => {
-<<<<<<< HEAD
-    setParticipants(prev => prev.map(p =>
-=======
     setParticipants(prev => prev.map(p => 
->>>>>>> origin/main
       p.id === participantId ? { ...p, isMuted: !p.isMuted } : p
     ));
   };
 
   const toggleVideo = (participantId: string) => {
-<<<<<<< HEAD
-    setParticipants(prev => prev.map(p =>
-=======
     setParticipants(prev => prev.map(p => 
->>>>>>> origin/main
       p.id === participantId ? { ...p, hasVideo: !p.hasVideo } : p
     ));
   };
@@ -143,11 +111,7 @@ export function CollaborativeSession() {
       });
       return;
     }
-<<<<<<< HEAD
-
-=======
     
->>>>>>> origin/main
     setIsRecording(true);
     toast({
       title: "Collaborative Recording Started",
@@ -156,10 +120,6 @@ export function CollaborativeSession() {
   };
 
   const formatTime = (timestamp: number) => {
-<<<<<<< HEAD
-    // Calculate difference at call time, not during render setup
-=======
->>>>>>> origin/main
     const diff = Date.now() - timestamp;
     const minutes = Math.floor(diff / 60000);
     if (minutes < 1) return 'now';
@@ -172,11 +132,7 @@ export function CollaborativeSession() {
         <Crown className="h-16 w-16 text-yellow-400 mx-auto mb-4" />
         <h3 className="text-2xl font-bold text-white mb-4">Collaborative Recording</h3>
         <p className="text-gray-300 mb-6">
-<<<<<<< HEAD
-          Join live karaoke sessions with up to 4 singers worldwide. Record together,
-=======
           Join live karaoke sessions with up to 4 singers worldwide. Record together, 
->>>>>>> origin/main
           share the experience, and create amazing collaborative performances.
         </p>
         <Button className="bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700 text-white font-semibold px-8 py-3">
@@ -217,11 +173,7 @@ export function CollaborativeSession() {
             </Button>
           </div>
         </div>
-<<<<<<< HEAD
-
-=======
         
->>>>>>> origin/main
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-6 text-sm text-gray-300">
             <span className="flex items-center">
@@ -234,11 +186,7 @@ export function CollaborativeSession() {
             </span>
             <span>Current singer: {participants[currentSinger]?.name}</span>
           </div>
-<<<<<<< HEAD
-
-=======
           
->>>>>>> origin/main
           <div className="flex items-center space-x-2">
             <Button
               onClick={nextSinger}
@@ -265,14 +213,9 @@ export function CollaborativeSession() {
             {participants.map((participant, index) => (
               <div
                 key={participant.id}
-<<<<<<< HEAD
-                className={`bg-black rounded-xl overflow-hidden relative aspect-video group border-2 ${index === currentSinger ? 'border-yellow-400' : 'border-transparent'
-                  }`}
-=======
                 className={`bg-black rounded-xl overflow-hidden relative aspect-video group border-2 ${
                   index === currentSinger ? 'border-yellow-400' : 'border-transparent'
                 }`}
->>>>>>> origin/main
               >
                 {participant.hasVideo ? (
                   <div className="w-full h-full bg-gradient-to-br from-purple-900 to-blue-900 flex items-center justify-center">
@@ -363,11 +306,7 @@ export function CollaborativeSession() {
                 </div>
               </div>
             ))}
-<<<<<<< HEAD
-
-=======
             
->>>>>>> origin/main
             {/* Add Participant Slot */}
             {participants.length < 4 && (
               <div className="bg-gray-800/50 rounded-xl border-2 border-dashed border-gray-600 aspect-video flex items-center justify-center">
@@ -387,24 +326,15 @@ export function CollaborativeSession() {
             <MessageCircle className="h-4 w-4 mr-2" />
             Live Chat
           </h3>
-<<<<<<< HEAD
-
-=======
           
->>>>>>> origin/main
           {/* Messages */}
           <div className="flex-1 overflow-y-auto space-y-3 mb-4">
             {messages.map((msg) => (
               <div key={msg.id} className="space-y-1">
                 <div className="flex items-center space-x-2">
-<<<<<<< HEAD
-                  <span className={`text-sm font-medium ${msg.user === 'System' ? 'text-blue-400' : 'text-purple-400'
-                    }`}>
-=======
                   <span className={`text-sm font-medium ${
                     msg.user === 'System' ? 'text-blue-400' : 'text-purple-400'
                   }`}>
->>>>>>> origin/main
                     {msg.user}
                   </span>
                   <span className="text-gray-500 text-xs">{formatTime(msg.timestamp)}</span>
@@ -457,11 +387,7 @@ export function CollaborativeSession() {
               </div>
             </div>
           </div>
-<<<<<<< HEAD
-
-=======
           
->>>>>>> origin/main
           <div className="space-y-3">
             <h4 className="text-white font-medium">Session Settings</h4>
             <div className="space-y-2">

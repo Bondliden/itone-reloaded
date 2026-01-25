@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 
+<<<<<<< HEAD
+=======
 // Register service worker for PWA functionality
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -16,6 +18,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+>>>>>>> origin/main
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />

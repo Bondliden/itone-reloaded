@@ -1,3 +1,23 @@
+<<<<<<< HEAD
+import { useState, useRef, useEffect, useCallback } from 'react';
+import { Video, VideoOff, Mic, MicOff, Square, Play, Download, Users, Globe, Upload } from 'lucide-react';
+import { Button } from './ui/button';
+import { Switch } from './ui/switch';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { TransposeControl } from './TransposeControl';
+import { IntegratedUploadStudio } from './IntegratedUploadStudio';
+import { toast } from './ui/toast';
+import { useAuth } from '../contexts/AuthContext';
+import { useUserSubscription } from '../hooks/useSubscription';
+import { usePlatinumSubscription } from '../hooks/usePlatinum';
+
+interface RecordingStudioProps {
+  song?: {
+    id: string;
+    title: string;
+    artist: string;
+    youtube_url: string;
+=======
 import React, { useState, useRef, useEffect } from 'react';
 import { Video, VideoOff, Mic, MicOff, Square, Download, Upload, Music, Heart, Play, Star } from 'lucide-react';
 import { Button } from './ui/button';
@@ -14,11 +34,30 @@ interface RecordingStudioProps {
     artist: string;
     youtubeUrl: string;
     duration?: number;
+>>>>>>> origin/main
   };
   initialTranspose?: number;
 }
 
 export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioProps) {
+<<<<<<< HEAD
+  const { user } = useAuth();
+  const { data: subscription } = useUserSubscription(user?.id);
+  const { data: platinumSubscription } = usePlatinumSubscription(user?.id);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isVideoEnabled, setIsVideoEnabled] = useState(true);
+  const [isAudioEnabled, setIsAudioEnabled] = useState(true);
+  const [isCollaborative, setIsCollaborative] = useState(false);
+  const [transpose, setTranspose] = useState(initialTranspose);
+  const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null);
+  const [showUploadStudio, setShowUploadStudio] = useState(false);
+  const [connectedUsers, setConnectedUsers] = useState(1);
+  const [recordingQuality, setRecordingQuality] = useState<'standard' | 'high' | 'ultra'>('standard');
+  const [includeYouTubeAudio, setIncludeYouTubeAudio] = useState(true);
+  const [autoTune, setAutoTune] = useState(false);
+  const [echoEffect, setEchoEffect] = useState(false);
+
+=======
   const { state: { user } } = useAuth();
   const [isRecording, setIsRecording] = useState(false);
   const [isVideoEnabled, setIsVideoEnabled] = useState(true);
@@ -30,10 +69,37 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
   const [freeRecordingsUsed] = useState(2); // Mock data - in real app this would come from database
   const [currentAudioMetrics, setCurrentAudioMetrics] = useState<any>(null);
   
+>>>>>>> origin/main
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
+<<<<<<< HEAD
+  const hasGoldOrHigher = subscription?.plan?.name === 'Gold' || subscription?.plan?.name === 'Platinum';
+  const hasPlatinum = subscription?.plan?.name === 'Platinum';
+  const hasIntegratedPlatinum = !!platinumSubscription;
+
+  const initializeCamera = useCallback(async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: isVideoEnabled,
+        audio: isAudioEnabled
+      });
+
+      streamRef.current = stream;
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_error) {
+      toast({
+        title: "Camera Access Denied",
+        description: "Please allow camera and microphone access to record karaoke.",
+        variant: "destructive",
+      });
+    }
+  }, [isVideoEnabled, isAudioEnabled]);
+=======
   // Sound effects - clearly defined
   const effects = [
     { id: 'studio', name: 'Studio', emoji: '🎙️', description: 'Clean professional sound' },
@@ -45,6 +111,7 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
 
   const isFreeTier = !user?.subscriptionTier || user.subscriptionTier === 'free';
   const freeRecordingsRemaining = Math.max(0, 4 - freeRecordingsUsed);
+>>>>>>> origin/main
 
   useEffect(() => {
     initializeCamera();
@@ -53,6 +120,9 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
         streamRef.current.getTracks().forEach(track => track.stop());
       }
     };
+<<<<<<< HEAD
+  }, [initializeCamera]);
+=======
   }, []);
 
   const initializeCamera = async () => {
@@ -73,6 +143,7 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
       setPermissionStatus('denied');
     }
   };
+>>>>>>> origin/main
 
   const toggleRecording = async () => {
     if (!isRecording) {
@@ -83,6 +154,8 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
   };
 
   const startRecording = async () => {
+<<<<<<< HEAD
+=======
     // Check free tier limits
     if (isFreeTier && freeRecordingsUsed >= 4) {
       toast({
@@ -93,14 +166,25 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
       return;
     }
 
+>>>>>>> origin/main
     if (!streamRef.current) {
       await initializeCamera();
     }
 
     if (streamRef.current) {
+<<<<<<< HEAD
+      const options = {
+        mimeType: recordingQuality === 'high' && hasGoldOrHigher ? 'video/webm;codecs=vp9' : 'video/webm'
+      };
+
+      const mediaRecorder = new MediaRecorder(streamRef.current, options);
+      mediaRecorderRef.current = mediaRecorder;
+
+=======
       const mediaRecorder = new MediaRecorder(streamRef.current);
       mediaRecorderRef.current = mediaRecorder;
       
+>>>>>>> origin/main
       const chunks: BlobPart[] = [];
       mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
@@ -113,17 +197,31 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
         setRecordedBlob(blob);
         toast({
           title: "Recording Complete!",
+<<<<<<< HEAD
+          description: `Your karaoke performance has been saved${recordingQuality === 'high' ? ' in HD quality' : ''}.`,
+=======
           description: `Your karaoke performance has been saved with ${effects.find(e => e.id === selectedEffect)?.name} effect!`,
+>>>>>>> origin/main
         });
       };
 
       mediaRecorder.start();
       setIsRecording(true);
+<<<<<<< HEAD
+
+      if (isCollaborative) {
+        toast({
+          title: "Live Collaboration Started",
+          description: `Up to ${subscription?.plan?.max_collaborators || 1} users can join your session!`,
+        });
+      }
+=======
       
       toast({
         title: `🎤 Recording Started!`,
         description: `Using ${effects.find(e => e.id === selectedEffect)?.emoji} ${effects.find(e => e.id === selectedEffect)?.name} effect with transpose ${transpose > 0 ? '+' : ''}${transpose}`,
       });
+>>>>>>> origin/main
     }
   };
 
@@ -139,17 +237,30 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
       const url = URL.createObjectURL(recordedBlob);
       const a = document.createElement('a');
       a.href = url;
+<<<<<<< HEAD
+      const quality = recordingQuality === 'ultra' ? 'UHD' : recordingQuality === 'high' ? 'HD' : 'SD';
+      const transposeValue = transpose !== 0 ? `_transpose${transpose > 0 ? '+' : ''}${transpose}` : '';
+      a.download = `karaoke-${song?.title || 'recording'}${transposeValue}_${quality}-${Date.now()}.webm`;
+=======
       const transposeStr = transpose !== 0 ? `_transpose${transpose > 0 ? '+' : ''}${transpose}` : '';
       const effectStr = selectedEffect !== 'studio' ? `_${selectedEffect}` : '';
       a.download = `karaoke-${song?.title || 'recording'}${transposeStr}${effectStr}-${Date.now()}.webm`;
+>>>>>>> origin/main
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
+<<<<<<< HEAD
+
+      toast({
+        title: "Download Started",
+        description: `Your ${quality} recording is being downloaded.`,
+=======
       
       toast({
         title: "Download Started",
         description: "Your recording is being downloaded.",
+>>>>>>> origin/main
       });
     }
   };
@@ -174,12 +285,30 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
     }
   };
 
+<<<<<<< HEAD
+  const startCollaborativeSession = () => {
+    if (!hasGoldOrHigher) {
+      toast({
+        title: "Gold or Platinum Required",
+        description: "Upgrade to Gold or Platinum to access collaborative recording features.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsCollaborative(true);
+    setConnectedUsers(Math.min(Math.floor(Math.random() * 3) + 2, subscription?.plan?.max_collaborators || 2));
+    toast({
+      title: "Collaborative Session Started",
+      description: "Other users can now join your recording session!",
+=======
   const applyEffect = (effectId: string) => {
     setSelectedEffect(effectId);
     const effect = effects.find(e => e.id === effectId);
     toast({
       title: `${effect?.emoji} ${effect?.name} Applied!`,
       description: effect?.description,
+>>>>>>> origin/main
     });
   };
 
@@ -187,6 +316,43 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
     <div className="space-y-6">
       {/* Recording Controls Header */}
       <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6">
+<<<<<<< HEAD
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-2xl font-bold text-white">Recording Studio</h2>
+          <div className="flex items-center space-x-4">
+            {isCollaborative && (
+              <div className="flex items-center space-x-2 bg-green-600/20 px-3 py-1 rounded-full">
+                <Globe className="h-4 w-4 text-green-400" />
+                <span className="text-green-400 text-sm font-medium">
+                  {connectedUsers} connected
+                </span>
+              </div>
+            )}
+            <div className="flex items-center space-x-2">
+              <span className="text-white text-sm">Quality:</span>
+              <Select value={recordingQuality} onValueChange={(value: 'standard' | 'high') => setRecordingQuality(value)}>
+                <SelectTrigger className="w-32 bg-white/10 border-white/20 text-white">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-gray-800 border-gray-600">
+                  <SelectItem value="standard">Standard</SelectItem>
+                  <SelectItem value="high" disabled={!hasGoldOrHigher}>
+                    HD {!hasGoldOrHigher && '(Gold+)'}
+                  </SelectItem>
+                  <SelectItem value="ultra" disabled={!hasPlatinum}>
+                    Ultra HD {!hasPlatinum && '(Platinum)'}
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </div>
+
+        {song && (
+          <div className="bg-black/30 rounded-lg p-4 mb-4">
+            <h3 className="text-lg font-semibold text-white">{song.title}</h3>
+            <p className="text-gray-300">{song.artist}</p>
+=======
         <h2 className="text-2xl font-bold text-white mb-4">Recording Studio</h2>
 
         {song && (
@@ -234,10 +400,18 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
                 </p>
               </div>
             </div>
+>>>>>>> origin/main
           </div>
         )}
       </div>
 
+<<<<<<< HEAD
+      {/* Video Preview and Controls */}
+      <div className="grid lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 space-y-4">
+          {/* Camera Preview */}
+          <div className="bg-black rounded-2xl overflow-hidden relative aspect-video">
+=======
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Main Recording Area */}
         <div className="lg:col-span-2 space-y-4">
@@ -254,18 +428,48 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
               </div>
             )}
             
+>>>>>>> origin/main
             <video
               ref={videoRef}
               autoPlay
               muted
               playsInline
+<<<<<<< HEAD
+              className="w-full h-full object-cover"
+            />
+
+=======
               className={`w-full h-full object-cover ${permissionStatus !== 'granted' ? 'hidden' : ''}`}
             />
             
+>>>>>>> origin/main
             {/* Recording Indicator */}
             {isRecording && (
               <div className="absolute top-4 left-4 flex items-center space-x-2 bg-red-600 px-3 py-1 rounded-full">
                 <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+<<<<<<< HEAD
+                <span className="text-white text-sm font-medium">
+                  REC {recordingQuality === 'high' ? 'HD' : 'SD'}
+                </span>
+              </div>
+            )}
+
+            {/* Collaborative Viewers */}
+            {isCollaborative && (
+              <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm px-3 py-1 rounded-full">
+                <div className="flex items-center space-x-2">
+                  <Users className="h-4 w-4 text-white" />
+                  <span className="text-white text-sm">{connectedUsers}</span>
+                </div>
+              </div>
+            )}
+
+            {/* Transpose Indicator */}
+            {transpose !== 0 && (
+              <div className="absolute bottom-4 right-4 bg-purple-600/80 backdrop-blur-sm px-3 py-1 rounded-full">
+                <span className="text-white text-sm font-medium">
+                  Transpose: {transpose > 0 ? '+' : ''}{transpose}
+=======
                 <span className="text-white text-sm font-medium">REC</span>
               </div>
             )}
@@ -282,10 +486,15 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
               <div className="absolute bottom-4 right-4 bg-green-600/80 backdrop-blur-sm px-3 py-1 rounded-full">
                 <span className="text-white text-sm font-medium">
                   Key: {transpose > 0 ? '+' : ''}{transpose}
+>>>>>>> origin/main
                 </span>
               </div>
             )}
 
+<<<<<<< HEAD
+            {/* Camera Controls Overlay */}
+=======
+>>>>>>> origin/main
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center space-x-4">
               <Button
                 variant="ghost"
@@ -303,12 +512,19 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
               <Button
                 onClick={toggleRecording}
                 size="lg"
+<<<<<<< HEAD
+                className={`rounded-full w-16 h-16 ${isRecording
+                  ? 'bg-red-600 hover:bg-red-700'
+                  : 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700'
+                  }`}
+=======
                 disabled={isFreeTier && freeRecordingsUsed >= 4}
                 className={`rounded-full w-16 h-16 ${
                   isRecording 
                     ? 'bg-red-600 hover:bg-red-700' 
                     : 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700'
                 }`}
+>>>>>>> origin/main
               >
                 {isRecording ? (
                   <Square className="h-6 w-6 text-white" />
@@ -332,6 +548,141 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
             </div>
           </div>
 
+<<<<<<< HEAD
+          {/* YouTube Integration */}
+          {song && (
+            <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h4 className="text-white font-medium">YouTube Playback</h4>
+                  <p className="text-gray-400 text-sm">Play along with the original track</p>
+                </div>
+                <Button
+                  onClick={() => window.open(song.youtube_url, '_blank')}
+                  className="bg-red-600 hover:bg-red-700 text-white"
+                >
+                  <Play className="h-4 w-4 mr-2" />
+                  Open YouTube
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Controls Panel */}
+        <div className="space-y-4">
+          {/* Transpose Control */}
+          <TransposeControl
+            transpose={transpose}
+            onTransposeChange={setTranspose}
+          />
+
+          {/* Recording Options */}
+          <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4">
+            <h4 className="text-white font-medium mb-4">Recording Options</h4>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-gray-300 text-sm">Include YouTube Audio</span>
+                <Switch
+                  checked={includeYouTubeAudio}
+                  onCheckedChange={setIncludeYouTubeAudio}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-gray-300 text-sm">Auto-tune</span>
+                <Switch
+                  checked={autoTune}
+                  onCheckedChange={setAutoTune}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-gray-300 text-sm">Echo Effect</span>
+                <Switch
+                  checked={echoEffect}
+                  onCheckedChange={setEchoEffect}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-gray-300 text-sm">Enhanced Quality</span>
+                <Switch
+                  checked={recordingQuality !== 'standard'}
+                  onCheckedChange={(checked) => setRecordingQuality(checked ? (hasPlatinum ? 'ultra' : 'high') : 'standard')}
+                  disabled={!hasGoldOrHigher}
+                />
+              </div>
+              {!hasGoldOrHigher && recordingQuality !== 'standard' && (
+                <p className="text-yellow-400 text-xs">Enhanced recording requires Gold or Platinum subscription</p>
+              )}
+            </div>
+          </div>
+
+          {/* Collaborative Features */}
+          <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4">
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="text-white font-medium">Collaborative Recording</h4>
+              <Switch
+                checked={isCollaborative}
+                onCheckedChange={hasGoldOrHigher ? setIsCollaborative : () => {
+                  toast({
+                    title: "Gold or Platinum Required",
+                    description: "Upgrade to Gold or Platinum for collaborative recording.",
+                    variant: "destructive",
+                  });
+                }}
+                disabled={!hasGoldOrHigher}
+              />
+            </div>
+
+            {!hasGoldOrHigher && (
+              <p className="text-yellow-400 text-xs mb-3">
+                Collaborative recording requires Gold or Platinum subscription
+              </p>
+            )}
+
+            {isCollaborative && hasGoldOrHigher && (
+              <div className="space-y-3">
+                <div className="bg-green-600/20 border border-green-400/30 rounded-lg p-3">
+                  <p className="text-green-400 text-sm font-medium mb-2">Session Active</p>
+                  <p className="text-gray-300 text-xs">
+                    Session Code: <span className="font-mono bg-black/30 px-2 py-1 rounded">LIVE2025</span>
+                  </p>
+                </div>
+                <Button
+                  size="sm"
+                  className={`w-full bg-green-600 hover:bg-green-700 text-white`}
+                  onClick={startCollaborativeSession}
+                >
+                  <Users className="h-4 w-4 mr-2" />
+                  Invite Friends (Max {subscription?.plan?.max_collaborators || 2})
+                </Button>
+              </div>
+            )}
+          </div>
+
+          {/* Download and Upload Options */}
+          {recordedBlob && (
+            <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4">
+              <h4 className="text-white font-medium mb-4">Export Recording</h4>
+              <div className="space-y-3">
+                <Button
+                  onClick={downloadRecording}
+                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  Download {recordingQuality === 'ultra' ? 'UHD' : recordingQuality === 'high' ? 'HD' : 'SD'} Recording
+                </Button>
+
+                {/* Integrated Platform Uploads (Platinum Only) */}
+                {hasIntegratedPlatinum && (
+                  <Button
+                    onClick={() => setShowUploadStudio(true)}
+                    className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white"
+                  >
+                    <Upload className="h-4 w-4 mr-2" />
+                    Upload to Streaming Platforms
+                  </Button>
+                )}
+=======
           {recordedBlob && (
             <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4">
               <h4 className="text-white font-medium mb-4">Recording Complete</h4>
@@ -347,10 +698,28 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
                   <Upload className="h-4 w-4 mr-2" />
                   Upload
                 </Button>
+>>>>>>> origin/main
               </div>
             </div>
           )}
         </div>
+<<<<<<< HEAD
+      </div>
+
+      {/* Integrated Upload Studio */}
+      {recordedBlob && (
+        <IntegratedUploadStudio
+          recording={{
+            id: `temp-${Date.now()}`,
+            title: `Karaoke Recording - ${song?.title || 'Untitled'}`,
+            file_url: URL.createObjectURL(recordedBlob),
+            song: song || { title: 'Untitled', artist: 'Unknown' }
+          }}
+          isOpen={showUploadStudio}
+          onClose={() => setShowUploadStudio(false)}
+        />
+      )}
+=======
 
         {/* RIGHT SIDE PANEL - THIS IS WHERE THE CONTROLS ARE */}
         <div className="space-y-4">
@@ -474,6 +843,7 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
           </div>
         </div>
       </div>
+>>>>>>> origin/main
     </div>
   );
 }

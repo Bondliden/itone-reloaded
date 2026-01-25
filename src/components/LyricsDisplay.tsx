@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+import { useMemo } from 'react';
+=======
 import React, { useState, useEffect } from 'react';
+>>>>>>> origin/main
 import { Music, Play, Pause } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -21,6 +25,17 @@ interface LyricsDisplayProps {
   onTimeSeek?: (time: number) => void;
 }
 
+<<<<<<< HEAD
+export function LyricsDisplay({
+  lyrics,
+  currentTime,
+  isPlaying,
+  className,
+  onTimeSeek
+}: LyricsDisplayProps) {
+  // Derive current and next line indices from currentTime instead of using state
+  const { currentLineIndex, nextLineIndex } = useMemo(() => {
+=======
 export function LyricsDisplay({ 
   lyrics, 
   currentTime, 
@@ -33,6 +48,7 @@ export function LyricsDisplay({
 
   useEffect(() => {
     // Find current and next lyrics lines
+>>>>>>> origin/main
     let current = -1;
     let next = -1;
 
@@ -48,8 +64,12 @@ export function LyricsDisplay({
       }
     }
 
+<<<<<<< HEAD
+    return { currentLineIndex: current, nextLineIndex: next };
+=======
     setCurrentLineIndex(current);
     setNextLineIndex(next);
+>>>>>>> origin/main
   }, [currentTime, lyrics]);
 
   const handleLineClick = (line: LyricsLine) => {
@@ -65,7 +85,11 @@ export function LyricsDisplay({
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+<<<<<<< HEAD
+  const getWordProgress = (word: { startTime: number; endTime: number; text: string }, currentTime: number) => {
+=======
   const getWordProgress = (word: any, currentTime: number) => {
+>>>>>>> origin/main
     if (currentTime < word.startTime) return 0;
     if (currentTime > word.endTime) return 100;
     return ((currentTime - word.startTime) / (word.endTime - word.startTime)) * 100;
@@ -131,7 +155,11 @@ export function LyricsDisplay({
                   {line.words.map((word, wordIndex) => {
                     const progress = isCurrent ? getWordProgress(word, currentTime) : 0;
                     const isWordActive = isCurrent && currentTime >= word.startTime && currentTime <= word.endTime;
+<<<<<<< HEAD
+
+=======
                     
+>>>>>>> origin/main
                     return (
                       <span
                         key={wordIndex}
@@ -142,7 +170,11 @@ export function LyricsDisplay({
                           !isCurrent && 'text-gray-300'
                         )}
                         style={{
+<<<<<<< HEAD
+                          background: isWordActive
+=======
                           background: isWordActive 
+>>>>>>> origin/main
                             ? `linear-gradient(to right, rgba(251, 191, 36, 0.3) ${progress}%, transparent ${progress}%)`
                             : 'transparent'
                         }}
@@ -163,7 +195,11 @@ export function LyricsDisplay({
                   {line.text}
                 </div>
               )}
+<<<<<<< HEAD
+
+=======
               
+>>>>>>> origin/main
               <div className="flex items-center justify-between mt-2 text-xs text-gray-500">
                 <span>{formatTime(line.startTime)}</span>
                 <span>{formatTime(line.endTime)}</span>
@@ -175,12 +211,21 @@ export function LyricsDisplay({
 
       {/* Progress indicator */}
       <div className="mt-4 bg-gray-700 rounded-full h-1">
+<<<<<<< HEAD
+        <div
+          className="bg-gradient-to-r from-purple-500 to-pink-500 h-1 rounded-full transition-all duration-300"
+          style={{
+            width: lyrics.length > 0
+              ? `${Math.min(100, (currentLineIndex + 1) / lyrics.length * 100)}%`
+              : '0%'
+=======
         <div 
           className="bg-gradient-to-r from-purple-500 to-pink-500 h-1 rounded-full transition-all duration-300"
           style={{ 
             width: lyrics.length > 0 
               ? `${Math.min(100, (currentLineIndex + 1) / lyrics.length * 100)}%` 
               : '0%' 
+>>>>>>> origin/main
           }}
         />
       </div>

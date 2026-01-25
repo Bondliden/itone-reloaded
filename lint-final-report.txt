@@ -1,0 +1,174 @@
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\server\index.ts
+  15:7  error  '_dirname' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\AudioVisualizer.tsx
+  138:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\AudioVisualizer.tsx:138:5
+  136 |     analyserRef.current = analyser;
+  137 |     dataArrayRef.current = dataArray;
+> 138 |     setIsActive(true);
+      |     ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  139 |
+  140 |     const draw = () => {
+  141 |       if (!analyserRef.current || !dataArrayRef.current || !ctx) return;  react-hooks/set-state-in-effect
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\CollaborativeSession.tsx
+  127:17  error  Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\CollaborativeSession.tsx:127:17
+  125 |   const formatTime = (timestamp: number) => {
+  126 |     // Called only when rendering message timestamps, not during initial render
+> 127 |     const now = Date.now();
+      |                 ^^^^^^^^^^ Cannot call impure function
+  128 |     const diff = now - timestamp;
+  129 |     const minutes = Math.floor(diff / 60000);
+  130 |     if (minutes < 1) return 'now';  react-hooks/purity
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\Header.tsx
+  13:17  error  '_subscription' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\IntegratedUploadStudio.tsx
+  94:14  error  '_error' is defined but never used  @typescript-eslint/no-unused-vars
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\KaraokePlayer.tsx
+  26:57  error    '_onRecordingStart' is defined but never used                                                                  @typescript-eslint/no-unused-vars
+  26:93  error    '_onRecordingStop' is defined but never used                                                                   @typescript-eslint/no-unused-vars
+  56:6   warning  React Hook useEffect has a missing dependency: 'userStream'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\LiveSession.tsx
+   40:42  error  '_sessionId' is defined but never used                        @typescript-eslint/no-unused-vars
+  137:9   error  '_toggleParticipantMute' is assigned a value but never used   @typescript-eslint/no-unused-vars
+  143:9   error  '_toggleParticipantVideo' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\LyricsDisplay.tsx
+  51:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\LyricsDisplay.tsx:51:5
+  49 |     }
+  50 |
+> 51 |     setCurrentLineIndex(current);
+     |     ^^^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  52 |     setNextLineIndex(next);
+  53 |   }, [currentTime, lyrics]);
+  54 |  react-hooks/set-state-in-effect
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\PlatformConnectionManager.tsx
+  61:14  error  '_error' is defined but never used       @typescript-eslint/no-unused-vars
+  72:35  error  '_platformId' is defined but never used  @typescript-eslint/no-unused-vars
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\PlatinumCheckout.tsx
+  20:9  error  '_createSubscription' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\Queue.tsx
+  51:14  error  '_error' is defined but never used              @typescript-eslint/no-unused-vars
+  78:13  error  '_nextSong' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  81:14  error  '_error' is defined but never used              @typescript-eslint/no-unused-vars
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\RecordingStudio.tsx
+   47:9   error    '_maxQuality' is assigned a value but never used                                                                     @typescript-eslint/no-unused-vars
+   56:6   warning  React Hook useEffect has a missing dependency: 'initializeCamera'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+   69:14  error    '_error' is defined but never used                                                                                   @typescript-eslint/no-unused-vars
+  154:9   error    'uploadToPlatform' is assigned a value but never used                                                                @typescript-eslint/no-unused-vars
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\SubscriptionManager.tsx
+  29:14  error  '_error' is defined but never used  @typescript-eslint/no-unused-vars
+  51:14  error  '_error' is defined but never used  @typescript-eslint/no-unused-vars
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\UserProfile.tsx
+  30:56  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\UserProfile.tsx:30:56
+  28 |   const stats = useMemo(() => {
+  29 |     // Pre-generate random values for each recording to avoid calling Math.random during render
+> 30 |     const viewCounts = recordings.map(() => Math.floor(Math.random() * 100));
+     |                                                        ^^^^^^^^^^^^^ Cannot call impure function
+  31 |     return {
+  32 |       songsRecorded: recordings.length,
+  33 |       savedSongs: userSongs.length,  react-hooks/purity
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\VoiceAnalyzer.tsx
+  78:9  warning  The 'startAnalysis' function makes the dependencies of useEffect Hook (at line 161) change on every render. Move it inside the useEffect callback. Alternatively, wrap the definition of 'startAnalysis' in its own useCallback() Hook  react-hooks/exhaustive-deps
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\ui\badge.tsx
+  35:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\ui\button.tsx
+  55:18  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\ui\toast.tsx
+  155:10  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\components\ui\use-toast.ts
+  14:7  error  'actionTypes' is assigned a value but only used as a type  @typescript-eslint/no-unused-vars
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\contexts\AuthContext.tsx
+    3:47  error    'UserProfile' is defined but never used                                                                                         @typescript-eslint/no-unused-vars
+   51:6   warning  React Hook useEffect has a missing dependency: 'checkUser'. Either include it or remove the dependency array                    react-hooks/exhaustive-deps
+  171:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\hooks\useAudioEffects.ts
+  29:72  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\hooks\usePlatinum.ts
+  184:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\hooks\useSupabase.ts
+  3:10  error  'useAuth' is defined but never used  @typescript-eslint/no-unused-vars
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\lib\stripe.ts
+  20:93  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\pages\DashboardPage.tsx
+  23:17  error  '_platinumSubscription' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\types\collaboration.ts
+   66:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  103:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\types\platinum.ts
+  61:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\utils\audioUtils.ts
+  18:64  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\src\utils\videoUtils.ts
+  287:56  error  '_audioBlob' is defined but never used  @typescript-eslint/no-unused-vars
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\supabase\functions\platform-upload\index.ts
+  120:32  error  'uploadJob' is defined but never used     @typescript-eslint/no-unused-vars
+  120:43  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  131:36  error  'uploadJob' is defined but never used     @typescript-eslint/no-unused-vars
+  131:47  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  142:35  error  'uploadJob' is defined but never used     @typescript-eslint/no-unused-vars
+  142:46  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  153:37  error  'uploadJob' is defined but never used     @typescript-eslint/no-unused-vars
+  153:48  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  164:31  error  'uploadJob' is defined but never used     @typescript-eslint/no-unused-vars
+  164:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+A:\ESCRITTORIO\AI\Itone\project-bolt-sb1-9mxnrqyh\project\supabase\functions\spotify-upload\index.ts
+  104:48  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  104:63  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  146:43  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  173:56  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Ô£û 57 problems (49 errors, 8 warnings)
+

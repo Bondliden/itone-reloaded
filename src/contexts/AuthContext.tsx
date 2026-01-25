@@ -8,7 +8,11 @@ interface User {
   email: string;
   avatar?: string;
   bio?: string;
+<<<<<<< HEAD
+  subscriptionTier?: 'free' | 'platinum';
+=======
   subscriptionTier?: 'free' | 'pro' | 'platinum';
+>>>>>>> origin/main
 }
 
 interface AuthContextType {
@@ -100,7 +104,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       // In a real app, this would be handled by Supabase Auth
       const mockUser = {
+<<<<<<< HEAD
+        id: 'demo-user-' + Date.now(),
+=======
         id: crypto.randomUUID(),
+>>>>>>> origin/main
         name: 'Demo User',
         email: 'demo@itone.com',
         avatar: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=128&h=128&fit=crop',

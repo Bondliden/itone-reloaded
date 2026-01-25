@@ -1,14 +1,25 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
+import { Check, Crown, Star, Zap, Users, Upload, Music, Video, Headphones, UserPlus, CheckCircle } from 'lucide-react';
+import { Button } from './ui/button';
+import { PlatinumCheckout } from './PlatinumCheckout';
+import { useAuth } from '../contexts/AuthContext';
+=======
 import { Check, Crown, Star, Zap, Users, Upload, Music, Video, Headphones, Shield, Globe, UserPlus, CheckCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import { PlatinumCheckout } from './PlatinumCheckout';
 import { useAuth } from '../modules/auth';
+>>>>>>> origin/main
 import { useSubscriptionPlans, useUserSubscription } from '../hooks/useSubscription';
 import { usePlatinumPricing } from '../hooks/usePlatinum';
 import { toast } from './ui/toast';
 
 export function PricingPage() {
+<<<<<<< HEAD
+  const { user } = useAuth();
+=======
   const { state: { user } } = useAuth();
+>>>>>>> origin/main
   const { data: plans = [] } = useSubscriptionPlans();
   const { data: userSubscription } = useUserSubscription(user?.id);
   const { data: platinumPricing } = usePlatinumPricing();
@@ -17,6 +28,8 @@ export function PricingPage() {
   // Mock plans for demo
   const mockPlans = [
     {
+<<<<<<< HEAD
+=======
       id: '0',
       name: 'Free',
       price_monthly: 0,
@@ -32,6 +45,7 @@ export function PricingPage() {
       platform_uploads: false
     },
     {
+>>>>>>> origin/main
       id: '1',
       name: 'Silver',
       price_monthly: 9.99,
@@ -64,6 +78,8 @@ export function PricingPage() {
     },
     {
       id: '3',
+<<<<<<< HEAD
+=======
       name: 'Pro',
       price_monthly: 24.99,
       features: [
@@ -82,6 +98,7 @@ export function PricingPage() {
     },
     {
       id: '4',
+>>>>>>> origin/main
       name: 'Platinum',
       price_monthly: 29.99,
       features: [
@@ -89,10 +106,16 @@ export function PricingPage() {
         'Lossless downloads',
         '4-person collaboration',
         'Professional audio suite',
+<<<<<<< HEAD
+        'Platform uploads',
+        '24/7 support',
+        'Analytics dashboard'
+=======
         'Unlimited platform uploads',
         '24/7 support',
         'Advanced analytics',
         'API access'
+>>>>>>> origin/main
       ],
       max_collaborators: 4,
       download_quality: 'ultra',
@@ -136,7 +159,10 @@ export function PricingPage() {
     switch (planName) {
       case 'Silver': return <Star className="h-8 w-8 text-gray-400" />;
       case 'Gold': return <Crown className="h-8 w-8 text-yellow-400" />;
+<<<<<<< HEAD
+=======
       case 'Pro': return <Zap className="h-8 w-8 text-blue-400" />;
+>>>>>>> origin/main
       case 'Platinum': return <Zap className="h-8 w-8 text-purple-400" />;
       default: return <Music className="h-8 w-8 text-gray-400" />;
     }
@@ -146,7 +172,10 @@ export function PricingPage() {
     switch (planName) {
       case 'Silver': return 'from-gray-600/20 to-gray-500/20 border-gray-400/30';
       case 'Gold': return 'from-yellow-600/20 to-orange-600/20 border-yellow-400/30';
+<<<<<<< HEAD
+=======
       case 'Pro': return 'from-blue-600/20 to-cyan-600/20 border-blue-400/30';
+>>>>>>> origin/main
       case 'Platinum': return 'from-purple-600/20 to-pink-600/20 border-purple-400/30';
       default: return 'from-gray-600/20 to-gray-500/20 border-gray-400/30';
     }
@@ -199,7 +228,11 @@ export function PricingPage() {
       <div className="text-center">
         <h1 className="text-4xl font-bold text-white mb-4">Choose Your Plan</h1>
         <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+<<<<<<< HEAD
+          Unlock the full potential of iTone with our subscription plans.
+=======
           Unlock the full potential of iTone with our subscription plans. 
+>>>>>>> origin/main
           Start with a 7-day free trial on any plan.
         </p>
       </div>
@@ -215,7 +248,11 @@ export function PricingPage() {
                   Current Plan: {userSubscription.plan?.name}
                 </h3>
                 <p className="text-gray-300">
+<<<<<<< HEAD
+                  {userSubscription.status === 'trialing' ? 'Free trial' : 'Active subscription'} •
+=======
                   {userSubscription.status === 'trialing' ? 'Free trial' : 'Active subscription'} • 
+>>>>>>> origin/main
                   Renews {new Date(userSubscription.current_period_end).toLocaleDateString()}
                 </p>
               </div>
@@ -228,6 +265,19 @@ export function PricingPage() {
       )}
 
       {/* Pricing Cards */}
+<<<<<<< HEAD
+      <div className="grid md:grid-cols-3 gap-8">
+        {displayPlans.map((plan) => (
+          <div
+            key={plan.id}
+            className={`bg-gradient-to-b ${getPlanGradient(plan.name)} backdrop-blur-lg rounded-2xl p-8 border relative ${plan.name === 'Gold' ? 'transform scale-105 shadow-2xl' : ''
+              }`}
+          >
+            {/* Popular Badge */}
+            {plan.name === 'Gold' && (
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <div className="bg-gradient-to-r from-yellow-600 to-orange-600 text-white px-4 py-1 rounded-full text-sm font-bold">
+=======
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
         {displayPlans.map((plan) => (
           <div
@@ -240,6 +290,7 @@ export function PricingPage() {
             {plan.name === 'Pro' && (
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                 <div className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-4 py-1 rounded-full text-sm font-bold">
+>>>>>>> origin/main
                   MOST POPULAR
                 </div>
               </div>
@@ -276,7 +327,11 @@ export function PricingPage() {
                   <span className="text-gray-300 text-sm">{feature}</span>
                 </div>
               ))}
+<<<<<<< HEAD
+
+=======
               
+>>>>>>> origin/main
               {/* Key Feature Highlights */}
               <div className="pt-2 border-t border-white/10 space-y-2">
                 {/* Transpose Feature */}
@@ -286,7 +341,11 @@ export function PricingPage() {
                     Key transpose (-12 to +12 semitones)
                   </span>
                 </div>
+<<<<<<< HEAD
+
+=======
                 
+>>>>>>> origin/main
                 {/* Collaboration Feature */}
                 <div className="flex items-center space-x-3">
                   <UserPlus className="h-4 w-4 text-green-400" />
@@ -294,7 +353,11 @@ export function PricingPage() {
                     {getCollaborationText(plan.name)}
                   </span>
                 </div>
+<<<<<<< HEAD
+
+=======
                 
+>>>>>>> origin/main
                 {/* Recording Quality */}
                 <div className="flex items-center space-x-3">
                   <Video className="h-4 w-4 text-blue-400" />
@@ -302,7 +365,11 @@ export function PricingPage() {
                     {getQualityText(plan.name)}
                   </span>
                 </div>
+<<<<<<< HEAD
+
+=======
                 
+>>>>>>> origin/main
                 {/* Platform Publishing */}
                 {plan.platform_uploads && (
                   <div className="flex items-center space-x-3">
@@ -346,6 +413,16 @@ export function PricingPage() {
             <Button
               onClick={() => handleSubscribe(plan.name)}
               disabled={isCurrentPlan(plan.name)}
+<<<<<<< HEAD
+              className={`w-full py-3 font-semibold text-lg rounded-full transition-all duration-200 transform hover:scale-105 ${isCurrentPlan(plan.name)
+                  ? 'bg-gray-600 text-gray-300 cursor-not-allowed'
+                  : plan.name === 'Silver'
+                    ? 'bg-gradient-to-r from-gray-600 to-gray-500 hover:from-gray-700 hover:to-gray-600 text-white'
+                    : plan.name === 'Gold'
+                      ? 'bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700 text-white'
+                      : 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white'
+                }`}
+=======
               className={`w-full py-3 font-semibold text-lg rounded-full transition-all duration-200 transform hover:scale-105 ${
                 isCurrentPlan(plan.name)
                   ? 'bg-gray-600 text-gray-300 cursor-not-allowed'
@@ -355,6 +432,7 @@ export function PricingPage() {
                   ? 'bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700 text-white'
                   : 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white'
               }`}
+>>>>>>> origin/main
             >
               {isCurrentPlan(plan.name) ? 'Current Plan' : `Start ${plan.name} Trial`}
             </Button>
@@ -422,9 +500,12 @@ export function PricingPage() {
                   <span className="text-red-400">✗</span>
                 </td>
                 <td className="text-center py-3">
+<<<<<<< HEAD
+=======
                   <span className="text-blue-400">✓ 5 uploads/month</span>
                 </td>
                 <td className="text-center py-3">
+>>>>>>> origin/main
                   <span className="text-green-400">✓ Spotify, Apple Music, etc.</span>
                 </td>
               </tr>
@@ -493,9 +574,15 @@ export function PricingPage() {
       </div>
 
       {/* Platinum Checkout Dialog */}
+<<<<<<< HEAD
+      <PlatinumCheckout
+        isOpen={showPlatinumCheckout}
+        onClose={() => setShowPlatinumCheckout(false)}
+=======
       <PlatinumCheckout 
         isOpen={showPlatinumCheckout} 
         onClose={() => setShowPlatinumCheckout(false)} 
+>>>>>>> origin/main
       />
     </div>
   );

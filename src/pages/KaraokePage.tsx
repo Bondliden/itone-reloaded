@@ -6,7 +6,11 @@ import { Button } from '../components/ui/button';
 export function KaraokePage() {
   const [, setLocation] = useLocation();
   const [isPlaying, setIsPlaying] = useState(false);
+<<<<<<< HEAD
+  const [currentTime] = useState(0);
+=======
   const [currentTime, setCurrentTime] = useState(0);
+>>>>>>> origin/main
   const duration = 355; // Mock duration
 
   const togglePlay = () => {
@@ -44,7 +48,11 @@ export function KaraokePage() {
       <div className="relative h-96 bg-black flex items-center justify-center">
         <div className="text-center">
           <div className="w-32 h-32 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center mb-4 mx-auto">
+<<<<<<< HEAD
+            <button
+=======
             <button 
+>>>>>>> origin/main
               onClick={() => window.open('https://www.youtube.com/watch?v=fJ9rUzIMcZQ', '_blank')}
               className="hover:scale-110 transition-transform duration-200"
             >
@@ -84,7 +92,11 @@ export function KaraokePage() {
               <span>{formatTime(duration)}</span>
             </div>
             <div className="w-full bg-gray-700 rounded-full h-2">
+<<<<<<< HEAD
+              <div
+=======
               <div 
+>>>>>>> origin/main
                 className="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all duration-300"
                 style={{ width: `${(currentTime / duration) * 100}%` }}
               ></div>
@@ -96,7 +108,11 @@ export function KaraokePage() {
             <Button variant="ghost" size="lg" className="text-white hover:bg-white/10">
               <Volume2 className="h-6 w-6" />
             </Button>
+<<<<<<< HEAD
+
+=======
             
+>>>>>>> origin/main
             <Button
               onClick={togglePlay}
               size="lg"

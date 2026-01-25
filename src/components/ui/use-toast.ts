@@ -29,6 +29,23 @@ type ActionType = typeof actionTypes;
 
 type Action =
   | {
+<<<<<<< HEAD
+    type: ActionType["ADD_TOAST"];
+    toast: ToasterToast;
+  }
+  | {
+    type: ActionType["UPDATE_TOAST"];
+    toast: Partial<ToasterToast>;
+  }
+  | {
+    type: ActionType["DISMISS_TOAST"];
+    toastId?: ToasterToast["id"];
+  }
+  | {
+    type: ActionType["REMOVE_TOAST"];
+    toastId?: ToasterToast["id"];
+  };
+=======
       type: ActionType["ADD_TOAST"];
       toast: ToasterToast;
     }
@@ -44,6 +61,7 @@ type Action =
       type: ActionType["REMOVE_TOAST"];
       toastId?: ToasterToast["id"];
     };
+>>>>>>> origin/main
 
 interface State {
   toasts: ToasterToast[];
@@ -99,9 +117,15 @@ export const reducer = (state: State, action: Action): State => {
         toasts: state.toasts.map((t) =>
           t.id === toastId || toastId === undefined
             ? {
+<<<<<<< HEAD
+              ...t,
+              open: false,
+            }
+=======
                 ...t,
                 open: false,
               }
+>>>>>>> origin/main
             : t
         ),
       };

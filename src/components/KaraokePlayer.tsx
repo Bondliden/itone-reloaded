@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+import { useState, useRef, useEffect } from 'react';
+=======
 import React, { useState, useRef, useEffect } from 'react';
+>>>>>>> origin/main
 import { Play, Pause, SkipForward, SkipBack, Volume2, Settings, Repeat } from 'lucide-react';
 import { Button } from './ui/button';
 import { Slider } from './ui/slider';
@@ -6,6 +10,10 @@ import { LyricsDisplay } from './LyricsDisplay';
 import { AudioVisualizer } from './AudioVisualizer';
 import { VoiceAnalyzer } from './VoiceAnalyzer';
 import { TransposeControl } from './TransposeControl';
+<<<<<<< HEAD
+import { cn } from '../lib/utils';
+=======
+>>>>>>> origin/main
 
 interface KaraokePlayerProps {
   song: {
@@ -14,6 +22,10 @@ interface KaraokePlayerProps {
     artist: string;
     duration: number;
     youtube_url: string;
+<<<<<<< HEAD
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+=======
+>>>>>>> origin/main
     lyrics?: any[];
   };
   onRecordingStart?: () => void;
@@ -21,7 +33,11 @@ interface KaraokePlayerProps {
   className?: string;
 }
 
+<<<<<<< HEAD
+export function KaraokePlayer({ song, className }: KaraokePlayerProps) {
+=======
 export function KaraokePlayer({ song, onRecordingStart, onRecordingStop, className }: KaraokePlayerProps) {
+>>>>>>> origin/main
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(80);
@@ -51,6 +67,10 @@ export function KaraokePlayer({ song, onRecordingStart, onRecordingStop, classNa
         userStream.getTracks().forEach(track => track.stop());
       }
     };
+<<<<<<< HEAD
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+=======
+>>>>>>> origin/main
   }, []);
 
   useEffect(() => {
@@ -145,7 +165,11 @@ export function KaraokePlayer({ song, onRecordingStart, onRecordingStop, classNa
         <div className="lg:col-span-2 space-y-4">
           {/* Audio Visualizer */}
           <div className="bg-black/50 backdrop-blur-lg rounded-2xl p-6">
+<<<<<<< HEAD
+            <AudioVisualizer
+=======
             <AudioVisualizer 
+>>>>>>> origin/main
               stream={userStream}
               type="bars"
               color="#8b5cf6"
@@ -169,7 +193,11 @@ export function KaraokePlayer({ song, onRecordingStart, onRecordingStop, classNa
                 <span>{formatTime(currentTime)}</span>
                 <span>{formatTime(song.duration)}</span>
               </div>
+<<<<<<< HEAD
+              <div
+=======
               <div 
+>>>>>>> origin/main
                 className="w-full bg-gray-700 rounded-full h-2 cursor-pointer"
                 onClick={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
@@ -177,7 +205,11 @@ export function KaraokePlayer({ song, onRecordingStart, onRecordingStop, classNa
                   handleSeek(percent * song.duration);
                 }}
               >
+<<<<<<< HEAD
+                <div
+=======
                 <div 
+>>>>>>> origin/main
                   className="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all duration-300"
                   style={{ width: `${(currentTime / song.duration) * 100}%` }}
                 />
@@ -258,7 +290,11 @@ export function KaraokePlayer({ song, onRecordingStart, onRecordingStop, classNa
         {/* Side Panel */}
         <div className="space-y-4">
           {/* Voice Analyzer */}
+<<<<<<< HEAD
+          <VoiceAnalyzer
+=======
           <VoiceAnalyzer 
+>>>>>>> origin/main
             stream={userStream}
             targetPitch={440 + (transpose * 100)} // Rough pitch target with transpose
           />

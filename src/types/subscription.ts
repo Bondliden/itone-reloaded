@@ -1,6 +1,10 @@
 export interface SubscriptionPlan {
   id: string;
+<<<<<<< HEAD
+  name: 'Silver' | 'Gold' | 'Platinum';
+=======
   name: 'Silver' | 'Gold' | 'Pro' | 'Platinum';
+>>>>>>> origin/main
   price_monthly: number;
   features: string[];
   max_collaborators: number;

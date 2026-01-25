@@ -1,20 +1,43 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
+import { Search, Play, Plus, Clock, Star, Music, Video, Music2, Heart, HeartOff, Settings } from 'lucide-react';
+=======
 import { Search, Play, Plus, Clock, Star, Music, Video, Music2, Heart, HeartOff, Settings, Youtube, Link } from 'lucide-react';
+>>>>>>> origin/main
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { RecordingStudio } from './RecordingStudio';
 import { TransposeControl } from './TransposeControl';
 import { toast } from './ui/toast';
+<<<<<<< HEAD
+import { useAuth } from '../contexts/AuthContext';
+import { useSongs, useSaveSong, useRemoveSong, useUserSongs } from '../hooks/useSupabase';
+
+interface Song {
+  id: string;
+=======
 import { useAuth } from '../modules/auth';
 import { useSongs, useSaveSong, useRemoveSong, useUserSongs } from '../hooks/useSupabase';
 
 interface Song {
   id: number | string;
+>>>>>>> origin/main
   title: string;
   artist: string;
   duration: number;
   genre: string;
+<<<<<<< HEAD
+  difficulty: string;
+  youtube_url: string;
+  spotify_id?: string;
+}
+
+export function SongLibrary() {
+  const { user } = useAuth();
+  const [search, setSearch] = useState('');
+  const [selectedGenre, setSelectedGenre] = useState('');
+=======
   difficulty: string | null;
   youtubeUrl: string;
   spotifyId?: string | null;
@@ -27,19 +50,28 @@ export function SongLibrary() {
   const [youtubeUrl, setYoutubeUrl] = useState('');
   const [showAddSong, setShowAddSong] = useState(false);
   const [quickYoutubeUrl, setQuickYoutubeUrl] = useState('');
+>>>>>>> origin/main
   const [selectedSong, setSelectedSong] = useState<Song | null>(null);
   const [showRecordingStudio, setShowRecordingStudio] = useState(false);
   const [showTranspose, setShowTranspose] = useState<string | null>(null);
   const [transposeValues, setTransposeValues] = useState<Record<string, number>>({});
+<<<<<<< HEAD
+
+  const { data: songs = [] } = useSongs(search, selectedGenre);
+  const { data: userSongs = [] } = useUserSongs(user?.id);
+=======
   const [effectValues, setEffectValues] = useState<Record<string, string>>({});
 
   const { data: songs = [] } = useSongs(search, selectedGenre);
   const { data: userSongs = [] } = useUserSongs();
+>>>>>>> origin/main
   const saveSongMutation = useSaveSong();
   const removeSongMutation = useRemoveSong();
 
   const genres = ['Rock', 'Pop', 'Classic', 'Country', 'Hip Hop', 'R&B'];
 
+<<<<<<< HEAD
+=======
   const extractYouTubeInfo = (url: string) => {
     // Extract video ID from YouTube URL
     const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/;
@@ -131,23 +163,34 @@ export function SongLibrary() {
     { id: 'stadium', name: 'Stadium', emoji: '🏟️' }
   ];
 
+>>>>>>> origin/main
   const formatDuration = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+<<<<<<< HEAD
+  const isSongSaved = (songId: string) => {
+    return userSongs.some(us => us.song_id === songId);
+=======
   const isSongSaved = (songId: number | string) => {
     return userSongs.some(us => us.songId === Number(songId));
+>>>>>>> origin/main
   };
 
   const toggleSaveSong = async (song: Song) => {
     if (!user) return;
 
+<<<<<<< HEAD
+    if (isSongSaved(song.id)) {
+      await removeSongMutation.mutateAsync({ userId: user.id, songId: song.id });
+=======
     const numericId = typeof song.id === 'string' ? parseInt(song.id) : song.id;
     
     if (isSongSaved(song.id)) {
       await removeSongMutation.mutateAsync(numericId);
+>>>>>>> origin/main
       toast({
         title: "Removed from library",
         description: `${song.title} has been removed from your library.`,
@@ -155,7 +198,12 @@ export function SongLibrary() {
     } else {
       const transposeValue = transposeValues[song.id] || 0;
       await saveSongMutation.mutateAsync({ 
+<<<<<<< HEAD
+        userId: user.id, 
+        songId: song.id,
+=======
         songId: numericId,
+>>>>>>> origin/main
         transposeValue 
       });
       toast({
@@ -183,6 +231,19 @@ export function SongLibrary() {
   };
 
   const openRecordingStudio = (song: Song) => {
+<<<<<<< HEAD
+    setSelectedSong({
+      ...song,
+      youtube_url: song.youtube_url
+    });
+    setShowRecordingStudio(true);
+  };
+
+  // Mock songs data for demo
+  const mockSongs = [
+    {
+      id: '1',
+=======
     setSelectedSong(song);
     setShowRecordingStudio(true);
   };
@@ -191,43 +252,73 @@ export function SongLibrary() {
   const mockSongs: Song[] = [
     {
       id: 1,
+>>>>>>> origin/main
       title: 'Bohemian Rhapsody',
       artist: 'Queen',
       duration: 355,
       genre: 'Rock',
       difficulty: 'hard',
+<<<<<<< HEAD
+      youtube_url: 'https://www.youtube.com/watch?v=fJ9rUzIMcZQ',
+      spotify_id: '4u7EnebtmKWzUH433cf1Qv'
+    },
+    {
+      id: '2',
+=======
       youtubeUrl: 'https://www.youtube.com/watch?v=fJ9rUzIMcZQ',
       spotifyId: '4u7EnebtmKWzUH433cf1Qv'
     },
     {
       id: 2,
+>>>>>>> origin/main
       title: 'Shape of You',
       artist: 'Ed Sheeran',
       duration: 233,
       genre: 'Pop',
       difficulty: 'medium',
+<<<<<<< HEAD
+      youtube_url: 'https://www.youtube.com/watch?v=JGwWNGJdvx8',
+      spotify_id: '7qiZfU4dY4WkLyMn4s5iuJ'
+    },
+    {
+      id: '3',
+=======
       youtubeUrl: 'https://www.youtube.com/watch?v=JGwWNGJdvx8',
       spotifyId: '7qiZfU4dY4WkLyMn4s5iuJ'
     },
     {
       id: 3,
+>>>>>>> origin/main
       title: 'Imagine',
       artist: 'John Lennon',
       duration: 183,
       genre: 'Classic',
       difficulty: 'easy',
+<<<<<<< HEAD
+      youtube_url: 'https://www.youtube.com/watch?v=YkgkThdzX-8',
+      spotify_id: '7pKfPomDiuM2OtqtWKpGRb'
+    },
+    {
+      id: '4',
+=======
       youtubeUrl: 'https://www.youtube.com/watch?v=YkgkThdzX-8',
       spotifyId: '7pKfPomDiuM2OtqtWKpGRb'
     },
     {
       id: 4,
+>>>>>>> origin/main
       title: 'Billie Jean',
       artist: 'Michael Jackson',
       duration: 294,
       genre: 'Pop',
       difficulty: 'medium',
+<<<<<<< HEAD
+      youtube_url: 'https://www.youtube.com/watch?v=Zi_XLOBDo_Y',
+      spotify_id: '5ChkMS8OtdzJeqyybCc9R5'
+=======
       youtubeUrl: 'https://www.youtube.com/watch?v=Zi_XLOBDo_Y',
       spotifyId: '5ChkMS8OtdzJeqyybCc9R5'
+>>>>>>> origin/main
     }
   ];
 
@@ -235,6 +326,28 @@ export function SongLibrary() {
 
   return (
     <div className="space-y-6">
+<<<<<<< HEAD
+      {/* Search and Filters */}
+      <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6">
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Input
+              placeholder="Search songs or artists..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-10 bg-white/10 border-white/20 text-white placeholder-gray-400"
+            />
+          </div>
+          <select
+            value={selectedGenre}
+            onChange={(e) => setSelectedGenre(e.target.value)}
+            className="bg-white/10 border border-white/20 text-white rounded-lg px-4 py-2 min-w-[120px]"
+          >
+            <option value="">All Genres</option>
+            {genres.map(genre => (
+              <option key={genre} value={genre} className="bg-gray-800">
+=======
       {/* AI Smart Recommendations */}
       <div className="bg-gradient-to-r from-green-600/20 to-blue-600/20 border border-green-400/30 backdrop-blur-lg rounded-2xl p-6 mb-6">
         <div className="flex items-center space-x-3 mb-3">
@@ -347,11 +460,14 @@ export function SongLibrary() {
             <option value="">All Genres</option>
             {genres.map(genre => (
               <option key={genre} value={genre} className="bg-white text-gray-900">
+>>>>>>> origin/main
                 {genre}
               </option>
             ))}
           </select>
         </div>
+<<<<<<< HEAD
+=======
         
         {/* Quick Stats */}
         <div className="grid grid-cols-4 gap-4 text-center">
@@ -372,6 +488,7 @@ export function SongLibrary() {
             <div className="text-xs text-gray-400">Custom Songs</div>
           </div>
         </div>
+>>>>>>> origin/main
       </div>
 
       {/* Songs Grid */}
@@ -394,11 +511,14 @@ export function SongLibrary() {
                     {isSongSaved(song.id) && (
                       <Heart className="h-4 w-4 text-red-400 fill-current" />
                     )}
+<<<<<<< HEAD
+=======
                     {String(song.id).startsWith('custom-') && (
                       <span className="bg-red-600/20 text-red-400 px-2 py-1 rounded-full text-xs font-medium">
                         Custom
                       </span>
                     )}
+>>>>>>> origin/main
                   </div>
                   <p className="text-gray-300 mb-2">{song.artist}</p>
                   <div className="flex items-center space-x-4 text-sm">
@@ -407,9 +527,15 @@ export function SongLibrary() {
                       {formatDuration(song.duration)}
                     </span>
                     <span className="text-purple-400">{song.genre}</span>
+<<<<<<< HEAD
+                    <span className={`flex items-center ${getDifficultyColor(song.difficulty)}`}>
+                      <Star className="h-3 w-3 mr-1" />
+                      {song.difficulty}
+=======
                     <span className={`flex items-center ${getDifficultyColor(song.difficulty || 'medium')}`}>
                       <Star className="h-3 w-3 mr-1" />
                       {song.difficulty || 'medium'}
+>>>>>>> origin/main
                     </span>
                     {transposeValues[song.id] !== undefined && transposeValues[song.id] !== 0 && (
                       <span className="text-yellow-400 text-xs bg-yellow-400/20 px-2 py-1 rounded">
@@ -421,6 +547,42 @@ export function SongLibrary() {
                 
                 <div className="flex items-center space-x-2">
                   {/* Transpose Control */}
+<<<<<<< HEAD
+                  <Dialog open={showTranspose === song.id} onOpenChange={(open) => setShowTranspose(open ? song.id : null)}>
+                    <DialogTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-white hover:bg-white/10"
+                      >
+                        <Settings className="h-4 w-4" />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="bg-gray-900 border-gray-700 text-white">
+                      <DialogHeader>
+                        <DialogTitle>Transpose Settings - {song.title}</DialogTitle>
+                      </DialogHeader>
+                      <TransposeControl
+                        transpose={transposeValues[song.id] || 0}
+                        onTransposeChange={(value) => setTransposeValues(prev => ({ ...prev, [song.id]: value }))}
+                      />
+                    </DialogContent>
+                  </Dialog>
+
+                  {/* Save/Unsave Song */}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => toggleSaveSong(song)}
+                    className={`${isSongSaved(song.id) ? 'text-red-400 hover:bg-red-500/20' : 'text-white hover:bg-white/10'}`}
+                  >
+                    {isSongSaved(song.id) ? (
+                      <Heart className="h-4 w-4 fill-current" />
+                    ) : (
+                      <HeartOff className="h-4 w-4" />
+                    )}
+                  </Button>
+=======
                   <div className="flex items-center space-x-3 bg-gradient-to-r from-green-600/30 to-blue-600/30 border border-green-400/50 rounded-lg px-3 py-2 shadow-lg">
                     <Music2 className="h-3 w-3 text-green-400" />
                     <span className="text-green-400 text-xs font-bold">KEY:</span>
@@ -468,12 +630,17 @@ export function SongLibrary() {
                       )}
                     </Button>
                   )}
+>>>>>>> origin/main
 
                   {/* YouTube Link */}
                   <Button
                     variant="ghost"
                     size="sm"
+<<<<<<< HEAD
+                    onClick={() => window.open(song.youtube_url, '_blank')}
+=======
                     onClick={() => window.open(song.youtubeUrl, '_blank')}
+>>>>>>> origin/main
                     className="text-white hover:bg-white/10"
                   >
                     <Play className="h-4 w-4 mr-1" />

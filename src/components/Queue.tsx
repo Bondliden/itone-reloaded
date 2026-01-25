@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import React from 'react';
+>>>>>>> origin/main
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Clock, User, Trash2, Play } from 'lucide-react';
 import { Button } from './ui/button';
@@ -28,27 +32,49 @@ export function Queue() {
   const { data: queue = [], isLoading } = useQuery({
     queryKey: ['queue'],
     queryFn: async () => {
+<<<<<<< HEAD
       // Mock empty queue for demo
       return [];
+=======
+      // Auto-scalable memory queue - Load from localStorage with real-time sync
+      const stored = JSON.parse(localStorage.getItem('itone-karaoke-queue') || '[]');
+      return stored.map((item: any, index: number) => ({
+        ...item,
+        position: index + 1,
+        estimated_start: new Date(Date.now() + (index * 4 * 60 * 1000)), // 4 min per song
+        user: item.user || { name: 'Unknown User', avatar: null }
+      }));
+>>>>>>> origin/main
     },
     refetchInterval: 5000 // Refresh every 5 seconds
   });
 
   const removeFromQueue = async (queueId: string) => {
     try {
+<<<<<<< HEAD
       const response = await fetch(`/api/queue/${queueId}`, {
         method: 'DELETE'
       });
 
       if (!response.ok) throw new Error('Failed to remove from queue');
+=======
+      // Remove from localStorage queue
+      const stored = JSON.parse(localStorage.getItem('itone-karaoke-queue') || '[]');
+      const filtered = stored.filter((item: any) => item.id !== queueId);
+      localStorage.setItem('itone-karaoke-queue', JSON.stringify(filtered));
+>>>>>>> origin/main
 
       queryClient.invalidateQueries({ queryKey: ['queue'] });
       toast({
         title: "Removed from queue",
         description: "Song has been removed from the queue.",
       });
+<<<<<<< HEAD
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_error) {
+=======
+    } catch (error) {
+>>>>>>> origin/main
       toast({
         title: "Error",
         description: "Failed to remove song from queue.",
@@ -59,6 +85,7 @@ export function Queue() {
 
   const playNext = async () => {
     try {
+<<<<<<< HEAD
       const response = await fetch('/api/queue/next', {
         method: 'POST'
       });
@@ -80,6 +107,33 @@ export function Queue() {
       setLocation('/karaoke');
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_error) {
+=======
+      const stored = JSON.parse(localStorage.getItem('itone-karaoke-queue') || '[]');
+      
+      if (stored.length === 0) {
+        toast({
+          title: "Queue is empty",
+          description: "Add some songs to the queue first.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Get first song and remove from queue
+      const nextSong = stored[0];
+      const remaining = stored.slice(1);
+      localStorage.setItem('itone-karaoke-queue', JSON.stringify(remaining));
+      
+      queryClient.invalidateQueries({ queryKey: ['queue'] });
+      
+      toast({
+        title: "🎤 Starting Karaoke!",
+        description: `Now playing: ${nextSong.song?.title || nextSong.title}`,
+      });
+      
+      setLocation('/karaoke');
+    } catch (error) {
+>>>>>>> origin/main
       toast({
         title: "Error",
         description: "Failed to start karaoke session.",

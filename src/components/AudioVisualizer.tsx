@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { useRef, useEffect } from 'react';
+=======
+import React, { useRef, useEffect, useState } from 'react';
+>>>>>>> origin/main
 import { cn } from '../lib/utils';
 
 interface AudioVisualizerProps {
@@ -10,10 +14,17 @@ interface AudioVisualizerProps {
   sensitivity?: number;
 }
 
+<<<<<<< HEAD
 export function AudioVisualizer({
   stream,
   className,
   type = 'bars',
+=======
+export function AudioVisualizer({ 
+  stream, 
+  className, 
+  type = 'bars', 
+>>>>>>> origin/main
   color = '#8b5cf6',
   height = 100,
   sensitivity = 1
@@ -22,6 +33,7 @@ export function AudioVisualizer({
   const animationRef = useRef<number>();
   const analyserRef = useRef<AnalyserNode>();
   const dataArrayRef = useRef<Uint8Array>();
+<<<<<<< HEAD
 
   // Define draw functions before useEffect to avoid hoisting issues
   const drawBars = (
@@ -29,6 +41,74 @@ export function AudioVisualizer({
     dataArray: Uint8Array,
     width: number,
     height: number,
+=======
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    if (!stream || !canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Set up audio analysis
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const analyser = audioContext.createAnalyser();
+    const source = audioContext.createMediaStreamSource(stream);
+    
+    analyser.fftSize = 256;
+    analyser.smoothingTimeConstant = 0.8;
+    source.connect(analyser);
+    
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+    
+    analyserRef.current = analyser;
+    dataArrayRef.current = dataArray;
+    setIsActive(true);
+
+    const draw = () => {
+      if (!analyserRef.current || !dataArrayRef.current || !ctx) return;
+
+      analyserRef.current.getByteFrequencyData(dataArrayRef.current);
+      
+      const width = canvas.width;
+      const height = canvas.height;
+      
+      // Clear canvas
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.fillRect(0, 0, width, height);
+
+      if (type === 'bars') {
+        drawBars(ctx, dataArrayRef.current, width, height, color, sensitivity);
+      } else if (type === 'waveform') {
+        drawWaveform(ctx, dataArrayRef.current, width, height, color, sensitivity);
+      } else if (type === 'circular') {
+        drawCircular(ctx, dataArrayRef.current, width, height, color, sensitivity);
+      }
+
+      animationRef.current = requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      if (audioContext.state !== 'closed') {
+        audioContext.close();
+      }
+      setIsActive(false);
+    };
+  }, [stream, type, color, sensitivity]);
+
+  const drawBars = (
+    ctx: CanvasRenderingContext2D, 
+    dataArray: Uint8Array, 
+    width: number, 
+    height: number, 
+>>>>>>> origin/main
     color: string,
     sensitivity: number
   ) => {
@@ -37,6 +117,7 @@ export function AudioVisualizer({
 
     for (let i = 0; i < dataArray.length; i++) {
       const barHeight = (dataArray[i] / 255) * height * sensitivity;
+<<<<<<< HEAD
 
       const gradient = ctx.createLinearGradient(0, height - barHeight, 0, height);
       gradient.addColorStop(0, color);
@@ -45,15 +126,32 @@ export function AudioVisualizer({
       ctx.fillStyle = gradient;
       ctx.fillRect(x, height - barHeight, barWidth, barHeight);
 
+=======
+      
+      const gradient = ctx.createLinearGradient(0, height - barHeight, 0, height);
+      gradient.addColorStop(0, color);
+      gradient.addColorStop(1, color + '40');
+      
+      ctx.fillStyle = gradient;
+      ctx.fillRect(x, height - barHeight, barWidth, barHeight);
+      
+>>>>>>> origin/main
       x += barWidth + 1;
     }
   };
 
   const drawWaveform = (
+<<<<<<< HEAD
     ctx: CanvasRenderingContext2D,
     dataArray: Uint8Array,
     width: number,
     height: number,
+=======
+    ctx: CanvasRenderingContext2D, 
+    dataArray: Uint8Array, 
+    width: number, 
+    height: number, 
+>>>>>>> origin/main
     color: string,
     sensitivity: number
   ) => {
@@ -82,10 +180,17 @@ export function AudioVisualizer({
   };
 
   const drawCircular = (
+<<<<<<< HEAD
     ctx: CanvasRenderingContext2D,
     dataArray: Uint8Array,
     width: number,
     height: number,
+=======
+    ctx: CanvasRenderingContext2D, 
+    dataArray: Uint8Array, 
+    width: number, 
+    height: number, 
+>>>>>>> origin/main
     color: string,
     sensitivity: number
   ) => {
@@ -99,7 +204,11 @@ export function AudioVisualizer({
     for (let i = 0; i < dataArray.length; i++) {
       const angle = (i / dataArray.length) * Math.PI * 2;
       const amplitude = (dataArray[i] / 255) * radius * sensitivity;
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> origin/main
       const x1 = centerX + Math.cos(angle) * radius;
       const y1 = centerY + Math.sin(angle) * radius;
       const x2 = centerX + Math.cos(angle) * (radius + amplitude);
@@ -112,6 +221,7 @@ export function AudioVisualizer({
     }
   };
 
+<<<<<<< HEAD
   useEffect(() => {
     if (!stream || !canvasRef.current) return;
 
@@ -172,6 +282,8 @@ export function AudioVisualizer({
 
   const isActive = !!stream;
 
+=======
+>>>>>>> origin/main
   return (
     <canvas
       ref={canvasRef}

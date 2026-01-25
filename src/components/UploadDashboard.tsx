@@ -1,11 +1,19 @@
 import React from 'react';
 import { Upload, CheckCircle, Clock, XCircle, ExternalLink, RefreshCw, TrendingUp } from 'lucide-react';
 import { Button } from './ui/button';
+<<<<<<< HEAD
 import { useAuth } from '../contexts/AuthContext';
 import { useUploadJobs } from '../hooks/usePlatinum';
 
 export function UploadDashboard() {
   const { user } = useAuth();
+=======
+import { useAuth } from '../modules/auth';
+import { useUploadJobs } from '../hooks/usePlatinum';
+
+export function UploadDashboard() {
+  const { state: { user } } = useAuth();
+>>>>>>> origin/main
   const { data: uploadJobs = [], refetch } = useUploadJobs(user?.id);
 
   const getStatusIcon = (status: string) => {

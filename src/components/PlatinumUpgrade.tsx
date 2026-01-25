@@ -2,11 +2,20 @@ import React from 'react';
 import { Crown, Check, Star, Users, Upload, Zap } from 'lucide-react';
 import { Button } from './ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
+<<<<<<< HEAD
 import { useAuth } from '../contexts/AuthContext';
 
 export function PlatinumUpgrade() {
   const { user } = useAuth();
   const isPlatinum = user?.subscriptionTier === 'platinum';
+=======
+import { useAuth } from '../modules/auth';
+import { toast } from './ui/toast';
+
+export function PlatinumUpgrade() {
+  const { user } = useAuth();
+  const hasProOrHigher = user?.subscriptionTier === 'pro' || user?.subscriptionTier === 'platinum';
+>>>>>>> origin/main
 
   const features = [
     {
@@ -49,12 +58,31 @@ export function PlatinumUpgrade() {
     });
   };
 
+<<<<<<< HEAD
   if (isPlatinum) {
     return (
       <div className="bg-gradient-to-r from-yellow-600/20 to-orange-600/20 backdrop-blur-lg rounded-2xl p-6 border border-yellow-400/30">
         <div className="text-center">
           <Crown className="h-12 w-12 text-yellow-400 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-white mb-2">Platinum Member</h2>
+=======
+  if (hasProOrHigher) {
+    return (
+      <div className={`backdrop-blur-lg rounded-2xl p-6 border ${
+        user?.subscriptionTier === 'platinum' 
+          ? 'bg-gradient-to-r from-purple-600/20 to-pink-600/20 border-purple-400/30'
+          : 'bg-gradient-to-r from-blue-600/20 to-cyan-600/20 border-blue-400/30'
+      }`}>
+        <div className="text-center">
+          {user?.subscriptionTier === 'platinum' ? (
+            <Crown className="h-12 w-12 text-purple-400 mx-auto mb-4" />
+          ) : (
+            <Zap className="h-12 w-12 text-blue-400 mx-auto mb-4" />
+          )}
+          <h2 className="text-2xl font-bold text-white mb-2">
+            {user?.subscriptionTier === 'platinum' ? 'Platinum' : 'Pro'} Member
+          </h2>
+>>>>>>> origin/main
           <p className="text-gray-300">
             You have access to all premium features. Enjoy your karaoke experience!
           </p>

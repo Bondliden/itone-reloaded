@@ -21,7 +21,11 @@ export interface UserProfile {
   bio: string;
   github_repo: string;
   avatar_url: string;
+<<<<<<< HEAD
   subscription_tier: 'free' | 'platinum';
+=======
+  subscription_tier: 'free' | 'pro' | 'platinum';
+>>>>>>> origin/main
   created_at: string;
   updated_at: string;
 }

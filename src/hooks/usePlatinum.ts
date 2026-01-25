@@ -86,7 +86,11 @@ export function usePlatinumSubscription(userId?: string) {
         .select('*')
         .eq('user_id', userId)
         .eq('status', 'active')
+<<<<<<< HEAD
         .single();
+=======
+        .maybeSingle();
+>>>>>>> origin/main
       
       if (error && error.code !== 'PGRST116') throw error;
       return data as PlatinumSubscription | null;

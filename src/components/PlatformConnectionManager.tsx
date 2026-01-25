@@ -1,19 +1,35 @@
+<<<<<<< HEAD
 import { useState } from 'react';
 import { Link2, CheckCircle, ExternalLink, Unlink, Loader2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { useAuth } from '../contexts/AuthContext';
+=======
+import React, { useState } from 'react';
+import { Link2, CheckCircle, AlertTriangle, ExternalLink, RefreshCw, Unlink, Loader2 } from 'lucide-react';
+import { Button } from './ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
+import { useAuth } from '../modules/auth';
+>>>>>>> origin/main
 import { useStreamingPlatforms, useUserPlatformConnections, useConnectPlatform } from '../hooks/usePlatinum';
 import { toast } from './ui/toast';
 
 export function PlatformConnectionManager() {
+<<<<<<< HEAD
   const { user } = useAuth();
+=======
+  const { state: { user } } = useAuth();
+>>>>>>> origin/main
   const { data: platforms = [] } = useStreamingPlatforms();
   const { data: connections = [] } = useUserPlatformConnections(user?.id);
   const connectPlatform = useConnectPlatform();
   const [connectingPlatform, setConnectingPlatform] = useState<string | null>(null);
 
   const isConnected = (platformId: string) => {
+<<<<<<< HEAD
     return connections.some(conn =>
+=======
+    return connections.some(conn => 
+>>>>>>> origin/main
       conn.platform_id === platformId && conn.connection_status === 'active'
     );
   };
@@ -22,12 +38,19 @@ export function PlatformConnectionManager() {
     return connections.find(conn => conn.platform_id === platformId);
   };
 
+<<<<<<< HEAD
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+=======
+>>>>>>> origin/main
   const handleConnect = async (platform: any) => {
     if (!user) return;
 
     setConnectingPlatform(platform.id);
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> origin/main
     try {
       // Redirect to OAuth flow based on platform
       if (platform.name === 'spotify') {
@@ -58,8 +81,12 @@ export function PlatformConnectionManager() {
           description: `Successfully connected to ${platform.display_name}. You can now upload directly to this platform.`,
         });
       }
+<<<<<<< HEAD
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_error) {
+=======
+    } catch (error) {
+>>>>>>> origin/main
       toast({
         title: "Connection Failed",
         description: `Failed to connect to ${platform.display_name}. Please try again.`,
@@ -70,8 +97,12 @@ export function PlatformConnectionManager() {
     }
   };
 
+<<<<<<< HEAD
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDisconnect = async (_platformId: string) => {
+=======
+  const handleDisconnect = async (platformId: string) => {
+>>>>>>> origin/main
     // In a real app, this would revoke the OAuth token
     toast({
       title: "Platform Disconnected",

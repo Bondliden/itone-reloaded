@@ -1,26 +1,53 @@
+<<<<<<< HEAD
 # iTone Karaoke - Sing Your Heart Out
+=======
+# Itone.studio - Sing Your Heart Out
+>>>>>>> origin/main
 
 A comprehensive karaoke platform with real-time collaboration, HD recording, and streaming platform integration.
 
 ## Features
 
 - 🎤 **Massive Song Library** - Thousands of songs across all genres
+<<<<<<< HEAD
 - 🎥 **HD Recording** - Professional quality video and audio recording
 - 👥 **Live Collaboration** - Sing with up to 4 friends simultaneously
 - 🎵 **Key Transpose** - Adjust songs to your vocal range (-12 to +12 semitones)
+=======
+- 🧠 **AI-Powered Recommendations** - Smart song suggestions via Genspark AI
+- 🎥 **HD Recording** - Professional quality video and audio recording
+- 🎯 **Real-time Vocal Coaching** - AI analysis and feedback during recording
+- 👥 **Live Collaboration** - Sing with up to 4 friends simultaneously
+- 🎵 **Key Transpose** - Adjust songs to your vocal range (-12 to +12 semitones)
+- 🛡️ **Content Moderation** - AI-powered safety and quality checks
+>>>>>>> origin/main
 - 📱 **Responsive Design** - Works perfectly on desktop and mobile
 - 🔒 **Secure Authentication** - Email/password and Google OAuth
 - 💎 **Subscription Tiers** - Silver, Gold, and Platinum plans
 - 🌐 **Platform Integration** - Upload directly to Spotify, Apple Music, and more
+<<<<<<< HEAD
+=======
+- 🌍 **International** - Auto-detect country and language support
+>>>>>>> origin/main
 
 ## Tech Stack
 
 - **Frontend**: React 18, TypeScript, Tailwind CSS
+<<<<<<< HEAD
 - **Backend**: Supabase (PostgreSQL, Auth, Edge Functions)
+=======
+- **AI Integration**: Genspark AI Agent with real-time streaming
+- **Backend**: Supabase (PostgreSQL, Auth, Edge Functions)
+- **Orchestration**: N8N workflow automation
+>>>>>>> origin/main
 - **Payments**: Stripe integration
 - **Hosting**: Bolt Hosting with SSL
 - **Real-time**: WebRTC for collaboration
 - **Audio/Video**: MediaRecorder API, WebAudio API
+<<<<<<< HEAD
+=======
+- **Modular Architecture**: Independent modules for scalability
+>>>>>>> origin/main
 
 ## Getting Started
 

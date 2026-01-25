@@ -2,24 +2,42 @@ import React from 'react';
 import { Lock, Crown, Star, Zap } from 'lucide-react';
 import { Button } from './ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
+<<<<<<< HEAD
 import { useAuth } from '../contexts/AuthContext';
+=======
+import { useAuth } from '../modules/auth';
+>>>>>>> origin/main
 import { useUserSubscription } from '../hooks/useSubscription';
 
 interface FeatureGateProps {
   feature: 'hd_recording' | 'collaboration' | 'platform_uploads' | 'ultra_hd' | 'advanced_effects';
+<<<<<<< HEAD
   requiredPlan: 'Silver' | 'Gold' | 'Platinum';
+=======
+  requiredPlan: 'Silver' | 'Gold' | 'Pro' | 'Platinum';
+>>>>>>> origin/main
   children: React.ReactNode;
   fallback?: React.ReactNode;
 }
 
 export function FeatureGate({ feature, requiredPlan, children, fallback }: FeatureGateProps) {
+<<<<<<< HEAD
   const { user } = useAuth();
   const { data: subscription } = useUserSubscription(user?.id);
+=======
+  const { state: { user } } = useAuth();
+  // Mock subscription for demo
+  const subscription = null;
+>>>>>>> origin/main
 
   const hasAccess = () => {
     if (!subscription || subscription.status !== 'active') return false;
     
+<<<<<<< HEAD
     const planHierarchy = { 'Silver': 1, 'Gold': 2, 'Platinum': 3 };
+=======
+    const planHierarchy = { 'Silver': 1, 'Gold': 2, 'Pro': 3, 'Platinum': 4 };
+>>>>>>> origin/main
     const userPlanLevel = planHierarchy[subscription.plan?.name as keyof typeof planHierarchy] || 0;
     const requiredLevel = planHierarchy[requiredPlan];
     
@@ -47,6 +65,10 @@ export function FeatureGate({ feature, requiredPlan, children, fallback }: Featu
     switch (plan) {
       case 'Silver': return <Star className="h-6 w-6 text-gray-400" />;
       case 'Gold': return <Crown className="h-6 w-6 text-yellow-400" />;
+<<<<<<< HEAD
+=======
+      case 'Pro': return <Zap className="h-6 w-6 text-blue-400" />;
+>>>>>>> origin/main
       case 'Platinum': return <Zap className="h-6 w-6 text-purple-400" />;
       default: return <Lock className="h-6 w-6 text-gray-400" />;
     }
@@ -56,6 +78,10 @@ export function FeatureGate({ feature, requiredPlan, children, fallback }: Featu
     switch (plan) {
       case 'Silver': return 'from-gray-600 to-gray-500';
       case 'Gold': return 'from-yellow-600 to-orange-600';
+<<<<<<< HEAD
+=======
+      case 'Pro': return 'from-blue-600 to-cyan-600';
+>>>>>>> origin/main
       case 'Platinum': return 'from-purple-600 to-pink-600';
       default: return 'from-gray-600 to-gray-500';
     }

@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import { Upload, Music, CheckCircle, Loader2, AlertTriangle } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { useAuth } from '../contexts/AuthContext';
+=======
+import { Upload, Music, Image, Globe, CheckCircle, Loader2, AlertTriangle } from 'lucide-react';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
+import { useAuth } from '../modules/auth';
+>>>>>>> origin/main
 import { useUserPlatformConnections, useCreateUploadJob } from '../hooks/usePlatinum';
 import { toast } from './ui/toast';
 
@@ -22,10 +30,17 @@ interface IntegratedUploadStudioProps {
 }
 
 export function IntegratedUploadStudio({ recording, isOpen, onClose }: IntegratedUploadStudioProps) {
+<<<<<<< HEAD
   const { user } = useAuth();
   const { data: connections = [] } = useUserPlatformConnections(user?.id);
   const createUploadJob = useCreateUploadJob();
 
+=======
+  const { state: { user } } = useAuth();
+  const { data: connections = [] } = useUserPlatformConnections(user?.id);
+  const createUploadJob = useCreateUploadJob();
+  
+>>>>>>> origin/main
   const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
   const [uploadMetadata, setUploadMetadata] = useState({
     title: recording.song.title,
@@ -41,8 +56,13 @@ export function IntegratedUploadStudio({ recording, isOpen, onClose }: Integrate
   const activeConnections = connections.filter(conn => conn.connection_status === 'active');
 
   const togglePlatform = (platformId: string) => {
+<<<<<<< HEAD
     setSelectedPlatforms(prev =>
       prev.includes(platformId)
+=======
+    setSelectedPlatforms(prev => 
+      prev.includes(platformId) 
+>>>>>>> origin/main
         ? prev.filter(id => id !== platformId)
         : [...prev, platformId]
     );
@@ -91,7 +111,11 @@ export function IntegratedUploadStudio({ recording, isOpen, onClose }: Integrate
       });
 
       onClose();
+<<<<<<< HEAD
     } catch (_error) {
+=======
+    } catch (error) {
+>>>>>>> origin/main
       toast({
         title: "Upload Failed",
         description: "Failed to start upload process. Please try again.",
@@ -160,10 +184,18 @@ export function IntegratedUploadStudio({ recording, isOpen, onClose }: Integrate
                   <div
                     key={connection.id}
                     onClick={() => togglePlatform(connection.platform_id)}
+<<<<<<< HEAD
                     className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${selectedPlatforms.includes(connection.platform_id)
                       ? 'border-purple-400 bg-purple-600/20'
                       : 'border-gray-600 bg-black/30 hover:border-gray-500'
                       }`}
+=======
+                    className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                      selectedPlatforms.includes(connection.platform_id)
+                        ? 'border-purple-400 bg-purple-600/20'
+                        : 'border-gray-600 bg-black/30 hover:border-gray-500'
+                    }`}
+>>>>>>> origin/main
                   >
                     <div className="flex items-center space-x-3">
                       {getPlatformIcon(connection.platform?.name || '')}
@@ -194,7 +226,11 @@ export function IntegratedUploadStudio({ recording, isOpen, onClose }: Integrate
                   <label className="text-sm text-gray-300 mb-1 block">Track Title</label>
                   <Input
                     value={uploadMetadata.title}
+<<<<<<< HEAD
                     onChange={(e) => setUploadMetadata({ ...uploadMetadata, title: e.target.value })}
+=======
+                    onChange={(e) => setUploadMetadata({...uploadMetadata, title: e.target.value})}
+>>>>>>> origin/main
                     className="bg-gray-800 border-gray-600 text-white"
                   />
                 </div>
@@ -202,7 +238,11 @@ export function IntegratedUploadStudio({ recording, isOpen, onClose }: Integrate
                   <label className="text-sm text-gray-300 mb-1 block">Artist Name</label>
                   <Input
                     value={uploadMetadata.artist}
+<<<<<<< HEAD
                     onChange={(e) => setUploadMetadata({ ...uploadMetadata, artist: e.target.value })}
+=======
+                    onChange={(e) => setUploadMetadata({...uploadMetadata, artist: e.target.value})}
+>>>>>>> origin/main
                     className="bg-gray-800 border-gray-600 text-white"
                   />
                 </div>
@@ -210,7 +250,11 @@ export function IntegratedUploadStudio({ recording, isOpen, onClose }: Integrate
                   <label className="text-sm text-gray-300 mb-1 block">Album</label>
                   <Input
                     value={uploadMetadata.album}
+<<<<<<< HEAD
                     onChange={(e) => setUploadMetadata({ ...uploadMetadata, album: e.target.value })}
+=======
+                    onChange={(e) => setUploadMetadata({...uploadMetadata, album: e.target.value})}
+>>>>>>> origin/main
                     className="bg-gray-800 border-gray-600 text-white"
                   />
                 </div>
@@ -218,17 +262,29 @@ export function IntegratedUploadStudio({ recording, isOpen, onClose }: Integrate
                   <label className="text-sm text-gray-300 mb-1 block">Genre</label>
                   <Input
                     value={uploadMetadata.genre}
+<<<<<<< HEAD
                     onChange={(e) => setUploadMetadata({ ...uploadMetadata, genre: e.target.value })}
+=======
+                    onChange={(e) => setUploadMetadata({...uploadMetadata, genre: e.target.value})}
+>>>>>>> origin/main
                     className="bg-gray-800 border-gray-600 text-white"
                   />
                 </div>
               </div>
+<<<<<<< HEAD
 
+=======
+              
+>>>>>>> origin/main
               <div>
                 <label className="text-sm text-gray-300 mb-1 block">Description</label>
                 <textarea
                   value={uploadMetadata.description}
+<<<<<<< HEAD
                   onChange={(e) => setUploadMetadata({ ...uploadMetadata, description: e.target.value })}
+=======
+                  onChange={(e) => setUploadMetadata({...uploadMetadata, description: e.target.value})}
+>>>>>>> origin/main
                   rows={3}
                   className="w-full bg-gray-800 border border-gray-600 text-white rounded-md px-3 py-2 text-sm"
                 />

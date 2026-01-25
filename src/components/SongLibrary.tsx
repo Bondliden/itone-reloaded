@@ -1,353 +1,64 @@
 import React, { useState } from 'react';
-<<<<<<< HEAD
-import { Search, Play, Plus, Clock, Star, Music, Video, Music2, Heart, HeartOff, Settings } from 'lucide-react';
-=======
-import { Search, Play, Plus, Clock, Star, Music, Video, Music2, Heart, HeartOff, Settings, Youtube, Link } from 'lucide-react';
->>>>>>> origin/main
+import { 
+  Search, Play, Plus, Clock, Star, Music, Video, Music2, 
+  Heart, HeartOff, Settings, Youtube, Link 
+} from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { RecordingStudio } from './RecordingStudio';
 import { TransposeControl } from './TransposeControl';
 import { toast } from './ui/toast';
-<<<<<<< HEAD
-import { useAuth } from '../contexts/AuthContext';
-import { useSongs, useSaveSong, useRemoveSong, useUserSongs } from '../hooks/useSupabase';
-
-interface Song {
-  id: string;
-=======
 import { useAuth } from '../modules/auth';
 import { useSongs, useSaveSong, useRemoveSong, useUserSongs } from '../hooks/useSupabase';
 
 interface Song {
   id: number | string;
->>>>>>> origin/main
   title: string;
   artist: string;
   duration: number;
   genre: string;
-<<<<<<< HEAD
   difficulty: string;
-  youtube_url: string;
+  youtube_url?: string;
+  youtubeUrl?: string;
   spotify_id?: string;
+  spotifyId?: string;
 }
 
 export function SongLibrary() {
-  const { user } = useAuth();
   const [search, setSearch] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('');
-=======
-  difficulty: string | null;
-  youtubeUrl: string;
-  spotifyId?: string | null;
-}
+  const { state: authState } = useAuth();
+  const { data: songs = [], isLoading } = useSongs();
+  const { data: userSongs = [] } = useUserSongs(authState?.user?.id);
+  const saveSong = useSaveSong();
+  const removeSong = useRemoveSong();
 
-export function SongLibrary() {
-  const { state: { user } } = useAuth();
-  const [search, setSearch] = useState('');
-  const [selectedGenre, setSelectedGenre] = useState('');
-  const [youtubeUrl, setYoutubeUrl] = useState('');
-  const [showAddSong, setShowAddSong] = useState(false);
-  const [quickYoutubeUrl, setQuickYoutubeUrl] = useState('');
->>>>>>> origin/main
-  const [selectedSong, setSelectedSong] = useState<Song | null>(null);
-  const [showRecordingStudio, setShowRecordingStudio] = useState(false);
-  const [showTranspose, setShowTranspose] = useState<string | null>(null);
-  const [transposeValues, setTransposeValues] = useState<Record<string, number>>({});
-<<<<<<< HEAD
+  const genres = Array.from(new Set(songs.map(s => s.genre)));
 
-  const { data: songs = [] } = useSongs(search, selectedGenre);
-  const { data: userSongs = [] } = useUserSongs(user?.id);
-=======
-  const [effectValues, setEffectValues] = useState<Record<string, string>>({});
-
-  const { data: songs = [] } = useSongs(search, selectedGenre);
-  const { data: userSongs = [] } = useUserSongs();
->>>>>>> origin/main
-  const saveSongMutation = useSaveSong();
-  const removeSongMutation = useRemoveSong();
-
-  const genres = ['Rock', 'Pop', 'Classic', 'Country', 'Hip Hop', 'R&B'];
-
-<<<<<<< HEAD
-=======
-  const extractYouTubeInfo = (url: string) => {
-    // Extract video ID from YouTube URL
-    const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/;
-    const match = url.match(regex);
-    return match ? match[1] : null;
-  };
-
-  const addCustomSong = () => {
-    if (!youtubeUrl.trim()) {
-      toast({
-        title: "YouTube URL Required",
-        description: "Please enter a valid YouTube URL.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    const videoId = extractYouTubeInfo(youtubeUrl);
-    if (!videoId) {
-      toast({
-        title: "Invalid YouTube URL",
-        description: "Please enter a valid YouTube URL.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Create a custom song entry
-    const customSong: Song = {
-      id: `custom-${Date.now()}`,
-      title: 'Custom YouTube Song',
-      artist: 'Unknown Artist',
-      duration: 180,
-      genre: 'Custom',
-      difficulty: 'medium',
-      youtubeUrl: youtubeUrl,
-      spotifyId: ''
-    };
-
-    // Add to the current session (in a real app, this would be saved to database)
-    openRecordingStudio(customSong);
-    setYoutubeUrl('');
-    setShowAddSong(false);
-    
-    toast({
-      title: "Custom Song Added!",
-      description: "You can now record with your custom YouTube track.",
-    });
-  };
-
-  const addQuickYoutube = () => {
-    if (!quickYoutubeUrl.trim()) return;
-    
-    const videoId = extractYouTubeInfo(quickYoutubeUrl);
-    if (!videoId) {
-      toast({
-        title: "Invalid YouTube URL",
-        description: "Please enter a valid YouTube video URL (not a search results page).",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    const customSong: Song = {
-      id: `quick-${Date.now()}`,
-      title: 'Custom YouTube Video',
-      artist: 'Unknown Artist',
-      duration: 180,
-      genre: 'Custom',
-      difficulty: 'medium',
-      youtubeUrl: quickYoutubeUrl,
-      spotifyId: ''
-    };
-
-    openRecordingStudio(customSong);
-    setQuickYoutubeUrl('');
-    
-    toast({
-      title: "YouTube Video Loaded!",
-      description: "Recording studio opened with your YouTube track.",
-    });
-  };
-
-  const effects = [
-    { id: 'studio', name: 'Studio', emoji: '🎙️' },
-    { id: 'bathroom', name: 'Bathroom', emoji: '🚿' },
-    { id: 'arena', name: 'Arena', emoji: '🏟️' },
-    { id: 'cathedral', name: 'Cathedral', emoji: '⛪' },
-    { id: 'stadium', name: 'Stadium', emoji: '🏟️' }
-  ];
-
->>>>>>> origin/main
-  const formatDuration = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
-<<<<<<< HEAD
-  const isSongSaved = (songId: string) => {
-    return userSongs.some(us => us.song_id === songId);
-=======
-  const isSongSaved = (songId: number | string) => {
-    return userSongs.some(us => us.songId === Number(songId));
->>>>>>> origin/main
-  };
-
-  const toggleSaveSong = async (song: Song) => {
-    if (!user) return;
-
-<<<<<<< HEAD
-    if (isSongSaved(song.id)) {
-      await removeSongMutation.mutateAsync({ userId: user.id, songId: song.id });
-=======
-    const numericId = typeof song.id === 'string' ? parseInt(song.id) : song.id;
-    
-    if (isSongSaved(song.id)) {
-      await removeSongMutation.mutateAsync(numericId);
->>>>>>> origin/main
-      toast({
-        title: "Removed from library",
-        description: `${song.title} has been removed from your library.`,
-      });
-    } else {
-      const transposeValue = transposeValues[song.id] || 0;
-      await saveSongMutation.mutateAsync({ 
-<<<<<<< HEAD
-        userId: user.id, 
-        songId: song.id,
-=======
-        songId: numericId,
->>>>>>> origin/main
-        transposeValue 
-      });
-      toast({
-        title: "Added to library!",
-        description: `${song.title} has been saved to your library.`,
-      });
-    }
-  };
-
-  const addToQueue = (song: Song) => {
-    const transposeValue = transposeValues[song.id] || 0;
-    toast({
-      title: "Added to queue!",
-      description: `${song.title}${transposeValue !== 0 ? ` (transpose ${transposeValue > 0 ? '+' : ''}${transposeValue})` : ''} has been added to the karaoke queue.`,
-    });
-  };
-
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty.toLowerCase()) {
-      case 'easy': return 'text-green-400';
-      case 'medium': return 'text-yellow-400';
-      case 'hard': return 'text-red-400';
-      default: return 'text-gray-400';
-    }
-  };
-
-  const openRecordingStudio = (song: Song) => {
-<<<<<<< HEAD
-    setSelectedSong({
-      ...song,
-      youtube_url: song.youtube_url
-    });
-    setShowRecordingStudio(true);
-  };
-
-  // Mock songs data for demo
-  const mockSongs = [
-    {
-      id: '1',
-=======
-    setSelectedSong(song);
-    setShowRecordingStudio(true);
-  };
-
-  // Mock songs data for demo (used as fallback when API returns empty)
   const mockSongs: Song[] = [
     {
-      id: 1,
->>>>>>> origin/main
-      title: 'Bohemian Rhapsody',
-      artist: 'Queen',
-      duration: 355,
-      genre: 'Rock',
-      difficulty: 'hard',
-<<<<<<< HEAD
-      youtube_url: 'https://www.youtube.com/watch?v=fJ9rUzIMcZQ',
-      spotify_id: '4u7EnebtmKWzUH433cf1Qv'
-    },
-    {
-      id: '2',
-=======
-      youtubeUrl: 'https://www.youtube.com/watch?v=fJ9rUzIMcZQ',
-      spotifyId: '4u7EnebtmKWzUH433cf1Qv'
-    },
-    {
-      id: 2,
->>>>>>> origin/main
-      title: 'Shape of You',
-      artist: 'Ed Sheeran',
-      duration: 233,
+      id: '1',
+      title: 'Stay With Me',
+      artist: 'Sam Smith',
+      duration: 172,
       genre: 'Pop',
       difficulty: 'medium',
-<<<<<<< HEAD
-      youtube_url: 'https://www.youtube.com/watch?v=JGwWNGJdvx8',
-      spotify_id: '7qiZfU4dY4WkLyMn4s5iuJ'
-    },
-    {
-      id: '3',
-=======
-      youtubeUrl: 'https://www.youtube.com/watch?v=JGwWNGJdvx8',
-      spotifyId: '7qiZfU4dY4WkLyMn4s5iuJ'
-    },
-    {
-      id: 3,
->>>>>>> origin/main
-      title: 'Imagine',
-      artist: 'John Lennon',
-      duration: 183,
-      genre: 'Classic',
-      difficulty: 'easy',
-<<<<<<< HEAD
-      youtube_url: 'https://www.youtube.com/watch?v=YkgkThdzX-8',
-      spotify_id: '7pKfPomDiuM2OtqtWKpGRb'
-    },
-    {
-      id: '4',
-=======
-      youtubeUrl: 'https://www.youtube.com/watch?v=YkgkThdzX-8',
-      spotifyId: '7pKfPomDiuM2OtqtWKpGRb'
-    },
-    {
-      id: 4,
->>>>>>> origin/main
-      title: 'Billie Jean',
-      artist: 'Michael Jackson',
-      duration: 294,
-      genre: 'Pop',
-      difficulty: 'medium',
-<<<<<<< HEAD
-      youtube_url: 'https://www.youtube.com/watch?v=Zi_XLOBDo_Y',
-      spotify_id: '5ChkMS8OtdzJeqyybCc9R5'
-=======
-      youtubeUrl: 'https://www.youtube.com/watch?v=Zi_XLOBDo_Y',
+      youtubeUrl: 'https://www.youtube.com/watch?v=pB-5XG-DbAA',
       spotifyId: '5ChkMS8OtdzJeqyybCc9R5'
->>>>>>> origin/main
     }
   ];
 
   const displaySongs = songs.length > 0 ? songs : mockSongs;
+  const filteredSongs = displaySongs.filter(song => {
+    const matchesSearch = song.title.toLowerCase().includes(search.toLowerCase()) || 
+                         song.artist.toLowerCase().includes(search.toLowerCase());
+    const matchesGenre = !selectedGenre || song.genre === selectedGenre;
+    return matchesSearch && matchesGenre;
+  });
 
   return (
     <div className="space-y-6">
-<<<<<<< HEAD
-      {/* Search and Filters */}
-      <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6">
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <Input
-              placeholder="Search songs or artists..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-10 bg-white/10 border-white/20 text-white placeholder-gray-400"
-            />
-          </div>
-          <select
-            value={selectedGenre}
-            onChange={(e) => setSelectedGenre(e.target.value)}
-            className="bg-white/10 border border-white/20 text-white rounded-lg px-4 py-2 min-w-[120px]"
-          >
-            <option value="">All Genres</option>
-            {genres.map(genre => (
-              <option key={genre} value={genre} className="bg-gray-800">
-=======
       {/* AI Smart Recommendations */}
       <div className="bg-gradient-to-r from-green-600/20 to-blue-600/20 border border-green-400/30 backdrop-blur-lg rounded-2xl p-6 mb-6">
         <div className="flex items-center space-x-3 mb-3">
@@ -381,315 +92,80 @@ export function SongLibrary() {
 
       {/* Search and Filters */}
       <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6">
-        {/* YouTube URL Quick Add - Prominent */}
-        <div className="bg-gradient-to-r from-red-600/20 to-pink-600/20 border border-red-400/40 rounded-xl p-6 mb-6 shadow-xl">
-          <div className="flex items-center space-x-3 mb-3">
-            <Youtube className="h-6 w-6 text-red-400" />
-            <div>
-              <h3 className="text-xl font-bold text-white">🎤 Record Any YouTube Karaoke Song</h3>
-              <p className="text-gray-300">Paste any YouTube karaoke URL • FREE: 4 recordings + unlimited transpose & effects</p>
-            </div>
-          </div>
-          <div className="flex space-x-2">
-            <Input
-              placeholder="🎵 Paste YouTube karaoke URL here (e.g., https://youtu.be/fJ9rUzIMcZQ)"
-              value={quickYoutubeUrl}
-              onChange={(e) => setQuickYoutubeUrl(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && addQuickYoutube()}
-              className="flex-1 bg-white/95 border-2 border-red-300 text-gray-900 placeholder-gray-600 font-medium text-base h-14 rounded-xl shadow-lg"
-            />
-            
-            {/* Key Transpose Control - Inline */}
-            <select
-              className="bg-green-500 border-2 border-green-400 text-black font-bold text-sm rounded-lg px-3 min-w-[80px] h-14"
-              defaultValue="0"
-            >
-              <option value="-12">Key -12</option>
-              <option value="-6">Key -6</option>
-              <option value="-3">Key -3</option>
-              <option value="0">Original</option>
-              <option value="+3">Key +3</option>
-              <option value="+6">Key +6</option>
-              <option value="+12">Key +12</option>
-            </select>
-            
-            {/* Sound Effects Control - Inline */}
-            <select
-              className="bg-blue-500 border-2 border-blue-400 text-white font-bold text-sm rounded-lg px-3 min-w-[100px] h-14"
-              defaultValue="studio"
-            >
-              <option value="studio">🎙️ Studio</option>
-              <option value="bathroom">🚿 Bathroom</option>
-              <option value="arena">🏟️ Arena</option>
-              <option value="cathedral">⛪ Cathedral</option>
-              <option value="stadium">🏟️ Stadium</option>
-            </select>
-            
-            <Button
-              onClick={addQuickYoutube}
-              disabled={!quickYoutubeUrl.trim()}
-              className="bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white font-bold px-8 h-14 rounded-xl shadow-xl transform hover:scale-105 transition-all"
-            >
-              <Video className="h-5 w-5 mr-2" />
-              🎬 START RECORDING
-            </Button>
-          </div>
-          <div className="mt-4 bg-gradient-to-r from-green-600/30 to-blue-600/30 border-2 border-green-400/60 rounded-xl p-4 shadow-lg">
-            <p className="text-green-400 text-sm font-medium text-center">
-              ✨ FREE TIER: 4 YouTube recordings + unlimited key transpose + 5 sound effects • Zero subscription required
-            </p>
-          </div>
-        </div>
-
-        <div className="flex flex-col md:flex-row gap-4 mb-4">
+        <div className="flex flex-col md:flex-row gap-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
             <Input
-              placeholder={user ? `Hey ${user.name?.split(' ')[0]}, search songs or artists...` : "Search songs or artists..."}
+              placeholder="Search songs or artists..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-10 bg-white/80 border-white text-gray-900 placeholder-gray-600 font-medium"
+              className="pl-10 bg-white/10 border-white/20 text-white placeholder-gray-400"
             />
           </div>
-          
           <select
             value={selectedGenre}
             onChange={(e) => setSelectedGenre(e.target.value)}
-            className="bg-white border border-gray-300 text-gray-900 rounded-lg px-4 py-2 min-w-[120px] font-medium"
+            className="bg-white/10 border border-white/20 text-white rounded-lg px-4 py-2 min-w-[120px]"
           >
-            <option value="">All Genres</option>
+            <option value="" className="bg-gray-800">All Genres</option>
             {genres.map(genre => (
-              <option key={genre} value={genre} className="bg-white text-gray-900">
->>>>>>> origin/main
-                {genre}
-              </option>
+              <option key={genre} value={genre} className="bg-gray-800">{genre}</option>
             ))}
           </select>
         </div>
-<<<<<<< HEAD
-=======
-        
-        {/* Quick Stats */}
-        <div className="grid grid-cols-4 gap-4 text-center">
-          <div className="bg-black/30 rounded-lg p-3">
-            <div className="text-lg font-bold text-white">{displaySongs.length}</div>
-            <div className="text-xs text-gray-400">Available Songs</div>
-          </div>
-          <div className="bg-black/30 rounded-lg p-3">
-            <div className="text-lg font-bold text-purple-400">{userSongs.length}</div>
-            <div className="text-xs text-gray-400">Saved Songs</div>
-          </div>
-          <div className="bg-black/30 rounded-lg p-3">
-            <div className="text-lg font-bold text-blue-400">{genres.length}</div>
-            <div className="text-xs text-gray-400">Genres</div>
-          </div>
-          <div className="bg-black/30 rounded-lg p-3">
-            <div className="text-lg font-bold text-green-400">∞</div>
-            <div className="text-xs text-gray-400">Custom Songs</div>
-          </div>
-        </div>
->>>>>>> origin/main
       </div>
 
       {/* Songs Grid */}
-      <div className="grid gap-4">
-        {displaySongs.length === 0 ? (
-          <div className="text-center py-12">
-            <Music className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-300 text-lg">No songs found</p>
-          </div>
-        ) : (
-          displaySongs.map((song: Song) => (
-            <div
-              key={song.id}
-              className="bg-white/10 backdrop-blur-lg rounded-xl p-6 hover:bg-white/15 transition-all duration-300 group"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-1">
-                    <h3 className="text-xl font-bold text-white">{song.title}</h3>
-                    {isSongSaved(song.id) && (
-                      <Heart className="h-4 w-4 text-red-400 fill-current" />
-                    )}
-<<<<<<< HEAD
-=======
-                    {String(song.id).startsWith('custom-') && (
-                      <span className="bg-red-600/20 text-red-400 px-2 py-1 rounded-full text-xs font-medium">
-                        Custom
-                      </span>
-                    )}
->>>>>>> origin/main
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredSongs.map((song) => {
+          const isSaved = userSongs.some(us => us.id === song.id);
+          return (
+            <div key={song.id} className="bg-white/5 border border-white/10 rounded-xl overflow-hidden group hover:border-green-400/50 transition-all">
+              <div className="p-4">
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <h3 className="font-bold text-white group-hover:text-green-400 transition-colors">{song.title}</h3>
+                    <p className="text-gray-400 text-sm">{song.artist}</p>
                   </div>
-                  <p className="text-gray-300 mb-2">{song.artist}</p>
-                  <div className="flex items-center space-x-4 text-sm">
-                    <span className="flex items-center text-gray-400">
-                      <Clock className="h-3 w-3 mr-1" />
-                      {formatDuration(song.duration)}
-                    </span>
-                    <span className="text-purple-400">{song.genre}</span>
-<<<<<<< HEAD
-                    <span className={`flex items-center ${getDifficultyColor(song.difficulty)}`}>
-                      <Star className="h-3 w-3 mr-1" />
-                      {song.difficulty}
-=======
-                    <span className={`flex items-center ${getDifficultyColor(song.difficulty || 'medium')}`}>
-                      <Star className="h-3 w-3 mr-1" />
-                      {song.difficulty || 'medium'}
->>>>>>> origin/main
-                    </span>
-                    {transposeValues[song.id] !== undefined && transposeValues[song.id] !== 0 && (
-                      <span className="text-yellow-400 text-xs bg-yellow-400/20 px-2 py-1 rounded">
-                        Transpose: {transposeValues[song.id] > 0 ? '+' : ''}{transposeValues[song.id]}
-                      </span>
-                    )}
-                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => isSaved ? removeSong.mutate(song.id) : saveSong.mutate(song)}
+                    className={isSaved ? "text-green-400" : "text-gray-400"}
+                  >
+                    <Star className={`h-5 w-5 ${isSaved ? "fill-current" : ""}`} />
+                  </Button>
                 </div>
-                
-                <div className="flex items-center space-x-2">
-                  {/* Transpose Control */}
-<<<<<<< HEAD
-                  <Dialog open={showTranspose === song.id} onOpenChange={(open) => setShowTranspose(open ? song.id : null)}>
+                <div className="flex items-center gap-4 text-xs text-gray-400 mb-4">
+                  <span className="flex items-center gap-1">
+                    <Clock className="h-3 w-3" />
+                    {Math.floor(song.duration / 60)}:{(song.duration % 60).toString().padStart(2, '0')}
+                  </span>
+                  <span>{song.genre}</span>
+                  <span className="capitalize">{song.difficulty}</span>
+                </div>
+                <div className="flex gap-2">
+                  <Dialog>
                     <DialogTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-white hover:bg-white/10"
-                      >
-                        <Settings className="h-4 w-4" />
+                      <Button className="flex-1 bg-green-500 hover:bg-green-600 text-black font-bold">
+                        <Play className="h-4 w-4 mr-2" />
+                        Sing Now
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="bg-gray-900 border-gray-700 text-white">
+                    <DialogContent className="max-w-4xl bg-black border-white/10">
                       <DialogHeader>
-                        <DialogTitle>Transpose Settings - {song.title}</DialogTitle>
+                        <DialogTitle>{song.title} - {song.artist}</DialogTitle>
                       </DialogHeader>
-                      <TransposeControl
-                        transpose={transposeValues[song.id] || 0}
-                        onTransposeChange={(value) => setTransposeValues(prev => ({ ...prev, [song.id]: value }))}
-                      />
+                      <RecordingStudio song={song} />
                     </DialogContent>
                   </Dialog>
-
-                  {/* Save/Unsave Song */}
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => toggleSaveSong(song)}
-                    className={`${isSongSaved(song.id) ? 'text-red-400 hover:bg-red-500/20' : 'text-white hover:bg-white/10'}`}
-                  >
-                    {isSongSaved(song.id) ? (
-                      <Heart className="h-4 w-4 fill-current" />
-                    ) : (
-                      <HeartOff className="h-4 w-4" />
-                    )}
-                  </Button>
-=======
-                  <div className="flex items-center space-x-3 bg-gradient-to-r from-green-600/30 to-blue-600/30 border border-green-400/50 rounded-lg px-3 py-2 shadow-lg">
-                    <Music2 className="h-3 w-3 text-green-400" />
-                    <span className="text-green-400 text-xs font-bold">KEY:</span>
-                    <select
-                      value={transposeValues[song.id] || 0}
-                      onChange={(e) => setTransposeValues(prev => ({ ...prev, [song.id]: parseInt(e.target.value) }))}
-                      className="bg-white/90 text-gray-900 text-xs font-bold border border-green-400 rounded px-2 py-1 min-w-[70px]"
-                    >
-                      {Array.from({ length: 25 }, (_, i) => i - 12).map(value => (
-                        <option key={value} value={value} className="bg-white text-gray-900">
-                          {value === 0 ? 'Original' : value > 0 ? `+${value}` : `${value}`}
-                        </option>
-                      ))}
-                    </select>
-                    
-                    {/* Sound Effects Control - RIGHT BESIDE KEY */}
-                    <span className="text-red-400 text-xs font-bold">EFFECTS:</span>
-                    <select
-                      value={effectValues[song.id] || 'studio'}
-                      onChange={(e) => setEffectValues(prev => ({ ...prev, [song.id]: e.target.value }))}
-                      className="bg-white/90 text-gray-900 text-xs font-bold border border-red-400 rounded px-2 py-1 min-w-[90px]"
-                    >
-                      {effects.map(effect => (
-                        <option key={effect.id} value={effect.id} className="bg-white text-gray-900">
-                          {effect.emoji} {effect.name}
-                        </option>
-                      ))}
-                    </select>
-                    
-                    <span className="text-green-400 text-xs font-bold bg-green-400/20 px-2 py-1 rounded">FREE</span>
-                  </div>
-
-                  {/* Save/Unsave Song */}
-                  {!String(song.id).startsWith('custom-') && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => toggleSaveSong(song)}
-                      className={`${isSongSaved(song.id) ? 'text-red-400 hover:bg-red-500/20' : 'text-white hover:bg-white/10'}`}
-                    >
-                      {isSongSaved(song.id) ? (
-                        <Heart className="h-4 w-4 fill-current" />
-                      ) : (
-                        <HeartOff className="h-4 w-4" />
-                      )}
-                    </Button>
-                  )}
->>>>>>> origin/main
-
-                  {/* YouTube Link */}
-                  <Button
-                    variant="ghost"
-                    size="sm"
-<<<<<<< HEAD
-                    onClick={() => window.open(song.youtube_url, '_blank')}
-=======
-                    onClick={() => window.open(song.youtubeUrl, '_blank')}
->>>>>>> origin/main
-                    className="text-white hover:bg-white/10"
-                  >
-                    <Play className="h-4 w-4 mr-1" />
-                    YouTube
-                  </Button>
-
-                  {/* Record Button */}
-                  <Button
-                    size="sm"
-                    onClick={() => openRecordingStudio(song)}
-                    className="bg-red-600 hover:bg-red-700 text-white"
-                  >
-                    <Video className="h-4 w-4 mr-1" />
-                    Record
-                  </Button>
-
-                  {/* Add to Queue */}
-                  <Button
-                    onClick={() => addToQueue(song)}
-                    size="sm"
-                    className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
-                  >
-                    <Plus className="h-4 w-4 mr-1" />
-                    Queue
-                  </Button>
+                  <TransposeControl />
                 </div>
               </div>
             </div>
-          ))
-        )}
+          );
+        })}
       </div>
-
-      {/* Recording Studio Dialog */}
-      <Dialog open={showRecordingStudio} onOpenChange={setShowRecordingStudio}>
-        <DialogContent className="max-w-7xl bg-gray-900 border-gray-700 text-white">
-          <DialogHeader>
-            <DialogTitle className="flex items-center space-x-2">
-              <Music2 className="h-5 w-5 text-purple-400" />
-              <span>Recording Studio - {selectedSong?.title}</span>
-            </DialogTitle>
-          </DialogHeader>
-          {selectedSong && (
-            <RecordingStudio 
-              song={selectedSong} 
-              initialTranspose={transposeValues[selectedSong.id] || 0}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

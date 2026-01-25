@@ -6,7 +6,6 @@ import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { NotificationCenter } from './NotificationCenter';
 import { useAuth } from '../contexts/AuthContext';
-import { useUserSubscription } from '../hooks/useSubscription';
 
 export function Header() {
   const { user, logout } = useAuth();

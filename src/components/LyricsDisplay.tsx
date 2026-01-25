@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useMemo } from 'react';
 import { Music, Play, Pause } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -28,11 +28,8 @@ export function LyricsDisplay({
   className,
   onTimeSeek
 }: LyricsDisplayProps) {
-  const [currentLineIndex, setCurrentLineIndex] = useState(-1);
-  const [nextLineIndex, setNextLineIndex] = useState(-1);
-
-  useEffect(() => {
-    // Find current and next lyrics lines
+  // Derive current and next line indices from currentTime instead of using state
+  const { currentLineIndex, nextLineIndex } = useMemo(() => {
     let current = -1;
     let next = -1;
 
@@ -48,8 +45,7 @@ export function LyricsDisplay({
       }
     }
 
-    setCurrentLineIndex(current);
-    setNextLineIndex(next);
+    return { currentLineIndex: current, nextLineIndex: next };
   }, [currentTime, lyrics]);
 
   const handleLineClick = (line: LyricsLine) => {

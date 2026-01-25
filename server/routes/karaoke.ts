@@ -42,13 +42,20 @@ const songs = [
   }
 ];
 
-const queue: Array<{
+interface QueueItem {
   id: string;
   songId: string;
   userId: string;
   userName: string;
   timestamp: number;
-}> = [];
+}
+
+interface UserWithId extends Express.User {
+  id: string;
+  name: string;
+}
+
+const queue: QueueItem[] = [];
 
 // Get all songs
 karaokeRoutes.get('/songs', (req, res) => {
@@ -97,8 +104,8 @@ karaokeRoutes.post('/queue', (req, res) => {
   const queueItem = {
     id: Date.now().toString(),
     songId,
-    userId: (req.user as Express.User & { id: string }).id,
-    userName: (req.user as Express.User & { name: string }).name,
+    userId: (req.user as UserWithId).id,
+    userName: (req.user as UserWithId).name,
     timestamp: Date.now()
   };
 
@@ -130,7 +137,7 @@ karaokeRoutes.delete('/queue/:id', (req, res) => {
 
   // Only allow users to remove their own items or implement admin logic
   const queueItem = queue[index];
-  if (queueItem.userId !== (req.user as Express.User & { id: string }).id) {
+  if (queueItem.userId !== (req.user as UserWithId).id) {
     return res.status(403).json({ error: 'Unauthorized' });
   }
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { Video, VideoOff, Mic, MicOff, Square, Play, Download, Users, Globe, Upload } from 'lucide-react';
 import { Button } from './ui/button';
 import { Switch } from './ui/switch';
@@ -32,7 +32,7 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
   const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null);
   const [showUploadStudio, setShowUploadStudio] = useState(false);
   const [connectedUsers, setConnectedUsers] = useState(1);
-  const [recordingQuality, setRecordingQuality] = useState<'standard' | 'high'>('standard');
+  const [recordingQuality, setRecordingQuality] = useState<'standard' | 'high' | 'ultra'>('standard');
   const [includeYouTubeAudio, setIncludeYouTubeAudio] = useState(true);
   const [autoTune, setAutoTune] = useState(false);
   const [echoEffect, setEchoEffect] = useState(false);
@@ -44,18 +44,8 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
   const hasGoldOrHigher = subscription?.plan?.name === 'Gold' || subscription?.plan?.name === 'Platinum';
   const hasPlatinum = subscription?.plan?.name === 'Platinum';
   const hasIntegratedPlatinum = !!platinumSubscription;
-  const _maxQuality = subscription?.plan?.download_quality || 'standard';
 
-  useEffect(() => {
-    initializeCamera();
-    return () => {
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach(track => track.stop());
-      }
-    };
-  }, []);
-
-  const initializeCamera = async () => {
+  const initializeCamera = useCallback(async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: isVideoEnabled,
@@ -66,6 +56,7 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_error) {
       toast({
         title: "Camera Access Denied",
@@ -73,7 +64,16 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
         variant: "destructive",
       });
     }
-  };
+  }, [isVideoEnabled, isAudioEnabled]);
+
+  useEffect(() => {
+    initializeCamera();
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, [initializeCamera]);
 
   const toggleRecording = async () => {
     if (!isRecording) {
@@ -137,8 +137,8 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
       const a = document.createElement('a');
       a.href = url;
       const quality = recordingQuality === 'ultra' ? 'UHD' : recordingQuality === 'high' ? 'HD' : 'SD';
-      const transpose = transpose !== 0 ? `_transpose${transpose > 0 ? '+' : ''}${transpose}` : '';
-      a.download = `karaoke-${song?.title || 'recording'}${transpose}_${quality}-${Date.now()}.webm`;
+      const transposeValue = transpose !== 0 ? `_transpose${transpose > 0 ? '+' : ''}${transpose}` : '';
+      a.download = `karaoke-${song?.title || 'recording'}${transposeValue}_${quality}-${Date.now()}.webm`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -149,30 +149,6 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
         description: `Your ${quality} recording is being downloaded.`,
       });
     }
-  };
-
-  const uploadToPlatform = async (platform: 'youtube' | 'spotify') => {
-    if (!hasPlatinum) {
-      toast({
-        title: "Platinum Required",
-        description: "Upgrade to Platinum to upload directly to external platforms.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    toast({
-      title: `Uploading to ${platform === 'youtube' ? 'YouTube' : 'Spotify'}`,
-      description: "Your recording is being uploaded. This may take a few minutes.",
-    });
-
-    // Simulate upload
-    setTimeout(() => {
-      toast({
-        title: "Upload Successful!",
-        description: `Your recording has been uploaded to ${platform === 'youtube' ? 'YouTube' : 'Spotify'}.`,
-      });
-    }, 3000);
   };
 
   const toggleCamera = async () => {
@@ -317,8 +293,8 @@ export function RecordingStudio({ song, initialTranspose = 0 }: RecordingStudioP
                 onClick={toggleRecording}
                 size="lg"
                 className={`rounded-full w-16 h-16 ${isRecording
-                    ? 'bg-red-600 hover:bg-red-700'
-                    : 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700'
+                  ? 'bg-red-600 hover:bg-red-700'
+                  : 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700'
                   }`}
               >
                 {isRecording ? (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Users, Globe, Mic, Video, MessageCircle, UserPlus, Crown, MicOff, VideoOff, Copy } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -123,9 +123,8 @@ export function CollaborativeSession() {
   };
 
   const formatTime = (timestamp: number) => {
-    // Called only when rendering message timestamps, not during initial render
-    const now = Date.now();
-    const diff = now - timestamp;
+    // Calculate difference at call time, not during render setup
+    const diff = Date.now() - timestamp;
     const minutes = Math.floor(diff / 60000);
     if (minutes < 1) return 'now';
     return `${minutes}m ago`;

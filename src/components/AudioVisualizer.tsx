@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import { cn } from '../lib/utils';
 
 interface AudioVisualizerProps {
@@ -22,7 +22,6 @@ export function AudioVisualizer({
   const animationRef = useRef<number>();
   const analyserRef = useRef<AnalyserNode>();
   const dataArrayRef = useRef<Uint8Array>();
-  const [isActive, setIsActive] = useState(false);
 
   // Define draw functions before useEffect to avoid hoisting issues
   const drawBars = (
@@ -135,7 +134,6 @@ export function AudioVisualizer({
 
     analyserRef.current = analyser;
     dataArrayRef.current = dataArray;
-    setIsActive(true);
 
     const draw = () => {
       if (!analyserRef.current || !dataArrayRef.current || !ctx) return;
@@ -169,9 +167,10 @@ export function AudioVisualizer({
       if (audioContext.state !== 'closed') {
         audioContext.close();
       }
-      setIsActive(false);
     };
   }, [stream, type, color, sensitivity]);
+
+  const isActive = !!stream;
 
   return (
     <canvas

@@ -2,17 +2,12 @@ import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 import { authRoutes } from './routes/auth.js';
 import { karaokeRoutes } from './routes/karaoke.js';
 
 // Load environment variables first
 import dotenv from 'dotenv';
 dotenv.config();
-
-const __filename = fileURLToPath(import.meta.url);
-const _dirname = dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -57,11 +52,11 @@ passport.use(new GoogleStrategy({
   return done(null, user);
 }));
 
-passport.serializeUser((user: Express.User, done) => {
+passport.serializeUser((user: Express.User, done: (err: Error | null, id?: Express.User) => void) => {
   done(null, user);
 });
 
-passport.deserializeUser((user: Express.User, done) => {
+passport.deserializeUser((user: Express.User, done: (err: Error | null, user?: Express.User | false | null) => void) => {
   done(null, user);
 });
 

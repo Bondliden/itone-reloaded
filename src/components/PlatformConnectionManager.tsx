@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link2, CheckCircle, ExternalLink, Unlink, Loader2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { useAuth } from '../contexts/AuthContext';
@@ -58,6 +58,7 @@ export function PlatformConnectionManager() {
           description: `Successfully connected to ${platform.display_name}. You can now upload directly to this platform.`,
         });
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_error) {
       toast({
         title: "Connection Failed",
@@ -69,6 +70,7 @@ export function PlatformConnectionManager() {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDisconnect = async (_platformId: string) => {
     // In a real app, this would revoke the OAuth token
     toast({

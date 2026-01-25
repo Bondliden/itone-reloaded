@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CreditCard, Calendar, AlertTriangle, CheckCircle, XCircle, Download, Crown } from 'lucide-react';
 import { Button } from './ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
@@ -26,6 +26,7 @@ export function SubscriptionManager() {
         description: "Your subscription will end at the current billing period.",
       });
       setShowCancelDialog(false);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_error) {
       toast({
         title: "Error",
@@ -48,6 +49,7 @@ export function SubscriptionManager() {
         title: "Subscription Reactivated",
         description: "Your subscription will continue at the next billing period.",
       });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_error) {
       toast({
         title: "Error",

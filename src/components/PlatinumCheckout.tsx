@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Crown, Shield, Check, Loader2, Star, Users, Upload, Zap } from 'lucide-react';
 import { Button } from './ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { useAuth } from '../contexts/AuthContext';
-import { usePlatinumPricing, useCreatePlatinumSubscription } from '../hooks/usePlatinum';
+import { usePlatinumPricing } from '../hooks/usePlatinum';
 import { createCheckoutSession, redirectToCheckout } from '../lib/stripe';
 import { toast } from './ui/toast';
 
@@ -17,7 +17,6 @@ export function PlatinumCheckout({ isOpen, onClose }: PlatinumCheckoutProps) {
   const { user } = useAuth();
 
   const { data: pricing } = usePlatinumPricing();
-  const _createSubscription = useCreatePlatinumSubscription();
   const [isProcessing, setIsProcessing] = useState(false);
 
   // Check for successful Spotify connection on component mount

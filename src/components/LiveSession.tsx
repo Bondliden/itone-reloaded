@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Mic, MessageCircle, Settings, Crown, Globe, Copy, UserPlus } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -37,6 +37,7 @@ interface ChatMessage {
   type: 'text' | 'system';
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function LiveSession({ sessionId: _sessionId, isHost = false, className, onRecordingStart, onRecordingStop }: LiveSessionProps) {
   const { user } = useAuth();
   const [participants, setParticipants] = useState<SessionParticipant[]>([

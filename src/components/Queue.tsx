@@ -1,4 +1,3 @@
-import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Clock, User, Trash2, Play } from 'lucide-react';
 import { Button } from './ui/button';
@@ -48,6 +47,7 @@ export function Queue() {
         title: "Removed from queue",
         description: "Song has been removed from the queue.",
       });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_error) {
       toast({
         title: "Error",
@@ -75,9 +75,10 @@ export function Queue() {
         throw new Error('Failed to get next song');
       }
 
-      const _nextSong = await response.json();
+      // Response successful, invalidate and redirect
       queryClient.invalidateQueries({ queryKey: ['queue'] });
       setLocation('/karaoke');
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_error) {
       toast({
         title: "Error",

@@ -1,207 +1,78 @@
 import React from 'react';
 import { Link } from 'wouter';
-<<<<<<< HEAD
-import { Mic, Music, Users, Star } from 'lucide-react';
-=======
 import { Mic, Play, Users, Music, Star, Globe } from 'lucide-react';
->>>>>>> origin/main
 import { Button } from '../components/ui/button';
 
 export function HomePage() {
   return (
-<<<<<<< HEAD
-    <div className="min-h-screen">
-=======
     <div className="min-h-screen relative">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
-        <div className={`absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30`}></div>
+        <div 
+          className={`absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30`}
+        />
       </div>
 
->>>>>>> origin/main
       {/* Navigation */}
       <nav className="relative z-10 px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2">
-<<<<<<< HEAD
-            <Mic className="h-8 w-8 text-purple-400" />
-            <span className="text-2xl font-bold text-white">iTone</span>
-          </div>
-          <Link href="/login">
-            <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
-              Sign In
-            </Button>
-          </Link>
-=======
             <div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center">
-              <Mic className="h-4 w-4 text-white" />
+              <Mic className="h-5 w-5 text-white" />
             </div>
-            <span className="text-2xl font-bold text-white">Itone.studio</span>
+            <span className="text-2xl font-bold text-white">iTone Studio</span>
           </div>
-
           <div className="flex items-center space-x-4">
-            <Link href="/auth">
-              <Button variant="ghost" className="text-white hover:bg-white/10">
+            <Link href="/login">
+              <Button variant="ghost" className="text-white hover:text-purple-400">
                 Sign In
               </Button>
             </Link>
-            <Link href="/auth">
-              <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white">
+            <Link href="/register">
+              <Button className="bg-purple-600 hover:bg-purple-700 text-white border-none px-6">
                 Get Started
               </Button>
             </Link>
           </div>
->>>>>>> origin/main
         </div>
       </nav>
 
       {/* Hero Section */}
-<<<<<<< HEAD
-      <div className="relative px-6 py-20">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-6xl md:text-7xl font-bold text-white mb-6 tracking-tight">
-            Sing Your
-            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"> Heart Out</span>
-          </h1>
-          <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
-            The ultimate karaoke experience with thousands of songs, real-time lyrics, 
-            and an amazing community of singers.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/dashboard">
-              <Button size="lg" className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-4 text-lg font-semibold rounded-full transform hover:scale-105 transition-all duration-200">
-                Start Singing
-                <Mic className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-            <Button variant="outline" size="lg" className="bg-white/10 border-white/20 text-white hover:bg-white/20 px-8 py-4 text-lg rounded-full">
-=======
-      <div className="relative z-10 px-6 pt-20 pb-32">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-            Sing Your
-            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"> Heart Out</span>
-          </h1>
-          
-          <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto">
-            The ultimate karaoke experience with thousands of songs, AI-powered recommendations, 
-            real-time collaboration, and professional recording quality.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link href="/auth">
-              <Button size="lg" className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold px-8 py-4 rounded-full text-lg">
-                <Mic className="h-5 w-5 mr-2" />
-                Start Singing
-              </Button>
-            </Link>
-            
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="border-white/20 text-white hover:bg-white/10 px-8 py-4 rounded-full text-lg"
-              onClick={() => window.open('https://www.youtube.com/watch?v=demo', '_blank')}
-            >
-              <Play className="h-5 w-5 mr-2" />
->>>>>>> origin/main
-              Watch Demo
+      <main className="relative z-10 max-w-7xl mx-auto px-6 pt-20 pb-24 text-center">
+        <h1 className="text-6xl md:text-8xl font-extrabold text-white mb-8 tracking-tight">
+          Sing Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">Heart Out</span>
+        </h1>
+        <p className="text-xl md:text-2xl text-purple-100/80 mb-12 max-w-3xl mx-auto leading-relaxed">
+          The ultimate karaoke experience with thousands of songs, AI-powered recommendations, real-time collaboration, and professional recording quality.
+        </p>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Link href="/songs">
+            <Button size="lg" className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-6 text-lg rounded-full shadow-lg shadow-purple-500/25">
+              Start Singing <Music className="ml-2 h-5 w-5" />
             </Button>
-          </div>
+          </Link>
+          <Link href="/demo">
+            <Button size="lg" variant="outline" className="bg-white/5 border-white/10 text-white hover:bg-white/10 px-8 py-6 text-lg rounded-full">
+              Watch Demo <Play className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
         </div>
-      </div>
-
-<<<<<<< HEAD
-      {/* Features Section */}
-      <div className="relative px-6 py-20">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-white text-center mb-16">
-            Why Choose iTone?
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-center hover:bg-white/15 transition-all duration-300">
-              <Music className="h-12 w-12 text-purple-400 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-3">Massive Library</h3>
-              <p className="text-gray-300">
-                Access thousands of songs across all genres with high-quality backing tracks.
-              </p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-center hover:bg-white/15 transition-all duration-300">
-              <Users className="h-12 w-12 text-blue-400 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-3">Live Sessions</h3>
-              <p className="text-gray-300">
-                Join live karaoke sessions with friends or meet new people who love to sing.
-              </p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-center hover:bg-white/15 transition-all duration-300">
-              <Star className="h-12 w-12 text-yellow-400 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-3">Professional Quality</h3>
-              <p className="text-gray-300">
-                Studio-quality audio and real-time pitch correction for the perfect performance.
-=======
-      {/* Features Grid */}
-      <div className="relative z-10 px-6 pb-20">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
-              <Users className="h-12 w-12 text-purple-400 mb-4" />
-              <h3 className="text-xl font-bold text-white mb-3">Collaborate Live</h3>
-              <p className="text-gray-300">
-                Sing with friends in real-time. Up to 4 people can join the same session and create amazing collaborative performances.
-              </p>
-            </div>
-
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
-              <Music className="h-12 w-12 text-blue-400 mb-4" />
-              <h3 className="text-xl font-bold text-white mb-3">Massive Library</h3>
-              <p className="text-gray-300">
-                Thousands of songs across all genres. From classic rock to modern pop, find your perfect song with AI-powered recommendations.
-              </p>
-            </div>
-
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
-              <Star className="h-12 w-12 text-yellow-400 mb-4" />
-              <h3 className="text-xl font-bold text-white mb-3">Pro Recording</h3>
-              <p className="text-gray-300">
-                Professional HD recording with advanced audio effects, key transpose, and real-time vocal coaching powered by AI.
->>>>>>> origin/main
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      </main>
 
       {/* Footer */}
-<<<<<<< HEAD
-      <footer className="relative px-6 py-12 border-t border-white/10">
-        <div className="max-w-6xl mx-auto text-center">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <Mic className="h-6 w-6 text-purple-400" />
-            <span className="text-xl font-bold text-white">iTone Karaoke</span>
+      <footer className="relative z-10 py-12 border-t border-white/10 bg-black/20 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center space-x-2">
+            <div className="w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center">
+              <Mic className="h-3 w-3 text-white" />
+            </div>
+            <span className="font-bold text-white">iTone.studio</span>
           </div>
-          <p className="text-gray-400">
-            © 2025 iTone. All rights reserved. Sing responsibly.
+          <p className="text-purple-100/40 text-sm">
+            © 2025 iTone. All rights reserved. Sing your heart out.
           </p>
         </div>
       </footer>
     </div>
   );
-=======
-      <footer className="relative z-10 border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-8">
-          <div className="text-center">
-            <div className="flex items-center justify-center space-x-2 mb-4">
-              <div className="w-6 h-6 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center">
-                <Mic className="h-3 w-3 text-white" />
-              </div>
-              <span className="text-white font-bold">Itone.studio</span>
-            </div>
-            <p className="text-gray-400 text-sm">
-              © 2025 iTone. All rights reserved. Sing your heart out.
-            </p>
-          </div>
-        </div>
-      </footer>
-    </div>
-  )
->>>>>>> origin/main
 }

@@ -1,8 +1,8 @@
-import express, { type Request, Response } from "express";
+import express from "express";
 import session from 'express-session';
 import passport from 'passport';
 import { fileURLToPath } from "url";
-import { dirname, join } from "path";
+import { dirname, join, resolve } from "path";
 import dotenv from "dotenv";
 import { karaokeRoutes } from "./routes/karaoke.js";
 import { authRoutes } from "./routes/auth.js";
@@ -39,10 +39,18 @@ app.get("/health", (req, res) => {
   res.json({ status: "OK", message: "iTone Karaoke API is running" });
 });
 
+// Serve static files
 app.use(express.static(__dirname));
 
-app.get("*", (req: Request, res: Response) => {
-  res.sendFile(join(__dirname, "index.html"));
+// Catch-all route for SPA
+app.get("*", (req, res) => {
+  const indexPath = resolve(__dirname, "index.html");
+  res.sendFile(indexPath, (err) => {
+    if (err) {
+      console.error("Error sending index.html:", err);
+      res.status(500).send("Error loading frontend");
+    }
+  });
 });
 
 app.listen(PORT, "0.0.0.0", () => {

@@ -41,7 +41,7 @@ app.get("/health", (req, res) => {
 
 app.use(express.static(__dirname));
 
-app.get("/*", (req, res) => {
+app.get(/^\\/(?!api|auth|health).*/, (req, res) => {
   res.sendFile(resolve(__dirname, "index.html"), (err) => {
     if (err) {
       console.error("Error sending index.html:", err);

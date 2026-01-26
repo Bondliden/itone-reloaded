@@ -1,4 +1,5 @@
-import type { Express, Request, Response } from "express";
+import type { Express, Request,
+             import path from "path";
 import { storage } from "./storage";
 import { insertSongSchema, insertRecordingSchema, insertCollaborativeSessionSchema, insertSessionParticipantSchema, insertUserSongSchema, insertUploadJobSchema } from "@shared/schema";
 import Stripe from "stripe";

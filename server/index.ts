@@ -13,6 +13,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -39,9 +40,11 @@ app.get("/health", (req, res) => {
   res.json({ status: "OK", message: "iTone Karaoke API is running" });
 });
 
+// Serve static files
 app.use(express.static(__dirname));
 
-app.get(/^\\/(?!api|auth|health).*/, (req, res) => {
+// Catch-all route for SPA - using (.*) for Express 5 compatibility
+app.get('(.*)', (req, res) => {
   res.sendFile(resolve(__dirname, "index.html"), (err) => {
     if (err) {
       console.error("Error sending index.html:", err);

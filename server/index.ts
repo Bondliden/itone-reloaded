@@ -89,7 +89,7 @@ app.get("/health", (req, res) => {
 
 // Catch-all route for SPA - serve index.html for frontend routing
 app.get("*", (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, "../dist/index.html"));
+  res.sendFile(path.join(__dirname, "./index.html"));
 });
 
 app.listen(PORT, () => {

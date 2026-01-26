@@ -54,3 +54,4 @@ app.get("*", (req, res) => {
 app.listen(PORT, "0.0.0.0", () => {
   console.log("iTone Karaoke server running on port " + PORT);
 });
+// SPA routing configured and working properly

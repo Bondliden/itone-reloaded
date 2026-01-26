@@ -40,20 +40,15 @@ app.get("/health", (req, res) => {
   res.json({ status: "OK", message: "iTone Karaoke API is running" });
 });
 
-// Serve static files
 app.use(express.static(__dirname));
 
-// Final catch-all for SPA using middleware
-app.use((req, res, next) => {
-  if (req.method === 'GET' && !req.url.startsWith('/api') && !req.url.startsWith('/auth') && !req.url.startsWith('/health')) {
-    return res.sendFile(resolve(__dirname, "index.html"), (err) => {
-      if (err) {
-        console.error("Error sending index.html:", err);
-        res.status(500).send("Frontend missing");
-      }
-    });
-  }
-  next();
+app.get("*", (req, res) => {
+  res.sendFile(resolve(__dirname, "index.html"), (err) => {
+    if (err) {
+      console.error("Error sending index.html:", err);
+      res.status(500).send("Frontend missing");
+    }
+  });
 });
 
 app.listen(PORT, "0.0.0.0", () => {

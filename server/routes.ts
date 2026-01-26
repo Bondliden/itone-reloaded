@@ -1,7 +1,5 @@
-import type { Express, Request,
              import path from "path";
-import { storage } from "./storage";
-import { insertSongSchema, insertRecordingSchema, insertCollaborativeSessionSchema, insertSessionParticipantSchema, insertUserSongSchema, insertUploadJobSchema } from "@shared/schema";
+import type { Express, Request, Response } from "express";import { import { storage } from "./storage";insertRecordingSchema, insertCollaborativeSessionSchema, insertSessionParticipantSchema, insertUserSongSchema, insertUploadJobSchema } from "@shared/schema";
 import Stripe from "stripe";
 
 const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null;

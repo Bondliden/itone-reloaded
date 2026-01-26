@@ -2,7 +2,7 @@ import express from "express";
 import session from 'express-session';
 import passport from 'passport';
 import { fileURLToPath } from "url";
-import { dirname, join, resolve } from "path";
+import { dirname, resolve } from "path";
 import dotenv from "dotenv";
 import { karaokeRoutes } from "./routes/karaoke.js";
 import { authRoutes } from "./routes/auth.js";
@@ -30,7 +30,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-const PORT = process.env.PORT ? parseInt(process.env.PORT) : 8080;
+const PORT = process.env.PORT || 8080;
 
 app.use("/auth", authRoutes);
 app.use("/api", karaokeRoutes);
@@ -39,20 +39,17 @@ app.get("/health", (req, res) => {
   res.json({ status: "OK", message: "iTone Karaoke API is running" });
 });
 
-// Serve static files
 app.use(express.static(__dirname));
 
-// Catch-all route for SPA
 app.get("*", (req, res) => {
-  const indexPath = resolve(__dirname, "index.html");
-  res.sendFile(indexPath, (err) => {
+  res.sendFile(resolve(__dirname, "index.html"), (err) => {
     if (err) {
       console.error("Error sending index.html:", err);
-      res.status(500).send("Error loading frontend");
+      res.status(500).send("Frontend missing");
     }
   });
 });
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`🎤 iTone Karaoke server running on port ${PORT}`);
+  console.log("iTone Karaoke server running on port " + PORT);
 });

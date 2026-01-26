@@ -43,14 +43,17 @@ app.get("/health", (req, res) => {
 // Serve static files
 app.use(express.static(__dirname));
 
-// Catch-all route for SPA - using (.*) for Express 5 compatibility
-app.get('(.*)', (req, res) => {
-  res.sendFile(resolve(__dirname, "index.html"), (err) => {
-    if (err) {
-      console.error("Error sending index.html:", err);
-      res.status(500).send("Frontend missing");
-    }
-  });
+// Final catch-all for SPA using middleware
+app.use((req, res, next) => {
+  if (req.method === 'GET' && !req.url.startsWith('/api') && !req.url.startsWith('/auth') && !req.url.startsWith('/health')) {
+    return res.sendFile(resolve(__dirname, "index.html"), (err) => {
+      if (err) {
+        console.error("Error sending index.html:", err);
+        res.status(500).send("Frontend missing");
+      }
+    });
+  }
+  next();
 });
 
 app.listen(PORT, "0.0.0.0", () => {

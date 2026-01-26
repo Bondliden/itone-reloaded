@@ -21,8 +21,7 @@ app.get("/health", (req, res) => {
 app.use(express.static(__dirname));
 
 // SPA catch-all route - MUST be last
-app.use, res) => {
-  
+app.use((req, res) => {  
   res.sendFile(resolve(__dirname, "index.html"), (err) => {
     if (err) {
       console.error("Error serving index.html:", err);
